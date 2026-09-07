@@ -1,0 +1,22 @@
+{
+  "name": "openmouse-landing-page",
+  "version": "1.0.0",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "check": "npm run build && npm test",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@openmouse/protocol": "https://github.com/OpenMouse-Project/mouse-protocol.git",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
+  }
+}

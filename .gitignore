@@ -1,0 +1,8 @@
+node_modules/
+dist/
+/preview/
+CHANGELOG.md
+.DS_Store
+.env
+.env.*
+!.env.example
