@@ -5,6 +5,7 @@ import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { t, tp } from "./i18n";
 import { PageLocaleToggle, usePageLocale } from "./app/page-locale";
+import { GITHUB_URL } from "./app/social-links";
 
 const ORG = "OpenMouse-Project";
 const REFRESH_MS = 15 * 60 * 1000;
@@ -476,7 +477,7 @@ function DonateApp(): ReactNode {
         </nav>
         <PageLocaleToggle locale={locale} onChange={setLocale} />
         <div className="don-actions">
-          <a className="don-github" href="https://github.com/OpenMouse-Project/openmouse" target="_blank" rel="noreferrer">
+          <a className="don-github" href={GITHUB_URL} target="_blank" rel="noreferrer">
             <GitHubIcon />
             <span className="don-github-label">GitHub</span>
             {stars !== null ? (
@@ -626,7 +627,7 @@ function DonateApp(): ReactNode {
               );
             })}
           </div>
-          <a className="don-contrib-link" href="https://github.com/OpenMouse-Project" target="_blank" rel="noreferrer">
+          <a className="don-contrib-link" href={GITHUB_URL} target="_blank" rel="noreferrer">
             {t(locale, "don.seeAll")}
           </a>
         </section>
@@ -649,7 +650,7 @@ function DonateApp(): ReactNode {
 
           <div className="don-fcol">
             <h3>{t(locale, "don.contributeCol")}</h3>
-            <a href="https://github.com/OpenMouse-Project" target="_blank" rel="noreferrer">GitHub</a>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/issues" target="_blank" rel="noreferrer">{t(locale, "don.reportIssue")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/discussions" target="_blank" rel="noreferrer">{t(locale, "don.discussions")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse" target="_blank" rel="noreferrer">{t(locale, "don.source")}</a>
@@ -658,7 +659,7 @@ function DonateApp(): ReactNode {
           <div className="don-fcol">
             <h3>{t(locale, "don.community")}</h3>
             <div className="don-fsocial">
-              <a href="https://github.com/OpenMouse-Project" target="_blank" rel="noreferrer" aria-label="GitHub">
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label="GitHub">
                 <GitHubIcon />
               </a>
               <a href="https://discord.gg/yxC9jzMdw6" target="_blank" rel="noreferrer" aria-label="Discord">
@@ -677,7 +678,7 @@ function DonateApp(): ReactNode {
             <a href="/" className="don-flegal">{t(locale, "don.privacy")}</a>
             <a href="/" className="don-flegal">{t(locale, "don.terms")}</a>
           </p>
-          <p>{t(locale, "don.created")} <a href="https://github.com/OpenMouse-Project" target="_blank" rel="noreferrer">{t(locale, "don.theCommunity")}</a> {t(locale, "don.and")} <a href="/donate.html">{t(locale, "don.contributors")}</a>.</p>
+          <p>{t(locale, "don.created")} <a href={GITHUB_URL} target="_blank" rel="noreferrer">{t(locale, "don.theCommunity")}</a> {t(locale, "don.and")} <a href="/donate.html">{t(locale, "don.contributors")}</a>.</p>
         </div>
       </footer>
     </div>

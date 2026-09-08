@@ -18,6 +18,7 @@ const HTML_LANG: Partial<Record<InterfaceLocale, string>> = {
   zh: "zh-Hans",
 };
 import { fetchLiveData, mergeLiveMice, type LiveData } from "./supported-live.ts";
+import { GITHUB_URL } from "./app/social-links";
 
 // ── Data ──────────────────────────────────────────────────────────────────
 // Mouse/status data lives in ./supported-mice.ts (verified at build time by
@@ -223,7 +224,7 @@ function buildShell(): void {
               `<option value="${option}"${option === locale ? " selected" : ""}>${t(locale, nameKey)}</option>`).join("")}
           </select>
           <button class="theme-toggle" id="theme-btn" aria-label="${t(locale, "supp.theme")}">${themeIcon(getTheme())}</button>
-          <a class="github-link" href="https://github.com/OpenMouse-Project/openmouse" target="_blank" rel="noreferrer" aria-label="OpenMouse on GitHub">
+          <a class="github-link" href="${GITHUB_URL}" target="_blank" rel="noreferrer" aria-label="OpenMouse on GitHub">
             ${GH_SVG}
             <span>GitHub</span>
           </a>
@@ -282,7 +283,7 @@ function buildShell(): void {
       <span>OpenMouse</span>
       <div class="footer-links">
         <a href="https://x.com/openmouseapp" target="_blank" rel="noreferrer">${t(locale, "supp.follow")}</a>
-        <a href="https://github.com/OpenMouse-Project/openmouse" target="_blank" rel="noreferrer">${t(locale, "supp.source")}</a>
+        <a href="${GITHUB_URL}" target="_blank" rel="noreferrer">${t(locale, "supp.source")}</a>
       </div>
     </footer>
   </div>
