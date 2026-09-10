@@ -27,6 +27,7 @@ import { TEEVOLUTION_PRODUCT_IDS } from "@openmouse/protocol/teevolution";
 import { ZAUNKOENIG_PRODUCT_IDS } from "@openmouse/protocol/zaunkoenig";
 import { CORSAIR_PRODUCT_IDS } from "@openmouse/protocol/corsair";
 import { KSNAKE_PRODUCTS } from "@openmouse/protocol/ksnake";
+import { HYPERX_PULSEFIRE_HASTE_PIDS } from "@openmouse/protocol/hyperx";
 
 import { MICE, STATUS, type Mouse, type Status } from "./supported-mice.ts";
 
@@ -158,6 +159,8 @@ const PID_UNIVERSE = new Set<number>([
   ...MICROSOFT_PRODUCTS,
   // K-snake X11 wired + 2.4 GHz dongle share PID 0x2255 (src/ksnake).
   ...KSNAKE_PRODUCTS.keys(),
+  // HyperX Pulsefire Haste wired + wireless dongle (src/hyperx).
+  ...HYPERX_PULSEFIRE_HASTE_PIDS,
 ]);
 test("every pinned PID on a coverage claim exists in the protocol registry", () => {
   const withPids: Array<Mouse & { pids: readonly number[] }> = MICE.filter(

@@ -315,6 +315,9 @@ export const MICE: Mouse[] = [
     note: "PID 0x005c in Razer registry — standard transport" },
 
   // HYPERX ─────────────────────────────────────────────────────────────
+  { brand: "HyperX", model: "Pulsefire Haste",            status: "likely",      req: 1,
+    pids: [0x1727, 0x0f8f, 0x048e, 0x028e],
+    note: "Read/write: DPI (per-profile, onboard save), polling rate, and 2-step lift-off distance; hardware info, connection type, and battery (wireless) are read live. PIDs 0x1727 (Kingston-era wired), 0x0f8f/0x048e (HP-era wired / wired-mode), 0x028e (wireless dongle) in the HyperX driver" },
   { brand: "HyperX", model: "Pulsefire Haste 2",          status: "driver",  req: 10,
     note: "Kingston NGENUITY protocol — not implemented" },
   { brand: "HyperX", model: "Pulsefire Haste 2 Wireless", status: "driver",  req: 4,
@@ -441,6 +444,10 @@ export const MICE: Mouse[] = [
     note: "ATK driver (0x373b) likely covers — needs hardware test" },
   { brand: "ATK", model: "F1 Ultimate",                 status: "likely",    req: 1,
     note: "ATK driver (0x373b) likely covers — needs hardware test" },
+  { brand: "ATK", model: "F1 Ultimate 2.0",             status: "likely",      req: 0,
+    note: "ATK firmware device id 1,8 — PAW3950Ultra, not yet verified on hardware" },
+  { brand: "ATK", model: "A9 Mini +",                    status: "likely",      req: 0,
+    note: "ATK firmware device id 1,31/1,52 — PAW3955Master, not yet verified on hardware" },
   { brand: "ATK", model: "VXE Mad R Major",             status: "likely",    req: 1,
     note: "ATK driver (0x373b) likely covers — needs hardware test" },
   { brand: "ATK", model: "ZERO",                        status: "supported", req: 1,
