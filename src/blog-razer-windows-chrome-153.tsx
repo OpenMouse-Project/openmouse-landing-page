@@ -7,7 +7,9 @@ import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { DiscordIcon, DISCORD_URL, GitHubIcon, GITHUB_URL, TwitterIcon, TWITTER_URL } from "./app/social-links";
 import { usePageLocale } from "./app/page-locale";
+import { BlogComments } from "./blog-comments";
 
+const POST_SLUG = "razer-windows-chrome-153";
 const CHROMIUM_BUG_URL = "https://issues.chromium.org/issues/536063911";
 const WORKAROUND_ZIP_URL = "https://commondatastorage.googleapis.com/chromium-browser-snapshots/Win_x64/1669035/chrome-win.zip";
 
@@ -243,6 +245,9 @@ function BlogPostPage(): ReactNode {
     <div className="land-shell">
       <SiteNav locale={locale} onLocale={setLocale} />
       <Post />
+      <div className="blog-comments-wrap">
+        <BlogComments slug={POST_SLUG} />
+      </div>
       <SiteFooter locale={locale} />
     </div>
   );
