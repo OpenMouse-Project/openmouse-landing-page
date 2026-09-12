@@ -19,7 +19,10 @@ const STATIC_PRECACHE = [
  * The root is reached through the _redirects file that
  * build/sites-vite-plugin.ts writes.
  */
-const PAGES = ["landing.html", "check.html", "supported.html", "donate.html", "faq.html"];
+const PAGES = [
+  "landing.html", "check.html", "supported.html", "donate.html", "faq.html",
+  "blog.html", "blog-razer-windows-chrome-153.html",
+];
 
 export const ROOT_PAGE = "landing.html";
 

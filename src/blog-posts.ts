@@ -1,0 +1,21 @@
+/* Blog post registry — one entry per post, for the index at /blog.html.
+   Each post is its own vite entry (see vite.config.ts) with its own
+   component; this file just lists them so the index can render cards
+   without importing every post's JSX. */
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  date: string;
+}
+
+export const BLOG_POSTS: readonly BlogPost[] = [
+  {
+    slug: "razer-windows-chrome-153",
+    title: "Every Razer mouse stopped connecting on Windows this week",
+    description:
+      "Not a Windows driver, not Razer Synapse, not anything in OpenMouse. A years-old bug in Chrome itself, and the fix for it, landing in Chrome 153.",
+    date: "2026-09-12",
+  },
+];

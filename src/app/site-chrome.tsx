@@ -30,6 +30,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
       </a>
       <nav className="land-nav-links">
         <a href="/supported.html">{t(locale, "land.supported")}</a>
+        <a href="/blog.html">Blog</a>
         <a href="/faq.html">FAQ</a>
         <a href="https://docs.openmouse.app">{t(locale, "land.contribute")}</a>
         <a href="/donate.html">{t(locale, "land.donate")}</a>
