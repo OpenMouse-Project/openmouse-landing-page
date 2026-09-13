@@ -24,6 +24,20 @@ function Hero({ locale }: { locale: InterfaceLocale }): ReactNode {
   );
 }
 
+function Screenshot(): ReactNode {
+  return (
+    <section className="land-screenshot">
+      <img
+        src="/screenshot-app.png"
+        alt="The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse"
+        width={1600}
+        height={811}
+        loading="lazy"
+      />
+    </section>
+  );
+}
+
 function Feature({ title, body }: { title: string; body: string }): ReactNode {
   return (
     <div className="land-feature">
@@ -70,6 +84,7 @@ function Landing(): ReactNode {
     <div className="land-shell">
       <SiteNav locale={locale} onLocale={setLocale} />
       <Hero locale={locale} />
+      <Screenshot />
       <Features locale={locale} />
       <Contribute locale={locale} />
       <SiteFooter locale={locale} />

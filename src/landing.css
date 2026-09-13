@@ -180,6 +180,22 @@ body {
   border-color: color-mix(in srgb, #69d28d 40%, #232527);
 }
 
+/* ── Screenshot ────────────────────────────────────────────────────────── */
+.land-screenshot {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem clamp(2.5rem, 6vw, 4rem);
+}
+
+.land-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, #69d28d 16%, #232527);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+}
+
 /* ── Features ──────────────────────────────────────────────────────────── */
 .land-features {
   display: grid;
