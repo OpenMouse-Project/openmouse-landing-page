@@ -191,6 +191,10 @@ function Post(): ReactNode {
         <p>
           <strong>Step 1.</strong> Download this file:{" "}
           <a href={WORKAROUND_ZIP_URL} target="_blank" rel="noreferrer">chrome-win.zip</a>
+          . It's hosted on <code>commondatastorage.googleapis.com</code>, Google's own storage for archived
+          Chromium build snapshots &mdash; not a third-party mirror, and not something we host ourselves. You
+          can check the link before clicking it: it points at an official Chromium build (revision 1669035),
+          the same kind of build that later becomes a public Chrome release.
         </p>
         <p><strong>Step 2.</strong> Right-click it and choose "Extract All", to a folder you'll remember (like your Desktop).</p>
         <p><strong>Step 3.</strong> Open that folder and double-click <code>chrome.exe</code> inside it. Use OpenMouse from that window.</p>
