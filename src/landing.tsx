@@ -27,13 +27,23 @@ function Hero({ locale }: { locale: InterfaceLocale }): ReactNode {
 function Screenshot(): ReactNode {
   return (
     <section className="land-screenshot">
-      <img
-        src="/screenshot-app.png"
-        alt="The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse"
-        width={1600}
-        height={811}
-        loading="lazy"
-      />
+      <div className="land-browser">
+        <div className="land-browser-bar">
+          <span className="land-browser-dot land-browser-dot-red" />
+          <span className="land-browser-dot land-browser-dot-yellow" />
+          <span className="land-browser-dot land-browser-dot-green" />
+          <span className="land-browser-url">control.openmouse.app</span>
+        </div>
+        <div className="land-screenshot-pad">
+          <img
+            src="/screenshot-app.png"
+            alt="The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse"
+            width={1572}
+            height={811}
+            loading="lazy"
+          />
+        </div>
+      </div>
     </section>
   );
 }

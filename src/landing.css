@@ -187,13 +187,59 @@ body {
   padding: 0 1.5rem clamp(2.5rem, 6vw, 4rem);
 }
 
+.land-browser {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, #69d28d 16%, #232527);
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  background: #1c1e21;
+}
+
+.land-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  background: #232527;
+  border-bottom: 1px solid color-mix(in srgb, #69d28d 10%, #232527);
+}
+
+.land-browser-dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: none;
+}
+.land-browser-dot-red {
+  background: #ff5f57;
+}
+.land-browser-dot-yellow {
+  background: #febc2e;
+}
+.land-browser-dot-green {
+  background: #28c840;
+}
+
+.land-browser-url {
+  margin: 0 auto;
+  padding: 0.3rem 1rem;
+  border-radius: 6px;
+  background: #141517;
+  color: #7a9498;
+  font-size: 0.8rem;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.land-screenshot-pad {
+  background: #08090a;
+  padding: clamp(1.25rem, 4vw, 3rem);
+}
+
 .land-screenshot img {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, #69d28d 16%, #232527);
-  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.6);
+  border-radius: 8px;
 }
 
 /* ── Features ──────────────────────────────────────────────────────────── */
