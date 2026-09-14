@@ -28,6 +28,7 @@ import { ZAUNKOENIG_PRODUCT_IDS } from "@openmouse/protocol/zaunkoenig";
 import { CORSAIR_PRODUCT_IDS } from "@openmouse/protocol/corsair";
 import { KSNAKE_PRODUCTS } from "@openmouse/protocol/ksnake";
 import { HYPERX_PULSEFIRE_HASTE_PIDS } from "@openmouse/protocol/hyperx";
+import { INCOTT_PRODUCT_IDS } from "@openmouse/protocol/incott";
 
 import { MICE, STATUS, type Mouse, type Status } from "./supported-mice.ts";
 
@@ -161,6 +162,9 @@ const PID_UNIVERSE = new Set<number>([
   ...KSNAKE_PRODUCTS.keys(),
   // HyperX Pulsefire Haste wired + wireless dongle (src/hyperx).
   ...HYPERX_PULSEFIRE_HASTE_PIDS,
+  // Incott's 2.4 GHz dongle and wired link, shared by all six model
+  // families (src/incott).
+  ...INCOTT_PRODUCT_IDS,
 ]);
 test("every pinned PID on a coverage claim exists in the protocol registry", () => {
   const withPids: Array<Mouse & { pids: readonly number[] }> = MICE.filter(

@@ -573,6 +573,26 @@ export const MICE: Mouse[] = [
   { brand: "Asus",     model: "TUF Gaming M3 Gen 1",    status: "driver",    req: 1,
     note: "Armoury Crate protocol — not implemented" },
 
+  // INCOTT ──────────────────────────────────────────────────────────────
+  // Every Incott model enumerates under the same two product ids — 093A:522C
+  // on the 2.4 GHz dongle, 093A:622C wired — so the USB id cannot tell the
+  // models apart. The driver reads the model and the fitted sensor out of the
+  // device's own identity reply instead, which is why only the one that was
+  // tested on hardware claims full support.
+  { brand: "Incott",        model: "G23 V2 (SE / Pro)",  status: "supported", req: 2,
+    note: "Hardware-verified: DPI stages, polling, buttons, per-axis DPI, lift-off, rapid fire, macros. Also written G23V2",
+    pids: [0x522c, 0x622c] },
+  { brand: "Incott",        model: "GHERO (and Pro)",    status: "likely",    req: 0,
+    note: "Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+  { brand: "Incott",        model: "G23 (and Pro)",      status: "likely",    req: 0,
+    note: "Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+  { brand: "Incott",        model: "G24 (and Pro)",      status: "likely",    req: 0,
+    note: "Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+  { brand: "Incott",        model: "Zero 29 (and Pro)",  status: "likely",    req: 0,
+    note: "Also sold as 029. Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+  { brand: "Incott",        model: "Zero 39 (and Pro)",  status: "likely",    req: 0,
+    note: "Also sold as 039. Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+
   // OTHER DRIVER-NEEDED ─────────────────────────────────────────────────
   { brand: "Bloody",        model: "Max W95",           status: "driver",    req: 1,
     note: "A4tech / Bloody protocol — not implemented" },
@@ -619,8 +639,6 @@ export const MICE: Mouse[] = [
   { brand: "Dark Project",  model: "Novus SE",          status: "unknown",   req: 2,
     note: "Protocol unknown — HID capture needed" },
   { brand: "Scyrox",        model: "V8",                status: "unknown",   req: 2,
-    note: "Protocol unknown" },
-  { brand: "Incott",        model: "G23 V2 Pro",        status: "unknown",   req: 2,
     note: "Protocol unknown" },
   { brand: "Mchose",        model: "AX5",               status: "unknown",   req: 2,
     note: "Protocol unknown" },
