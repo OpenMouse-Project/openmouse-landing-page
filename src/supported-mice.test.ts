@@ -19,7 +19,13 @@ import {
   NINJUTSO_LEGACY_RECEIVER_PRODUCT_IDS,
   NINJUTSO_RECEIVER_PRODUCT_IDS,
 } from "@openmouse/protocol/ninjutso";
-import { MCHOSE_DOCK_PRODUCT_ID, MCHOSE_LINK_PRODUCT_IDS, MCHOSE_PRODUCTS } from "@openmouse/protocol/mchose";
+import {
+  MCHOSE_DOCK_PRODUCT_ID,
+  MCHOSE_LINK_PRODUCT_IDS,
+  MCHOSE_PRODUCTS,
+  MCHOSE_V3_PRODUCT_IDS,
+  mchoseV3FindProduct,
+} from "@openmouse/protocol/mchose";
 import { ORBITAL_DEVICES } from "@openmouse/protocol/orbital";
 import { PULSAR_XS1_PRODUCT_IDS } from "@openmouse/protocol/pulsar";
 import { RAZER_PRODUCTS } from "@openmouse/protocol/razer-devices";
@@ -155,6 +161,9 @@ const PID_UNIVERSE = new Set<number>([
   ...MCHOSE_PRODUCTS.map((product) => product.productId),
   ...Object.values(MCHOSE_LINK_PRODUCT_IDS),
   MCHOSE_DOCK_PRODUCT_ID,
+  // MCHOSE A7 V3 generation, a separate protocol on the same usage page
+  // (drivers/mchose/v3-hid.ts).
+  ...MCHOSE_V3_PRODUCT_IDS,
   ...GLORIOUS_PRODUCTS.keys(),
   ...GLORIOUS_CLASSIC_PRODUCTS.keys(),
   ...MICROSOFT_PRODUCTS,
@@ -179,5 +188,38 @@ test("every pinned PID on a coverage claim exists in the protocol registry", () 
         `${m.brand} ${m.model}: PID 0x${pid.toString(16)} is not in any @openmouse/protocol registry`,
       );
     }
+  }
+});
+
+/**
+ * The `likely` V3 rows pin product ids even though the coverage test above only
+ * validates `supported` rows. They are the one thing separating the V3 driver
+ * from the V2's — the two share a usage page — so a typo here would be a device
+ * silently claimed by the wrong protocol.
+ */
+test("the pinned A7 V3 ids belong to the V3 driver, not the V2's", () => {
+  const rows = MICE.filter((m) => m.brand === "Mchose" && /^A7 V3/.test(m.model));
+  assert.equal(rows.length, 4, "the A7 V3 family is four models");
+
+  for (const row of rows) {
+    assert.ok(row.pids?.length, `${row.model}: no pinned pids`);
+    for (const pid of row.pids!) {
+      assert.ok(
+        MCHOSE_V3_PRODUCT_IDS.includes(pid),
+        `${row.model}: 0x${pid.toString(16)} is not a V3 id`,
+      );
+    }
+    // Every row pins exactly one model id, and it must be the model the row
+    // names — the rest of its pids are the shared receivers.
+    const own = row.pids!.filter((pid) => mchoseV3FindProduct(pid) !== null);
+    assert.equal(own.length, 1, `${row.model}: should pin exactly one model id`);
+    assert.equal(mchoseV3FindProduct(own[0]!)!.name, row.model);
+  }
+});
+
+test("no A7 V3 row claims to be confirmed on hardware", () => {
+  for (const row of MICE.filter((m) => m.brand === "Mchose" && /^A7 V3/.test(m.model))) {
+    assert.equal(row.status, "likely", `${row.model}: nothing V3 has been tested`);
+    assert.match(row.note ?? "", /not confirmed on hardware|untested/i);
   }
 });
