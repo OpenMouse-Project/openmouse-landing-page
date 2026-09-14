@@ -557,8 +557,9 @@ export const MICE: Mouse[] = [
   { brand: "Keychron", model: "Nape Pro",               status: "supported", req: 1,
     pids: [0x0440],
     note: "PID 0x0440 in Keychron driver" },
-  { brand: "Keychron", model: "M6",                     status: "quickwin",  req: 1,
-    note: "Nape VIA driver only; M6 uses a different Keychron mouse protocol" },
+  { brand: "Keychron", model: "M6",                     status: "supported", req: 1,
+    pids: [0xd060, 0xd029],
+    note: "Wired and Link-KM 2.4 GHz. DPI stages, polling, lift-off, motion sync, angle snapping, ripple control, angle tuning, debounce, sleep, onboard profiles and battery. No Bluetooth control channel." },
 
   // Asus ────────────────────────────────────────────────────────────────
   { brand: "Asus",     model: "Harpe Ace Aim Lab",      status: "driver",    req: 5,
