@@ -6,7 +6,7 @@ import { ATK_COMPX_PRODUCT_IDS } from "@openmouse/protocol/drivers/atk/products"
 import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "@openmouse/protocol/drivers/vendors";
 import { BITMOUSE_PRODUCT_IDS } from "@openmouse/protocol/bitmouse";
 import { EGG_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-op1";
-import { KEYCHRON_NAPE_PRODUCTS } from "@openmouse/protocol/keychron";
+import { KEYCHRON_M6_PRODUCT_ID, KEYCHRON_NAPE_PRODUCTS, KEYCHRON_M6_RECEIVER_PRODUCT_ID } from "@openmouse/protocol/keychron";
 import { LAMZU_PRODUCTS } from "@openmouse/protocol/lamzu";
 import { MICROSOFT_PRODUCTS } from "@openmouse/protocol/microsoft";
 import {
@@ -105,6 +105,9 @@ const PID_UNIVERSE = new Set<number>([
   // Viper V4 Pro.
   0x00a3, 0x008a, 0x00e5, 0x00e6,
   ...KEYCHRON_NAPE_PRODUCTS.keys(),
+  // Keychron M6 wired control PID and its Link-KM receiver (drivers/keychron).
+  KEYCHRON_M6_PRODUCT_ID,
+  KEYCHRON_M6_RECEIVER_PRODUCT_ID,
   ...TEEVOLUTION_PRODUCT_IDS,
   ...ZAUNKOENIG_PRODUCT_IDS,
   ...CORSAIR_PRODUCT_IDS,

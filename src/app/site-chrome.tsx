@@ -1,16 +1,10 @@
 import type { ReactNode } from "react";
 import {
-  DiscordIcon,
   DISCORD_URL,
-  formatCount,
-  GitHubIcon,
   GITHUB_URL,
-  StarIcon,
-  TwitterIcon,
   TWITTER_URL,
-  useGitHubStars,
 } from "./social-links";
-import { t } from "../i18n";
+import { t, tp } from "../i18n";
 import type { InterfaceLocale } from "../interface-preferences";
 import { PageLocaleToggle } from "./page-locale";
 
@@ -18,6 +12,10 @@ import { PageLocaleToggle } from "./page-locale";
 // retired, openmouse.app is this marketing page, control.openmouse.app is
 // the actual configurator.
 export const APP_URL = "https://control.openmouse.app/";
+
+// License facts come from the repository itself (GitHub API: AGPL-3.0, i.e.
+// the GNU Affero General Public License v3.0, LICENSE file at the repo root).
+const LICENSE_URL = "https://github.com/OpenMouse-Project/openmouse-landing-page/blob/main/LICENSE";
 
 // Shared header/footer for the marketing pages (openmouse.app) — landing.tsx
 // and faq.tsx both render these so the two pages look coherent.
@@ -43,33 +41,69 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
 }
 
 export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
-  const stars = useGitHubStars();
-
   return (
     <footer className="land-footer">
-      <a href={DISCORD_URL} target="_blank" rel="noreferrer" title="Discord" aria-label="OpenMouse on Discord">
-        <DiscordIcon />
-      </a>
-      <a href={TWITTER_URL} target="_blank" rel="noreferrer" title="Twitter" aria-label="OpenMouse on Twitter">
-        <TwitterIcon />
-      </a>
-      <a
-        className="land-footer-stars"
-        href={GITHUB_URL}
-        target="_blank"
-        rel="noreferrer"
-        title="GitHub"
-        aria-label="OpenMouse on GitHub"
-      >
-        <GitHubIcon />
-        {stars !== null && (
-          <span className="land-star-count">
-            <StarIcon />
-            {formatCount(stars)}
-          </span>
-        )}
-      </a>
-      <a href="/donate.html">{t(locale, "land.donate")}</a>
+      <div className="land-footer-grid">
+        <div className="land-footer-brand">
+          <a className="land-fwordmark" href="/">
+            <img src="/logo.png" alt="" width={22} height={32} />
+            OpenMouse
+          </a>
+          <p className="land-footer-tagline">{t(locale, "don.tagline")}</p>
+        </div>
+
+        <nav className="land-footer-col" aria-label={t(locale, "don.pages")}>
+          <h3>{t(locale, "don.pages")}</h3>
+          <a href="/">{t(locale, "don.home")}</a>
+          <a href="/supported.html">{t(locale, "land.supported")}</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/check.html">{t(locale, "don.check")}</a>
+          <a href="/donate.html">{t(locale, "land.donate")}</a>
+        </nav>
+
+        <nav className="land-footer-col" aria-label={t(locale, "don.contributeCol")}>
+          <h3>{t(locale, "don.contributeCol")}</h3>
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/OpenMouse-Project/openmouse/issues" target="_blank" rel="noreferrer">
+            {t(locale, "don.reportIssue")}
+          </a>
+          <a href="https://github.com/OpenMouse-Project/openmouse/discussions" target="_blank" rel="noreferrer">
+            {t(locale, "don.discussions")}
+          </a>
+          <a href="https://docs.openmouse.app">{t(locale, "don.contribute")}</a>
+        </nav>
+
+        <nav className="land-footer-col" aria-label={t(locale, "don.community")}>
+          <h3>{t(locale, "don.community")}</h3>
+          <a href={DISCORD_URL} target="_blank" rel="noreferrer" aria-label={t(locale, "don.community")}>
+            Discord
+          </a>
+          <a href={TWITTER_URL} target="_blank" rel="noreferrer" aria-label={t(locale, "don.community")}>
+            X / Twitter
+          </a>
+          <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label={t(locale, "don.community")}>
+            GitHub
+          </a>
+        </nav>
+      </div>
+
+      <div className="land-footer-bottom">
+        <p>{tp(locale, "don.rights", { year: new Date().getFullYear() })}</p>
+        <p className="land-footer-legal">
+          <a
+            href={LICENSE_URL}
+            target="_blank"
+            rel="noreferrer"
+            title="LICENSE"
+            aria-label="GNU Affero General Public License v3.0"
+          >
+            GNU Affero General Public License v3.0 (AGPL-3.0)
+          </a>
+          <a href="/privacy.html">{t(locale, "don.privacy")}</a>
+          <a href="/terms.html">{t(locale, "don.terms")}</a>
+        </p>
+      </div>
     </footer>
   );
 }

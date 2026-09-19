@@ -675,8 +675,8 @@ function DonateApp(): ReactNode {
         <div className="don-footer-bottom">
           <p>
             {tp(locale, "don.rights", { year: new Date().getFullYear() })}
-            <a href="/" className="don-flegal">{t(locale, "don.privacy")}</a>
-            <a href="/" className="don-flegal">{t(locale, "don.terms")}</a>
+            <a href="/privacy.html" className="don-flegal">{t(locale, "don.privacy")}</a>
+            <a href="/terms.html" className="don-flegal">{t(locale, "don.terms")}</a>
           </p>
           <p>{t(locale, "don.created")} <a href={GITHUB_URL} target="_blank" rel="noreferrer">{t(locale, "don.theCommunity")}</a> {t(locale, "don.and")} <a href="/donate.html">{t(locale, "don.contributors")}</a>.</p>
         </div>
