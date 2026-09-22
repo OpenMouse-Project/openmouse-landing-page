@@ -89,6 +89,10 @@
   color: #6f8387;
 }
 .dl-meta li + li { margin-top: 0.3rem; }
+.dl-count {
+  font-variant-numeric: tabular-nums;
+  color: var(--land-mint);
+}
 
 .dl-actions {
   display: flex;

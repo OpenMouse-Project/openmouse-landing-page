@@ -31,6 +31,41 @@ function useLaunched(at: Date): boolean {
   return launched;
 }
 
+const BRIDGE_RELEASES_API = "https://api.github.com/repos/OpenMouse-Project/OpenMouse-Bridge/releases?per_page=100";
+
+interface ReleaseAsset { name: string; download_count: number }
+interface Release { prerelease: boolean; assets: ReleaseAsset[] }
+
+/**
+ * Total Bridge downloads across every stable release, from GitHub's public
+ * per-asset counters. Only the .zip archives count (not their .sha256
+ * files), and the rolling dev-build prerelease is skipped. Bridge's own
+ * auto-updater downloads the same zips, so updates count too.
+ */
+function useBridgeDownloads(enabled: boolean): number | null {
+  const [count, setCount] = useState<number | null>(null);
+  useEffect(() => {
+    if (!enabled) return;
+    let cancelled = false;
+    fetch(BRIDGE_RELEASES_API)
+      .then((response) => (response.ok ? (response.json() as Promise<Release[]>) : null))
+      .then((releases) => {
+        if (cancelled || !Array.isArray(releases)) return;
+        const total = releases
+          .filter((release) => !release.prerelease)
+          .flatMap((release) => release.assets)
+          .filter((asset) => asset.name.endsWith(".zip"))
+          .reduce((sum, asset) => sum + asset.download_count, 0);
+        setCount(total);
+      })
+      .catch(() => undefined);
+    return () => {
+      cancelled = true;
+    };
+  }, [enabled]);
+  return count;
+}
+
 /** e.g. "Sep 23, 1:00 PM EDT" in the visitor's locale and time zone. */
 function formatLaunch(at: Date): string {
   return at.toLocaleString(undefined, {
@@ -44,6 +79,7 @@ function formatLaunch(at: Date): string {
 
 function Downloads(): ReactNode {
   const bridgeLaunched = useLaunched(BRIDGE_LAUNCH);
+  const bridgeDownloads = useBridgeDownloads(bridgeLaunched);
   return (
     <section className="dl-page">
       <header className="dl-head">
@@ -81,6 +117,11 @@ function Downloads(): ReactNode {
           </p>
           <ul className="dl-meta">
             <li>Windows (64-bit), macOS (Intel and Apple silicon)</li>
+            {bridgeDownloads !== null && (
+              <li className="dl-count">
+                {bridgeDownloads.toLocaleString()} {bridgeDownloads === 1 ? "download" : "downloads"}
+              </li>
+            )}
           </ul>
           {bridgeLaunched ? (
             <>
