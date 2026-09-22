@@ -5,9 +5,9 @@ import "./blog.css";
 import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
-import { DiscordIcon, DISCORD_URL, GitHubIcon, GITHUB_URL, TwitterIcon, TWITTER_URL } from "./app/social-links";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
+import { BlogOutro } from "./blog-outro";
 
 const POST_SLUG = "razer-windows-chrome-153";
 const CHROMIUM_BUG_URL = "https://issues.chromium.org/issues/536063911";
@@ -16,10 +16,7 @@ const WORKAROUND_ZIP_URL = "https://commondatastorage.googleapis.com/chromium-br
 function RuledOutItem({ what, note }: { what: string; note: string }): ReactNode {
   return (
     <li>
-      <span className="mark">ruled out</span>
-      <div>
-        <b>{what}</b> <span>{note}</span>
-      </div>
+      <b>{what}</b> <span>{note}</span>
     </li>
   );
 }
@@ -38,7 +35,7 @@ function Post(): ReactNode {
       <dl className="blog-glance">
         <div>
           <dt>Status</dt>
-          <dd><span className="blog-status-tag">Confirmed, upstream</span></dd>
+          <dd className="blog-status-tag">Confirmed, upstream</dd>
         </div>
         <div>
           <dt>Affects</dt>
@@ -187,18 +184,18 @@ function Post(): ReactNode {
         This is temporary, and it works because that older version still has the very bug that just got fixed,
         so treat it as a stopgap, not something to keep using forever.
       </p>
-      <div className="blog-steps">
-        <p>
-          <strong>Step 1.</strong> Download this file:{" "}
+      <ol className="blog-steps">
+        <li>
+          Download this file:{" "}
           <a href={WORKAROUND_ZIP_URL} target="_blank" rel="noreferrer">chrome-win.zip</a>
           . It's hosted on <code>commondatastorage.googleapis.com</code>, Google's own storage for archived
           Chromium build snapshots &mdash; not a third-party mirror, and not something we host ourselves. You
           can check the link before clicking it: it points at an official Chromium build (revision 1669035),
           the same kind of build that later becomes a public Chrome release.
-        </p>
-        <p><strong>Step 2.</strong> Right-click it and choose "Extract All", to a folder you'll remember (like your Desktop).</p>
-        <p><strong>Step 3.</strong> Open that folder and double-click <code>chrome.exe</code> inside it. Use OpenMouse from that window.</p>
-      </div>
+        </li>
+        <li>Right-click it and choose "Extract All", to a folder you'll remember (like your Desktop).</li>
+        <li>Open that folder and double-click <code>chrome.exe</code> inside it. Use OpenMouse from that window.</li>
+      </ol>
       <p>It won't install anything or touch your regular Chrome. It's just a separate copy you open when you need it.</p>
 
       <div className="blog-warn">
@@ -213,35 +210,10 @@ function Post(): ReactNode {
         </p>
       </div>
 
-      <div className="blog-finding" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "1rem" }}>
-        <p style={{ margin: 0 }}>Questions, or want to hear about the fix as soon as it ships? Come find us.</p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.6rem" }}>
-          <a href={DISCORD_URL} target="_blank" rel="noreferrer" style={socialLinkStyle}>
-            <span className="blog-social-icon"><DiscordIcon /></span> Discord
-          </a>
-          <a href={TWITTER_URL} target="_blank" rel="noreferrer" style={socialLinkStyle}>
-            <span className="blog-social-icon"><TwitterIcon /></span> X
-          </a>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer" style={socialLinkStyle}>
-            <span className="blog-social-icon"><GitHubIcon /></span> GitHub
-          </a>
-        </div>
-      </div>
+      <BlogOutro>Questions, or want to hear about the fix as soon as it ships? Come find us.</BlogOutro>
     </article>
   );
 }
-
-const socialLinkStyle = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: "0.5em",
-  fontSize: "0.88rem",
-  fontWeight: 600,
-  color: "#f4ffff",
-  border: "1px solid #263238",
-  borderRadius: "10px",
-  padding: "0.55em 0.9em",
-} as const;
 
 function BlogPostPage(): ReactNode {
   const [locale, setLocale] = usePageLocale();
