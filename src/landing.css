@@ -18,6 +18,7 @@ body {
 }
 
 .land-shell {
+  overflow-x: clip;
   --land-bg: #09090b;
   --land-panel: #0d0f13;
   --land-line: rgba(255, 255, 255, 0.08);
@@ -174,7 +175,6 @@ body {
 .land-hero {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,28 +184,34 @@ body {
   margin: 0 auto;
   padding: clamp(4rem, 11vw, 7rem) 1.5rem clamp(2.5rem, 6vw, 4rem);
 }
-.land-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background:
-    radial-gradient(720px 400px at 50% -4%, rgba(105, 210, 141, 0.13), transparent 70%),
-    radial-gradient(420px 260px at 14% 34%, rgba(105, 210, 141, 0.05), transparent 70%);
-  pointer-events: none;
-}
+/* Backdrop layers are wider than the 820px text column and centered on it,
+   so neither the glow nor the grid ends in a visible edge. .land-shell
+   clips the horizontal overflow on narrow screens. */
+.land-hero::before,
 .land-hero::after {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: min(1600px, 100vw);
+  transform: translateX(-50%);
   z-index: -1;
+  pointer-events: none;
+}
+.land-hero::before {
+  background:
+    radial-gradient(720px 400px at 50% -4%, rgba(105, 210, 141, 0.13), transparent 70%),
+    radial-gradient(420px 260px at 30% 40%, rgba(105, 210, 141, 0.05), transparent 70%);
+}
+.land-hero::after {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
   background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(62% 46% at 50% 18%, #000 30%, transparent 100%);
-  mask-image: radial-gradient(62% 46% at 50% 18%, #000 30%, transparent 100%);
-  pointer-events: none;
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(closest-side at 50% 38%, #000 25%, transparent 100%);
+  mask-image: radial-gradient(closest-side at 50% 38%, #000 25%, transparent 100%);
 }
 
 .land-hero h1 {
