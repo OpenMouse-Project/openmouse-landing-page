@@ -30,7 +30,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
         <a href="/supported.html">{t(locale, "land.supported")}</a>
         <a href="/blog.html">Blog</a>
         <a href="/faq.html">FAQ</a>
-        <a href="https://docs.openmouse.app">{t(locale, "land.contribute")}</a>
+        <a href="/download.html">{t(locale, "land.download")}</a>
         <a href="/donate.html">{t(locale, "land.donate")}</a>
         <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
       </nav>
@@ -56,6 +56,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
           <h3>{t(locale, "don.pages")}</h3>
           <a href="/">{t(locale, "don.home")}</a>
           <a href="/supported.html">{t(locale, "land.supported")}</a>
+          <a href="/download.html">{t(locale, "land.download")}</a>
           <a href="/blog.html">Blog</a>
           <a href="/faq.html">FAQ</a>
           <a href="/check.html">{t(locale, "don.check")}</a>

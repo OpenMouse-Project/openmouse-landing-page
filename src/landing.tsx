@@ -45,6 +45,17 @@ function Screenshot(): ReactNode {
   );
 }
 
+function BridgeCallout({ locale }: { locale: InterfaceLocale }): ReactNode {
+  return (
+    <section className="land-contribute">
+      <p className="land-contribute-kicker">{t(locale, "land.bridgeKicker")}</p>
+      <h2>{t(locale, "land.bridgeTitle")}</h2>
+      <p>{t(locale, "land.bridgeBody")}</p>
+      <a className="land-cta-secondary" href="/download.html">{t(locale, "land.bridgeCta")}</a>
+    </section>
+  );
+}
+
 function Contribute({ locale }: { locale: InterfaceLocale }): ReactNode {
   return (
     <section className="land-contribute">
@@ -63,6 +74,7 @@ function Landing(): ReactNode {
       <SiteNav locale={locale} onLocale={setLocale} />
       <Hero locale={locale} />
       <Screenshot />
+      <BridgeCallout locale={locale} />
       <Contribute locale={locale} />
       <SiteFooter locale={locale} />
     </div>

@@ -21,7 +21,7 @@ const STATIC_PRECACHE = [
  */
 const PAGES = [
   "landing.html", "check.html", "supported.html", "donate.html", "faq.html",
-  "blog.html", "blog-razer-windows-chrome-153.html",
+  "blog.html", "blog-razer-windows-chrome-153.html", "download.html",
   "privacy.html", "terms.html",
 ];
 
