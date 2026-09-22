@@ -23,6 +23,8 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     description:
       "A small helper app that runs next to your browser and talks to your mouse directly, so a browser update can't lock it out again.",
     date: "2026-09-23",
+    coverLabel: "Bridge",
+    coverCaption: "1.0 beta · Windows · macOS",
   },
   {
     slug: "razer-windows-chrome-153",
