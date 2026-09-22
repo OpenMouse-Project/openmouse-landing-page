@@ -24,7 +24,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
     <header className="land-nav">
       <a className="land-brand" href="/">
         <img src="/logo.png" alt="" width={22} height={32} />
-        OpenMouse
+        <span className="land-brand-name">OpenMouse</span>
       </a>
       <nav className="land-nav-links">
         <a href="/supported.html">{t(locale, "land.supported")}</a>

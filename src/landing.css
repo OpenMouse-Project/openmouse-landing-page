@@ -99,13 +99,16 @@ body {
 }
 .land-nav-links a {
   padding: 0.2rem 0;
+  white-space: nowrap;
   transition: color 0.15s;
 }
 .land-nav-links a:hover {
   color: var(--land-text);
 }
 
-@media (min-width: 640px) {
+/* The six links need ~1000px alongside the brand, language picker and CTA;
+   below that they're hidden (all of them are also in the footer). */
+@media (min-width: 1000px) {
   .land-nav-links {
     display: flex;
   }
@@ -148,6 +151,23 @@ body {
 .land-nav-cta:hover {
   transform: translateY(-1px);
   opacity: 0.92;
+}
+
+/* Without the links, keep the language picker and CTA together on the right. */
+@media (max-width: 999px) {
+  .land-nav .page-locale-select { margin-left: auto; }
+  .land-nav-cta { margin-left: 0; }
+}
+@media (max-width: 520px) {
+  .land-nav {
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+  }
+  .land-nav-cta { padding: 0.45rem 0.9rem; }
+}
+/* Narrowest phones: the logo alone carries the brand. */
+@media (max-width: 380px) {
+  .land-brand-name { display: none; }
 }
 
 /* ── Hero ──────────────────────────────────────────────────────────────── */
