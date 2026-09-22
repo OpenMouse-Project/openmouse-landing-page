@@ -30,7 +30,7 @@ function Post(): ReactNode {
         Not a Windows driver. Not Razer Synapse. Not anything in OpenMouse. A years-old bug in Chrome itself,
         and the fix for it, landing in Chrome 153.
       </p>
-      <p className="blog-byline">OpenMouse Project, updated September 12, 2026</p>
+      <p className="blog-byline">snekxs, updated September 12, 2026</p>
 
       <dl className="blog-glance">
         <div>
