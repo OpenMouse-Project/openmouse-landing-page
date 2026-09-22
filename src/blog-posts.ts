@@ -8,6 +8,10 @@ export interface BlogPost {
   title: string;
   description: string;
   date: string;
+  /** Big word or number on the generated cover art, e.g. "153". */
+  coverLabel?: string;
+  /** Small mono caption under the cover label. */
+  coverCaption?: string;
 }
 
 export const BLOG_POSTS: readonly BlogPost[] = [
@@ -17,5 +21,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     description:
       "Not a Windows driver, not Razer Synapse, not anything in OpenMouse. A years-old bug in Chrome itself, and the fix for it, landing in Chrome 153.",
     date: "2026-09-12",
+    coverLabel: "153",
+    coverCaption: "Chrome · Windows · WebHID",
   },
 ];

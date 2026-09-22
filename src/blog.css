@@ -4,57 +4,152 @@
    and long-form article layout landing.css doesn't need. */
 
 .blog-index {
-  max-width: 680px;
+  max-width: 1080px;
   margin: 0 auto;
-  padding: clamp(2.5rem, 8vw, 4rem) 1.5rem clamp(3rem, 6vw, 4.5rem);
+  padding: clamp(2rem, 6vw, 3rem) 1.5rem clamp(3rem, 6vw, 4.5rem);
 }
 
-.blog-index h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.8rem, 5vw, 2.4rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
+.blog-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
-.blog-index > p {
-  margin: 0 0 2.5rem;
-  color: #7a9498;
-  font-size: 0.95rem;
-}
-
-.blog-list {
+/* Generated cover art: brand glow + faint grid behind one big label. */
+.blog-cover {
+  position: relative;
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #1c2226;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 12px;
+  background:
+    radial-gradient(circle at 70% 20%, rgba(105, 210, 141, 0.28), transparent 55%),
+    radial-gradient(circle at 15% 90%, rgba(105, 210, 141, 0.12), transparent 50%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
+    #0f1216;
 }
-
-.blog-card {
-  display: block;
-  padding: 1.4rem 0;
-  border-bottom: 1px solid #1c2226;
+.blog-cover-label {
+  font-size: clamp(2.6rem, 7vw, 4.6rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #f4ffff;
 }
-.blog-card:hover h2 { color: #69d28d; }
-
-.blog-card time {
-  display: block;
+.blog-cover-caption {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.72rem;
-  color: #55666a;
-  margin-bottom: 0.45rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #69d28d;
 }
 
-.blog-card h2 {
-  margin: 0 0 0.35rem;
-  font-size: 1.1rem;
+/* ── Featured (latest) post ────────────────────────────────────────────── */
+.blog-featured {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.4rem, 4vw, 2.6rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  background: #0d0f13;
+}
+@media (max-width: 820px) {
+  .blog-featured { grid-template-columns: 1fr; }
+  .blog-featured-cover { order: -1; }
+}
+.blog-featured h2 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.8rem, 4.2vw, 2.7rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+}
+.blog-featured > .blog-featured-body > p {
+  margin: 0 0 1.8rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: #9fb0b4;
+}
+.blog-featured-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+.blog-featured .blog-read {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  background: #69d28d;
+  color: #041412;
+  font-weight: 700;
+  font-size: 0.95rem;
+  transition: background 0.15s;
+}
+.blog-featured .blog-read:hover { background: #7ce39d; }
+.blog-date-pill {
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(105, 210, 141, 0.1);
+  color: #69d28d;
+  font-size: 0.85rem;
   font-weight: 600;
-  transition: color 0.15s;
 }
+.blog-featured-cover { display: block; }
+.blog-featured-cover .blog-cover { box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8); }
 
+/* ── Older posts ───────────────────────────────────────────────────────── */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.4rem;
+  margin-top: 2.5rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  background: #0d0f13;
+  transition: border-color 0.15s, transform 0.15s;
+}
+.blog-card:hover {
+  border-color: rgba(105, 210, 141, 0.35);
+  transform: translateY(-2px);
+}
+.blog-card .blog-cover {
+  border-radius: 0;
+}
+.blog-card .blog-cover-label { font-size: 2.6rem; }
+.blog-card-body { padding: 1.2rem 1.3rem 1.3rem; }
+.blog-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.15rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
 .blog-card p {
-  margin: 0;
+  margin: 0 0 0.9rem;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: #7a9498;
+  color: #9fb0b4;
+}
+.blog-card time {
+  font-size: 0.82rem;
+  color: #55666a;
 }
 
 /* ── Article ───────────────────────────────────────────────────────────── */
