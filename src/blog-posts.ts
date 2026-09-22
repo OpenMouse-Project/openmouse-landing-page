@@ -18,6 +18,13 @@ export interface BlogPost {
 
 export const BLOG_POSTS: readonly BlogPost[] = [
   {
+    slug: "openmouse-bridge",
+    title: "OpenMouse Bridge is here, and Razer mice work on Windows again",
+    description:
+      "A small helper app that runs next to your browser and talks to your mouse directly, so a browser update can't lock it out again.",
+    date: "2026-09-23",
+  },
+  {
     slug: "razer-windows-chrome-153",
     title: "Every Razer mouse stopped connecting on Windows this week",
     description:

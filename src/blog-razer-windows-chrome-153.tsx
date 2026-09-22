@@ -32,6 +32,14 @@ function Post(): ReactNode {
       </p>
       <p className="blog-byline">snekxs, updated September 12, 2026</p>
 
+      <div className="blog-finding">
+        <p>
+          <strong>Update, September 23:</strong> the fix is out.{" "}
+          <a href="/blog-openmouse-bridge.html">Install OpenMouse Bridge</a> and Razer mice connect on Windows
+          again. The workaround below is no longer needed.
+        </p>
+      </div>
+
       <dl className="blog-glance">
         <div>
           <dt>Status</dt>
