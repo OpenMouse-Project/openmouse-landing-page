@@ -92,6 +92,9 @@ function Downloads(): ReactNode {
 
       <div className="dl-grid">
         <article className="dl-card">
+          <div className="dl-shot dl-shot-web" aria-hidden="true">
+            <img src="/screenshot-app.png" alt="" width={1572} height={811} loading="lazy" />
+          </div>
           <p className="dl-kicker">Web app</p>
           <h2>OpenMouse</h2>
           <p className="dl-desc">
@@ -107,6 +110,15 @@ function Downloads(): ReactNode {
         </article>
 
         <article className="dl-card dl-card-featured">
+          <div className="dl-shot dl-shot-bridge">
+            <img
+              src="/bridge-panel.png"
+              alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
+              width={320}
+              height={306}
+              loading="lazy"
+            />
+          </div>
           <p className="dl-kicker">
             Helper app <span className="dl-badge">Beta</span>
           </p>
@@ -145,14 +157,15 @@ function Downloads(): ReactNode {
         </article>
 
         <article className="dl-card dl-card-soon">
+          <div className="dl-shot dl-shot-desktop" aria-hidden="true">
+            <img src="/logo.png" alt="" width={44} height={64} />
+            <span>Coming soon</span>
+          </div>
           <p className="dl-kicker">Desktop app</p>
           <h2>OpenMouse Desktop</h2>
           <p className="dl-desc">
             OpenMouse as a standalone app, no browser required. We'll announce it on Discord first.
           </p>
-          <ul className="dl-meta">
-            <li>Coming soon</li>
-          </ul>
           <div className="dl-actions">
             <span className="dl-btn dl-btn-disabled" aria-disabled="true">Coming soon</span>
             <a className="dl-btn" href={DISCORD_URL} target="_blank" rel="noreferrer">Get notified</a>

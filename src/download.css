@@ -50,6 +50,72 @@
 }
 .dl-card-soon { opacity: 0.85; }
 
+/* Product shots: each card opens with an image on a soft "wallpaper". */
+.dl-shot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 10;
+  margin: -0.4rem -0.4rem 1.4rem;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background:
+    radial-gradient(90% 80% at 15% 0%, rgba(105, 210, 141, 0.35), transparent 60%),
+    radial-gradient(80% 90% at 100% 100%, rgba(56, 120, 170, 0.35), transparent 60%),
+    linear-gradient(160deg, #10251c, #0b1320 70%);
+}
+
+.dl-shot-bridge img {
+  width: 58%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 40px -12px rgba(0, 0, 0, 0.7);
+}
+
+/* The web app screenshot peeks in from the corner, like a window behind. */
+.dl-shot-web {
+  align-items: flex-start;
+  justify-content: flex-start;
+  background:
+    radial-gradient(90% 80% at 85% 0%, rgba(105, 210, 141, 0.3), transparent 60%),
+    radial-gradient(80% 90% at 0% 100%, rgba(120, 90, 200, 0.3), transparent 60%),
+    linear-gradient(200deg, #10251c, #120f22 70%);
+}
+.dl-shot-web img {
+  width: 150%;
+  max-width: none;
+  height: auto;
+  margin: 12% 0 0 10%;
+  border-radius: 8px 0 0 0;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 40px -12px rgba(0, 0, 0, 0.7);
+}
+
+.dl-shot-desktop {
+  flex-direction: column;
+  gap: 0.8rem;
+  background:
+    radial-gradient(80% 80% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
+    linear-gradient(180deg, #15181d, #0d0f13);
+}
+.dl-shot-desktop img {
+  width: 36px;
+  height: auto;
+  opacity: 0.55;
+}
+.dl-shot-desktop span {
+  font-family: var(--land-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #6f8387;
+}
+
 .dl-kicker {
   display: flex;
   align-items: center;
