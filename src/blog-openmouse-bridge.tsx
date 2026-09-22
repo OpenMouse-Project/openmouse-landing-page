@@ -109,7 +109,8 @@ function Post(): ReactNode {
 
       <p>
         Bridge can start itself when you log in, and can update itself when a new version comes out. Both are
-        switches in its tray panel. Automatic updates are off unless you turn them on.
+        switches in its tray panel. Automatic updates are off unless you turn them on. The newest version is always
+        on our <a href="/download.html">download page</a>.
       </p>
 
       <h2>What else it does</h2>
