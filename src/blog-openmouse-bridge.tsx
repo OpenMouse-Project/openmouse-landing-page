@@ -25,7 +25,7 @@ function Post(): ReactNode {
         A small helper app that runs next to your browser and talks to your mouse directly, so a browser
         update can't lock it out again.
       </p>
-      <p className="blog-byline">OpenMouse Project, September 23, 2026</p>
+      <p className="blog-byline">snekxs, September 23, 2026</p>
 
       <dl className="blog-glance">
         <div>
