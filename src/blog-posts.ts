@@ -3,11 +3,17 @@
    component; this file just lists them so the index can render cards
    without importing every post's JSX. */
 
+export type BlogCategory = "Announcements" | "Guides" | "Incident reports";
+
+/** Order the index shows its sections in. */
+export const BLOG_CATEGORIES: readonly BlogCategory[] = ["Announcements", "Guides", "Incident reports"];
+
 export interface BlogPost {
   slug: string;
   title: string;
   description: string;
   date: string;
+  category: BlogCategory;
   /** Big word or number on the generated cover art, e.g. "153". */
   coverLabel?: string;
   /** Small mono caption under the cover label. */
@@ -23,9 +29,20 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     description:
       "A small helper app that runs next to your browser and talks to your mouse directly, so a browser update can't lock it out again.",
     date: "2026-09-23",
+    category: "Announcements",
     coverLabel: "Bridge",
     coverImage: "/bridge-panel.png",
     coverCaption: "1.0 beta · Windows · macOS",
+  },
+  {
+    slug: "bridge-setup-guide",
+    title: "Setting up OpenMouse Bridge: install, game profiles, and battery alerts",
+    description:
+      "Everything from first launch to having your mouse switch settings on its own when a game starts.",
+    date: "2026-09-23",
+    category: "Guides",
+    coverLabel: "Setup",
+    coverCaption: "Bridge · Game profiles · Battery",
   },
   {
     slug: "razer-windows-chrome-153",
@@ -33,6 +50,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     description:
       "Not a Windows driver, not Razer Synapse, not anything in OpenMouse. A years-old bug in Chrome itself, and the fix for it, landing in Chrome 153.",
     date: "2026-09-12",
+    category: "Incident reports",
     coverLabel: "153",
     coverCaption: "Chrome · Windows · WebHID",
   },

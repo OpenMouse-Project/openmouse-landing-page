@@ -146,14 +146,52 @@
 .blog-featured-cover .blog-cover { box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8); }
 
 /* ── Older posts ───────────────────────────────────────────────────────── */
+.blog-section {
+  margin-top: 2.5rem;
+  padding-top: 2.2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+.blog-section h2 {
+  margin: 0 0 1.2rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9fb0b4;
+}
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.4rem;
-  margin-top: 2.5rem;
-  padding-top: 2.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
+.blog-category-pill {
+  color: #9fb0b4;
+  font-size: 0.85rem;
+}
+
+/* "In this guide" list at the top of long posts. */
+.blog-toc {
+  margin: 0 0 2.2rem;
+  padding: 1rem 0 1rem 1.2rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+.blog-article .blog-toc p {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #7a9498;
+}
+.blog-toc ol {
+  margin: 0;
+  padding-left: 1.2rem;
+  font-size: 0.93rem;
+  line-height: 1.8;
+  color: #7a9498;
+}
+.blog-article .blog-toc a { text-decoration: none; }
+.blog-article .blog-toc a:hover { text-decoration: underline; }
+.blog-article h2[id] { scroll-margin-top: 5rem; }
 .blog-card {
   display: flex;
   flex-direction: column;

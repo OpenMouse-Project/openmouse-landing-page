@@ -8,7 +8,7 @@ import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { usePageLocale } from "./app/page-locale";
-import { BLOG_POSTS, type BlogPost } from "./blog-posts";
+import { BLOG_CATEGORIES, BLOG_POSTS, type BlogPost } from "./blog-posts";
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
@@ -51,6 +51,7 @@ function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
         <div className="blog-featured-actions">
           <a className="blog-read" href={postUrl(post)}>Read post</a>
           <time className="blog-date-pill" dateTime={post.date}>{formatDate(post.date)}</time>
+          <span className="blog-category-pill">{post.category}</span>
         </div>
       </div>
       <a className="blog-featured-cover" href={postUrl(post)} tabIndex={-1}>
@@ -79,11 +80,18 @@ function BlogIndex(): ReactNode {
     <section className="blog-index">
       <h1 className="blog-visually-hidden">Blog</h1>
       {latest && <FeaturedPost post={latest} />}
-      {older.length > 0 && (
-        <div className="blog-grid">
-          {older.map((post) => <PostCard post={post} key={post.slug} />)}
-        </div>
-      )}
+      {BLOG_CATEGORIES.map((category) => {
+        const posts = older.filter((post) => post.category === category);
+        if (posts.length === 0) return null;
+        return (
+          <section className="blog-section" key={category}>
+            <h2>{category}</h2>
+            <div className="blog-grid">
+              {posts.map((post) => <PostCard post={post} key={post.slug} />)}
+            </div>
+          </section>
+        );
+      })}
     </section>
   );
 }

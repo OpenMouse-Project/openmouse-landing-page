@@ -106,6 +106,11 @@ function Post(): ReactNode {
         </li>
       </ol>
 
+      <p>
+        Want the full walkthrough, including game profiles and battery alerts?{" "}
+        <a href="/blog-bridge-setup-guide.html">Read the setup guide</a>.
+      </p>
+
       <div className="blog-warn">
         <h3>Your computer will probably warn you</h3>
         <p>
