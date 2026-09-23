@@ -27,6 +27,15 @@ function Post(): ReactNode {
       </p>
       <p className="blog-byline">snekxs, September 23, 2026</p>
 
+      <figure className="blog-hero-shot">
+        <img
+          src="/bridge-panel.png"
+          alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
+          width={320}
+          height={306}
+        />
+      </figure>
+
       <dl className="blog-glance">
         <div>
           <dt>Version</dt>
@@ -34,7 +43,7 @@ function Post(): ReactNode {
         </div>
         <div>
           <dt>Platforms</dt>
-          <dd>Windows (x64), macOS (Intel and Apple silicon)</dd>
+          <dd>Windows (x64), macOS (Intel and Apple silicon). Linux is in the works.</dd>
         </div>
         <div>
           <dt>Price</dt>
@@ -160,7 +169,7 @@ function Post(): ReactNode {
       <h2>It's a beta</h2>
       <p>
         It works on our machines and on our testers' machines, but there are a lot more mice out there than we
-        have on our desks. Safari and Linux aren't supported yet. If something doesn't connect, or connects and
+        have on our desks. Safari isn't supported yet, and a Linux version is in the works. If something doesn't connect, or connects and
         then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On
         Windows it's in <code>%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs</code>.
       </p>
