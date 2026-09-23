@@ -156,10 +156,6 @@
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.4rem;
 }
-.blog-category-pill {
-  color: #9fb0b4;
-  font-size: 0.85rem;
-}
 
 /* ── Long posts: sticky "On this page" rail beside the article ────────── */
 .blog-layout {

@@ -51,7 +51,6 @@ function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
         <div className="blog-featured-actions">
           <a className="blog-read" href={postUrl(post)}>Read post</a>
           <time className="blog-date-pill" dateTime={post.date}>{formatDate(post.date)}</time>
-          <span className="blog-category-pill">{post.category}</span>
         </div>
       </div>
       <a className="blog-featured-cover" href={postUrl(post)} tabIndex={-1}>
