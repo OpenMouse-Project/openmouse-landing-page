@@ -8,6 +8,7 @@ import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
+import { postTransition } from "./blog-transitions";
 
 const POST_SLUG = "razer-windows-chrome-153";
 const CHROMIUM_BUG_URL = "https://issues.chromium.org/issues/536063911";
@@ -25,7 +26,7 @@ function Post(): ReactNode {
   return (
     <article className="blog-article">
       <div className="blog-kicker">Incident report · WebHID</div>
-      <h1>Every Razer mouse stopped connecting on Windows this week</h1>
+      <h1 style={postTransition(POST_SLUG, "title")}>Every Razer mouse stopped connecting on Windows this week</h1>
       <p className="blog-dek">
         Not a Windows driver. Not Razer Synapse. Not anything in OpenMouse. A years-old bug in Chrome itself,
         and the fix for it, landing in Chrome 153.

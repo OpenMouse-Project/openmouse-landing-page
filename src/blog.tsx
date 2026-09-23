@@ -9,6 +9,7 @@ import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { usePageLocale } from "./app/page-locale";
 import { BLOG_CATEGORIES, BLOG_POSTS, type BlogPost } from "./blog-posts";
+import { postTransition } from "./blog-transitions";
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
@@ -27,13 +28,13 @@ function postUrl(post: BlogPost): string {
 function BlogCover({ post }: { post: BlogPost }): ReactNode {
   if (post.coverImage) {
     return (
-      <div className="blog-cover blog-cover-shot" aria-hidden="true">
+      <div className="blog-cover blog-cover-shot" aria-hidden="true" style={postTransition(post.slug, "image")}>
         <img src={post.coverImage} alt="" loading="lazy" />
       </div>
     );
   }
   return (
-    <div className="blog-cover" aria-hidden="true">
+    <div className="blog-cover" aria-hidden="true" style={postTransition(post.slug, "image")}>
       <span className="blog-cover-label">{post.coverLabel ?? "OpenMouse"}</span>
       {post.coverCaption && <span className="blog-cover-caption">{post.coverCaption}</span>}
     </div>
@@ -44,7 +45,7 @@ function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
   return (
     <article className="blog-featured">
       <div className="blog-featured-body">
-        <h2>
+        <h2 style={postTransition(post.slug, "title")}>
           <a href={postUrl(post)}>{post.title}</a>
         </h2>
         <p>{post.description}</p>
@@ -65,7 +66,7 @@ function PostCard({ post }: { post: BlogPost }): ReactNode {
     <a className="blog-card" href={postUrl(post)}>
       <BlogCover post={post} />
       <div className="blog-card-body">
-        <h3>{post.title}</h3>
+        <h3 style={postTransition(post.slug, "title")}>{post.title}</h3>
         <p>{post.description}</p>
         <time dateTime={post.date}>{formatDate(post.date)}</time>
       </div>

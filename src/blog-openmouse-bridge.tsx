@@ -9,6 +9,7 @@ import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
 import { BlogToc, type TocItem } from "./blog-toc";
+import { postTransition } from "./blog-transitions";
 
 const POST_SLUG = "openmouse-bridge";
 const RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
@@ -35,14 +36,14 @@ function Post(): ReactNode {
   return (
     <article className="blog-article">
       <div className="blog-kicker">Release · Bridge 1.0 beta</div>
-      <h1>OpenMouse Bridge is here, and Razer mice work on Windows again</h1>
+      <h1 style={postTransition(POST_SLUG, "title")}>OpenMouse Bridge is here, and Razer mice work on Windows again</h1>
       <p className="blog-dek">
         A small helper app that runs next to your browser and talks to your mouse directly, so a browser
         update can't lock it out again.
       </p>
       <p className="blog-byline">snekxs, September 23, 2026</p>
 
-      <figure className="blog-hero-shot">
+      <figure className="blog-hero-shot" style={postTransition(POST_SLUG, "image")}>
         <img
           src="/bridge-panel.png"
           alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"

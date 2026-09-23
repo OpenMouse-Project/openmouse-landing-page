@@ -3,6 +3,28 @@
    accent) — see that file's header comment. This file adds the post-list
    and long-form article layout landing.css doesn't need. */
 
+/* Cross-page morphs between the index and posts; see blog-transitions.ts.
+   Only pages that load this file opt in, so the rest of the site navigates
+   as before. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.22s;
+}
+::view-transition-group(*) {
+  animation-duration: 0.42s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none;
+  }
+}
+
 .blog-index {
   max-width: 1080px;
   margin: 0 auto;
