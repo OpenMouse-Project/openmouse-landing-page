@@ -28,12 +28,20 @@
       });
       return;
     }
-    function name(slug, on) {
+    // Clear every card first: a name left behind (say, after a swipe back,
+    // which never animates) would duplicate the next card's, and a
+    // duplicate name makes the browser skip the transition entirely.
+    function clear() {
+      var parts = document.querySelectorAll("[data-vt]");
+      for (var i = 0; i < parts.length; i++) parts[i].style.viewTransitionName = "";
+    }
+    function name(slug) {
+      clear();
       var card = slug && document.querySelector('[data-post="' + slug + '"]');
       if (!card) return;
       var parts = card.querySelectorAll("[data-vt]");
       for (var i = 0; i < parts.length; i++) {
-        parts[i].style.viewTransitionName = on ? "post-" + parts[i].getAttribute("data-vt") : "";
+        parts[i].style.viewTransitionName = "post-" + parts[i].getAttribute("data-vt");
       }
     }
     var clicked = null;
@@ -43,14 +51,14 @@
       clicked = match ? match[1] : null;
     }, true);
     addEventListener("pageswap", function (e) {
-      if (e.viewTransition) name(clicked, true);
+      if (e.viewTransition) name(clicked);
     });
     addEventListener("pagereveal", function (e) {
-      if (!e.viewTransition) return;
+      if (!e.viewTransition) { clear(); return; }
       var slug = null;
       try { slug = sessionStorage.getItem(KEY); } catch (err) {}
-      name(slug, true);
-      e.viewTransition.finished.then(function () { name(slug, false); });
+      name(slug);
+      e.viewTransition.finished.then(clear, clear);
     });
   })();
 </script>
