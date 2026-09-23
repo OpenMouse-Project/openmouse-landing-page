@@ -46,7 +46,6 @@ export default defineConfig({
         "blog-razer-windows-chrome-153": resolve(__dirname, "blog-razer-windows-chrome-153.html"),
         download: resolve(__dirname, "download.html"),
         "blog-openmouse-bridge": resolve(__dirname, "blog-openmouse-bridge.html"),
-        "blog-bridge-setup-guide": resolve(__dirname, "blog-bridge-setup-guide.html"),
         privacy: resolve(__dirname, "privacy.html"),
         terms: resolve(__dirname, "terms.html"),
       },

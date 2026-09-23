@@ -8,6 +8,7 @@ import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
+import { BlogToc, type TocItem } from "./blog-toc";
 
 const POST_SLUG = "openmouse-bridge";
 const RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
@@ -15,6 +16,20 @@ const WINDOWS_ZIP_URL = `${RELEASES_URL}/download/openmouse-bridge-windows-x64.z
 const MAC_ZIP_URL = `${RELEASES_URL}/download/openmouse-bridge-macos-universal.zip`;
 const SOURCE_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge";
 const CONTROL_URL = "https://control.openmouse.app";
+const GAMES_CATALOG_URL = "https://github.com/OpenMouse-Project/Desktop/blob/main/public/games.json";
+
+const SECTIONS: readonly TocItem[] = [
+  { id: "why", label: "Why Bridge exists" },
+  { id: "what", label: "What Bridge is" },
+  { id: "install", label: "Install it" },
+  { id: "connect", label: "Connect your mouse" },
+  { id: "game-profiles", label: "Set up a game profile" },
+  { id: "battery", label: "Low-battery alerts" },
+  { id: "settings", label: "Start at login and updates" },
+  { id: "privacy", label: "What it can and can't touch" },
+  { id: "troubleshooting", label: "Troubleshooting" },
+  { id: "beta", label: "It's a beta" },
+];
 
 function Post(): ReactNode {
   return (
@@ -61,10 +76,11 @@ function Post(): ReactNode {
           <li>If your Razer mouse stopped connecting on Windows after Chrome 153, install Bridge and it works again.</li>
           <li>Download it, unzip it, run it. OpenMouse finds it on its own. Nothing else changes.</li>
           <li>You can stop using the older-Chromium workaround from our last post.</li>
-          <li>It also adds per-game profiles and low-battery alerts.</li>
+          <li>It also adds game profiles that switch on their own, and low-battery alerts.</li>
         </ul>
       </div>
 
+      <h2 id="why">Why Bridge exists</h2>
       <p>
         Earlier this month we wrote about <a href="/blog-razer-windows-chrome-153.html">why every Razer mouse stopped
         connecting on Windows</a>. Short version: Chrome 153 fixed an old bug that had been letting websites reach a
@@ -75,7 +91,7 @@ function Post(): ReactNode {
         We said the real fix was a small local helper. This is it.
       </p>
 
-      <h2>What Bridge is</h2>
+      <h2 id="what">What Bridge is</h2>
       <p>
         Bridge is a small program that sits in your system tray. When you open OpenMouse, the page checks whether
         Bridge is running. If it is, OpenMouse talks to your mouse through Bridge instead of through the browser.
@@ -84,32 +100,28 @@ function Post(): ReactNode {
       </p>
       <p>
         The settings you see don't change, and the drivers don't change. The same code that runs in Chrome runs
-        through Bridge, it just takes a different road to the mouse.
+        through Bridge, it just takes a different road to the mouse. That also means OpenMouse works in{" "}
+        <strong>Firefox</strong> now, which has never supported WebHID.
       </p>
 
-      <h2>Install it</h2>
+      <h2 id="install">Install it</h2>
       <ol className="blog-steps">
         <li>
           Download the zip for your computer:{" "}
           <a href={WINDOWS_ZIP_URL}>Windows</a> or <a href={MAC_ZIP_URL}>macOS</a>. Both come straight from our{" "}
           <a href={RELEASES_URL} target="_blank" rel="noreferrer">GitHub releases page</a>, next to a checksum
-          file if you want to verify the download.
-        </li>
-        <li>Unzip it somewhere you'll keep it, like your Documents folder. Keep the <code>native-hid</code> folder next to the app.</li>
-        <li>
-          Run <code>openmouse-bridge</code>. An OpenMouse icon shows up in your system tray (Windows) or menu bar
-          (macOS).
+          file if you want to verify the download. The newest version is always on our{" "}
+          <a href="/download.html">download page</a>.
         </li>
         <li>
-          Open <a href={CONTROL_URL} target="_blank" rel="noreferrer">control.openmouse.app</a> like you normally
-          would. It connects through Bridge automatically.
+          Unzip it somewhere you'll keep it, like your Documents folder. Keep the <code>native-hid</code> folder
+          next to the app; Bridge needs it.
+        </li>
+        <li>
+          Open <code>openmouse-bridge</code>. An OpenMouse icon shows up in your system tray (Windows) or menu bar
+          (macOS). Click it to open Bridge's panel.
         </li>
       </ol>
-
-      <p>
-        Want the full walkthrough, including game profiles and battery alerts?{" "}
-        <a href="/blog-bridge-setup-guide.html">Read the setup guide</a>.
-      </p>
 
       <div className="blog-warn">
         <h3>Your computer will probably warn you</h3>
@@ -121,34 +133,80 @@ function Post(): ReactNode {
         </p>
       </div>
 
+      <h2 id="connect">Connect your mouse</h2>
       <p>
-        Bridge can start itself when you log in, and can update itself when a new version comes out. Both are
-        switches in its tray panel. Automatic updates are off unless you turn them on. The newest version is always
-        on our <a href="/download.html">download page</a>.
+        Click <strong>Open control panel</strong> in Bridge's panel, or go to{" "}
+        <a href={CONTROL_URL} target="_blank" rel="noreferrer">control.openmouse.app</a> like you normally would.
+        OpenMouse notices Bridge on its own and uses it to reach your mouse. There's nothing to pair.
+      </p>
+      <p>
+        You'll know it worked when a <strong>Games</strong> page shows up in the sidebar. It's only there while
+        Bridge is running.
       </p>
 
-      <h2>What else it does</h2>
+      <h2 id="game-profiles">Set up a game profile</h2>
       <p>
-        Since Bridge is running in the background anyway, it picks up a couple of things a web page can't do on its
-        own:
+        A game profile is a set of mouse settings (DPI, polling rate, buttons, whatever your mouse supports) that
+        Bridge applies when that game is running, and takes back off when it closes.
       </p>
+      <ol className="blog-steps">
+        <li>In the control panel, open <strong>Games</strong> from the sidebar and click the game you want.</li>
+        <li>
+          Under <strong>Target device</strong>, click <strong>Select</strong> next to the mouse this profile is
+          for.
+        </li>
+        <li>
+          Change the settings you want in the <strong>Settings</strong> section below. These only go into this
+          game's profile; your mouse keeps its current settings until the game launches. The card at the top
+          counts how many settings you've customized.
+        </li>
+        <li>
+          Turn on <strong>Apply automatically</strong>. Back on the Games page, that game's tile now has an{" "}
+          <strong>Auto</strong> badge.
+        </li>
+        <li>
+          Launch the game. Bridge applies the profile and shows a small notice with the game's name and what
+          changed, like "1600 DPI · 1000 Hz". When you close the game, your normal settings come back.
+        </li>
+      </ol>
+      <p>
+        You don't need the control panel open for any of this. Once a profile is saved, Bridge handles it in the
+        background. To start over, open the game and click <strong>Clear</strong>.
+      </p>
+      <div className="blog-finding">
+        <h3>Game not in the list?</h3>
+        <p>
+          Bridge recognizes games from a shared list that's updated on its own. If yours is missing, tell us on
+          Discord or GitHub, or add it to the{" "}
+          <a href={GAMES_CATALOG_URL} target="_blank" rel="noreferrer">games list</a> yourself.
+        </p>
+      </div>
+
+      <h2 id="battery">Low-battery alerts</h2>
+      <p>
+        For wireless mice, Bridge checks the battery every five minutes and sends a desktop notification when it
+        drops below your threshold, even when OpenMouse isn't open. It checks the mouse you last used in OpenMouse
+        and any mouse you've made a game profile for.
+      </p>
+      <p>
+        Change the threshold under <strong>Low battery alert</strong> in Bridge's <strong>Settings</strong>. It's
+        20% to start with, and you won't get the same alert more than once every few hours.
+      </p>
+
+      <h2 id="settings">Start at login and updates</h2>
       <ul>
         <li>
-          <strong>Game profiles.</strong> Give a game its own DPI, polling rate, buttons and so on. Bridge notices
-          when the game launches, applies them, and puts your normal settings back when you close it. You set these
-          up in the Games page in OpenMouse.
+          <strong>Launch at login</strong>, in Bridge's <strong>Settings</strong>, starts Bridge when you sign in,
+          so game profiles and alerts work without you opening it first.
         </li>
         <li>
-          <strong>Low-battery alerts.</strong> Bridge checks your wireless mouse's battery every few minutes and
-          sends a desktop notification when it gets low, even when OpenMouse isn't open. You pick the threshold.
-        </li>
-        <li>
-          <strong>Firefox.</strong> Firefox has never supported WebHID, so OpenMouse never worked there. With Bridge
-          running, it does.
+          Under <strong>Updates</strong>, Bridge can check for a new version and install it. Turn on{" "}
+          <strong>Automatic updates</strong> if you want that to happen on its own. It's off by default. Every
+          update is checked against a published checksum before it's installed.
         </li>
       </ul>
 
-      <h2>What it can and can't touch</h2>
+      <h2 id="privacy">What it can and can't touch</h2>
       <p>
         Anything that runs on your computer and talks to hardware should be clear about what it does, so here it
         is:
@@ -171,11 +229,31 @@ function Post(): ReactNode {
         </li>
       </ul>
 
-      <h2>It's a beta</h2>
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <ul className="blog-ruled-out">
+        <li>
+          <b>There's no Games page in the sidebar.</b>{" "}
+          <span>Bridge isn't running, or the page opened before it did. Start Bridge, then reload the control panel.</span>
+        </li>
+        <li>
+          <b>"Could not reach OpenMouse Bridge."</b>{" "}
+          <span>Bridge was closed while you were editing a profile. Start it again and retry.</span>
+        </li>
+        <li>
+          <b>The profile didn't apply when the game started.</b>{" "}
+          <span>Check the game's tile has the Auto badge and that the right mouse is selected under Target device.</span>
+        </li>
+        <li>
+          <b>It doesn't work in Safari.</b>{" "}
+          <span>Safari isn't supported yet. Use Chrome, Edge, or Firefox.</span>
+        </li>
+      </ul>
+
+      <h2 id="beta">It's a beta</h2>
       <p>
         It works on our machines and on our testers' machines, but there are a lot more mice out there than we
-        have on our desks. Safari isn't supported yet, and a Linux version is in the works. If something doesn't connect, or connects and
-        then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On
+        have on our desks, and a Linux version is still in the works. If something doesn't connect, or connects
+        and then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On
         Windows it's in <code>%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs</code>.
       </p>
 
@@ -189,9 +267,14 @@ function BlogPostPage(): ReactNode {
   return (
     <div className="land-shell">
       <SiteNav locale={locale} onLocale={setLocale} />
-      <Post />
-      <div className="blog-comments-wrap">
-        <BlogComments slug={POST_SLUG} />
+      <div className="blog-layout">
+        <BlogToc items={SECTIONS} />
+        <div className="blog-main">
+          <Post />
+          <div className="blog-comments-wrap">
+            <BlogComments slug={POST_SLUG} />
+          </div>
+        </div>
       </div>
       <SiteFooter locale={locale} />
     </div>

@@ -170,28 +170,69 @@
   font-size: 0.85rem;
 }
 
-/* "In this guide" list at the top of long posts. */
-.blog-toc {
-  margin: 0 0 2.2rem;
-  padding: 1rem 0 1rem 1.2rem;
-  border-left: 2px solid rgba(255, 255, 255, 0.1);
+/* ── Long posts: sticky "On this page" rail beside the article ────────── */
+.blog-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 680px);
+  column-gap: 3.5rem;
+  justify-content: center;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
 }
-.blog-article .blog-toc p {
-  margin: 0 0 0.5rem;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: #7a9498;
+.blog-layout .blog-article,
+.blog-layout .blog-comments-wrap {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+.blog-toc-rail {
+  padding-top: clamp(2rem, 7vw, 3.5rem);
+}
+.blog-toc {
+  position: sticky;
+  top: 6rem;
+}
+.blog-toc p {
+  margin: 0 0 0.8rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #55666a;
 }
 .blog-toc ol {
+  list-style: none;
   margin: 0;
-  padding-left: 1.2rem;
-  font-size: 0.93rem;
-  line-height: 1.8;
-  color: #7a9498;
+  padding: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
 }
-.blog-article .blog-toc a { text-decoration: none; }
-.blog-article .blog-toc a:hover { text-decoration: underline; }
-.blog-article h2[id] { scroll-margin-top: 5rem; }
+.blog-toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 0.32rem 0 0.32rem 0.9rem;
+  border-left: 2px solid transparent;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: #7a9498;
+  transition: color 0.15s, border-color 0.15s;
+}
+.blog-toc a:hover { color: #dbe9ea; }
+.blog-toc a.is-active {
+  border-left-color: #69d28d;
+  color: #f4ffff;
+}
+.blog-article h2[id] { scroll-margin-top: 5.5rem; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Narrow screens: no room for the rail, so the post runs full width. */
+@media (max-width: 960px) {
+  .blog-layout { grid-template-columns: minmax(0, 680px); }
+  .blog-toc-rail { display: none; }
+}
 .blog-card {
   display: flex;
   flex-direction: column;

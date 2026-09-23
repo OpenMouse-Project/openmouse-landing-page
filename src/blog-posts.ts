@@ -35,16 +35,6 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     coverCaption: "1.0 beta · Windows · macOS",
   },
   {
-    slug: "bridge-setup-guide",
-    title: "Setting up OpenMouse Bridge: install, game profiles, and battery alerts",
-    description:
-      "Everything from first launch to having your mouse switch settings on its own when a game starts.",
-    date: "2026-09-23",
-    category: "Guides",
-    coverLabel: "Setup",
-    coverCaption: "Bridge · Game profiles · Battery",
-  },
-  {
     slug: "razer-windows-chrome-153",
     title: "Every Razer mouse stopped connecting on Windows this week",
     description:
