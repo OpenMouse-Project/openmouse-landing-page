@@ -12,6 +12,8 @@ export interface BlogPost {
   coverLabel?: string;
   /** Small mono caption under the cover label. */
   coverCaption?: string;
+  /** A product shot to float on the cover instead of the label. */
+  coverImage?: string;
 }
 
 export const BLOG_POSTS: readonly BlogPost[] = [

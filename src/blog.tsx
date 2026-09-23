@@ -25,6 +25,13 @@ function postUrl(post: BlogPost): string {
 
 /** Generated cover art, so posts don't need a hand-made image. */
 function BlogCover({ post }: { post: BlogPost }): ReactNode {
+  if (post.coverImage) {
+    return (
+      <div className="blog-cover blog-cover-shot" aria-hidden="true">
+        <img src={post.coverImage} alt="" loading="lazy" />
+      </div>
+    );
+  }
   return (
     <div className="blog-cover" aria-hidden="true">
       <span className="blog-cover-label">{post.coverLabel ?? "OpenMouse"}</span>

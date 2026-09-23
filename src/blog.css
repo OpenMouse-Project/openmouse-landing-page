@@ -36,6 +36,43 @@
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px) 0 0 / 28px 28px,
     #0f1216;
 }
+
+/* A product shot floating on a soft "wallpaper", matching the download page. */
+.blog-cover-shot,
+.blog-hero-shot {
+  background:
+    radial-gradient(90% 80% at 15% 0%, rgba(105, 210, 141, 0.35), transparent 60%),
+    radial-gradient(80% 90% at 100% 100%, rgba(56, 120, 170, 0.35), transparent 60%),
+    linear-gradient(160deg, #10251c, #0b1320 70%);
+}
+.blog-cover-shot img {
+  width: 46%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 18px 40px -12px rgba(0, 0, 0, 0.7);
+}
+.blog-card .blog-cover-shot img { width: 52%; }
+
+.blog-hero-shot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 2.2rem;
+  padding: clamp(1.8rem, 6vw, 3rem) 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+}
+.blog-hero-shot img {
+  width: min(320px, 80%);
+  height: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.08),
+    0 24px 50px -14px rgba(0, 0, 0, 0.75);
+}
+
 .blog-cover-label {
   font-size: clamp(2.6rem, 7vw, 4.6rem);
   font-weight: 800;

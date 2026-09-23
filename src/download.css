@@ -179,6 +179,23 @@
   font-weight: 600;
   transition: border-color 0.15s, background 0.15s;
 }
+.dl-btn svg {
+  width: 15px;
+  height: 15px;
+  margin-right: 0.5rem;
+  flex: none;
+}
+.dl-btn-wide { flex-basis: 100%; }
+.dl-soon {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-family: var(--land-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .dl-btn:hover {
   border-color: rgba(105, 210, 141, 0.5);
   background: rgba(105, 210, 141, 0.07);

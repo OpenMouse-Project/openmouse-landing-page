@@ -6,6 +6,7 @@ import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { APP_URL, SiteFooter, SiteNav } from "./app/site-chrome";
 import { DISCORD_URL } from "./app/social-links";
+import { AppleIcon, LinuxIcon, WindowsIcon } from "./app/platform-icons";
 import { usePageLocale } from "./app/page-locale";
 
 // "latest" always resolves to the newest stable Bridge release, so these
@@ -128,7 +129,7 @@ function Downloads(): ReactNode {
             and switches settings automatically when a game launches.
           </p>
           <ul className="dl-meta">
-            <li>Windows (64-bit), macOS (Intel and Apple silicon)</li>
+            <li>Windows (64-bit), macOS (Intel and Apple silicon), Linux in the works</li>
             {bridgeDownloads !== null && (
               <li className="dl-count">
                 {bridgeDownloads.toLocaleString()} {bridgeDownloads === 1 ? "download" : "downloads"}
@@ -138,8 +139,15 @@ function Downloads(): ReactNode {
           {bridgeLaunched ? (
             <>
               <div className="dl-actions">
-                <a className="dl-btn dl-btn-primary" href={BRIDGE_WINDOWS_URL}>Windows</a>
-                <a className="dl-btn" href={BRIDGE_MAC_URL}>macOS</a>
+                <a className="dl-btn dl-btn-primary" href={BRIDGE_WINDOWS_URL}>
+                  <WindowsIcon /> Windows
+                </a>
+                <a className="dl-btn" href={BRIDGE_MAC_URL}>
+                  <AppleIcon /> macOS
+                </a>
+                <span className="dl-btn dl-btn-disabled dl-btn-wide" aria-disabled="true">
+                  <LinuxIcon /> Linux <span className="dl-soon">Soon</span>
+                </span>
               </div>
               <p className="dl-foot">
                 <a href={BRIDGE_POST_URL}>Install guide</a>
