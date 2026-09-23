@@ -1,32 +1,14 @@
-import { defineConfig, type Plugin } from "vite";
+import { defineConfig } from "vite";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { readFileSync } from "node:fs";
 
 import { pwa } from "./build/pwa-vite-plugin";
 import { sites } from "./build/sites-vite-plugin";
+import { blogPrerender } from "./build/blog-prerender";
 
 const rootDir = fileURLToPath(new URL(".", import.meta.url));
 
-/**
- * Blog pages render entirely from their module script, so hold the first
- * paint until it has run. Without this, a cross-page View Transition
- * (blog.css) snapshots the new page while it is still empty and the post's
- * cover and title have nothing to morph into. Vite drops this attribute
- * from the source HTML, so it is added to the emitted tag instead.
- */
-function blogRenderBlocking(): Plugin {
-  return {
-    name: "openmouse-blog-render-blocking",
-    transformIndexHtml: {
-      order: "post",
-      handler(html, ctx) {
-        if (!/\/blog[^/]*\.html$/.test(ctx.filename)) return html;
-        return html.replace(/<script type="module"(?![^>]*blocking=)/g, '<script type="module" blocking="render"');
-      },
-    },
-  };
-}
 
 const packageVersion = JSON.parse(
   readFileSync(resolve(rootDir, "package.json"), "utf8"),
@@ -38,7 +20,7 @@ const buildChannel = process.env.OPENMOUSE_BUILD_CHANNEL ?? "beta";
 // repo (control-panel branch) — see build/sites-vite-plugin.ts for the
 // _redirects file that routes the root request to landing.html.
 export default defineConfig({
-  plugins: [sites(), pwa(packageVersion.version), blogRenderBlocking()],
+  plugins: [sites(), pwa(packageVersion.version), blogPrerender()],
   resolve: {
     // Prefix aliases, so react-dom/client and react/jsx-runtime follow too.
     alias: {

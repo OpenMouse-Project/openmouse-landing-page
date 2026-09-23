@@ -25,19 +25,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-    <!-- Blog View Transitions (see src/blog-transitions.ts). Inline so they
-         apply before any script or stylesheet loads: the opt-in must be
-         there when the next page first renders, and the dark background
-         stops a white flash while it loads. -->
-    <style>
-      @view-transition { navigation: auto; }
-      html, body { background: #09090b; }
-    </style>
-    <!-- Prerender a blog page while its link is hovered, so opening it is
-         instant and the cover/title morph has a ready page to land on. -->
-    <script type="speculationrules">
-      { "prerender": [{ "where": { "href_matches": "/blog*" }, "eagerness": "moderate" }] }
-    </script>
   </head>
   <body>
     <div id="blog-post-app"></div>

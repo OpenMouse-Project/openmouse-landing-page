@@ -3,12 +3,9 @@
    accent) — see that file's header comment. This file adds the post-list
    and long-form article layout landing.css doesn't need. */
 
-/* Cross-page morphs between the index and posts; see blog-transitions.ts.
-   Only pages that load this file opt in, so the rest of the site navigates
-   as before. */
-@view-transition {
-  navigation: auto;
-}
+/* Cross-page morphs between the index and posts. The opt-in itself
+   (@view-transition) and the script that names the clicked card are
+   injected into every blog page's head by build/blog-prerender.ts. */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation-duration: 0.22s;
@@ -24,6 +21,10 @@
     animation: none;
   }
 }
+
+/* A post's headline and hero image are what an index card morphs into. */
+.blog-article > h1 { view-transition-name: post-title; }
+.blog-article > .blog-hero-shot { view-transition-name: post-image; }
 
 .blog-index {
   max-width: 1080px;
@@ -486,6 +487,63 @@ html { scroll-behavior: smooth; }
 }
 .blog-steps li + li { margin-top: 0.5rem; }
 .blog-steps li::marker { color: #69d28d; font-weight: 600; }
+
+/* Download buttons inside a post (same look as the download page's). */
+.blog-download {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0 0.6rem;
+}
+.blog-article .blog-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #eef6f6;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: border-color 0.15s, background 0.15s;
+}
+.blog-article .blog-download-btn:hover {
+  border-color: rgba(105, 210, 141, 0.5);
+  background: rgba(105, 210, 141, 0.07);
+}
+.blog-article .blog-download-btn.is-primary {
+  border-color: transparent;
+  background: #69d28d;
+  color: #041412;
+}
+.blog-article .blog-download-btn.is-primary:hover { background: #7ce39d; }
+.blog-article .blog-download-btn.is-disabled,
+.blog-article .blog-download-btn.is-disabled:hover {
+  border-style: dashed;
+  background: transparent;
+  color: #6f8387;
+  cursor: default;
+}
+.blog-download-btn svg {
+  width: 15px;
+  height: 15px;
+  flex: none;
+}
+.blog-download-soon {
+  padding: 0.05rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.blog-download-note {
+  display: block;
+  font-size: 0.88rem;
+  color: #7a9498;
+}
 
 /* Closing line with community links. */
 .blog-outro {

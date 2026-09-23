@@ -1,15 +1,12 @@
 import type { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
 // Blog shares landing.css so the header/footer render identically to the
 // other marketing pages — see src/app/site-chrome.tsx for the shared nav.
 import "./landing.css";
 import "./blog.css";
-import { mountOfflineBanner } from "./offline-banner";
-import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
+import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
 import { BLOG_CATEGORIES, BLOG_POSTS, type BlogPost } from "./blog-posts";
-import { postTransition } from "./blog-transitions";
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
@@ -28,13 +25,13 @@ function postUrl(post: BlogPost): string {
 function BlogCover({ post }: { post: BlogPost }): ReactNode {
   if (post.coverImage) {
     return (
-      <div className="blog-cover blog-cover-shot" aria-hidden="true" style={postTransition(post.slug, "image")}>
+      <div className="blog-cover blog-cover-shot" aria-hidden="true" data-vt="image">
         <img src={post.coverImage} alt="" loading="lazy" />
       </div>
     );
   }
   return (
-    <div className="blog-cover" aria-hidden="true" style={postTransition(post.slug, "image")}>
+    <div className="blog-cover" aria-hidden="true" data-vt="image">
       <span className="blog-cover-label">{post.coverLabel ?? "OpenMouse"}</span>
       {post.coverCaption && <span className="blog-cover-caption">{post.coverCaption}</span>}
     </div>
@@ -43,9 +40,9 @@ function BlogCover({ post }: { post: BlogPost }): ReactNode {
 
 function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
   return (
-    <article className="blog-featured">
+    <article className="blog-featured" data-post={post.slug}>
       <div className="blog-featured-body">
-        <h2 style={postTransition(post.slug, "title")}>
+        <h2 data-vt="title">
           <a href={postUrl(post)}>{post.title}</a>
         </h2>
         <p>{post.description}</p>
@@ -63,10 +60,10 @@ function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
 
 function PostCard({ post }: { post: BlogPost }): ReactNode {
   return (
-    <a className="blog-card" href={postUrl(post)}>
+    <a className="blog-card" href={postUrl(post)} data-post={post.slug}>
       <BlogCover post={post} />
       <div className="blog-card-body">
-        <h3 style={postTransition(post.slug, "title")}>{post.title}</h3>
+        <h3 data-vt="title">{post.title}</h3>
         <p>{post.description}</p>
         <time dateTime={post.date}>{formatDate(post.date)}</time>
       </div>
@@ -106,13 +103,6 @@ function BlogIndexPage(): ReactNode {
   );
 }
 
-const blogApp = document.querySelector<HTMLDivElement>("#blog-app");
+export default BlogIndexPage;
 
-if (!blogApp) {
-  throw new Error("OpenMouse could not find the blog page root.");
-}
-
-createRoot(blogApp).render(<BlogIndexPage />);
-
-registerServiceWorker();
-mountOfflineBanner();
+mountBlogPage(BlogIndexPage, "#blog-app");

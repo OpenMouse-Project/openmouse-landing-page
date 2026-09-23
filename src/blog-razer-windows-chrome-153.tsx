@@ -1,14 +1,11 @@
 import type { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
 import "./landing.css";
 import "./blog.css";
-import { mountOfflineBanner } from "./offline-banner";
-import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
+import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
-import { postTransition } from "./blog-transitions";
 
 const POST_SLUG = "razer-windows-chrome-153";
 const CHROMIUM_BUG_URL = "https://issues.chromium.org/issues/536063911";
@@ -26,7 +23,7 @@ function Post(): ReactNode {
   return (
     <article className="blog-article">
       <div className="blog-kicker">Incident report · WebHID</div>
-      <h1 style={postTransition(POST_SLUG, "title")}>Every Razer mouse stopped connecting on Windows this week</h1>
+      <h1>Every Razer mouse stopped connecting on Windows this week</h1>
       <p className="blog-dek">
         Not a Windows driver. Not Razer Synapse. Not anything in OpenMouse. A years-old bug in Chrome itself,
         and the fix for it, landing in Chrome 153.
@@ -238,13 +235,6 @@ function BlogPostPage(): ReactNode {
   );
 }
 
-const postApp = document.querySelector<HTMLDivElement>("#blog-post-app");
+export default BlogPostPage;
 
-if (!postApp) {
-  throw new Error("OpenMouse could not find the blog post root.");
-}
-
-createRoot(postApp).render(<BlogPostPage />);
-
-registerServiceWorker();
-mountOfflineBanner();
+mountBlogPage(BlogPostPage, "#blog-post-app");

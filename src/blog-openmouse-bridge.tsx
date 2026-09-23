@@ -1,15 +1,13 @@
 import type { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
 import "./landing.css";
 import "./blog.css";
-import { mountOfflineBanner } from "./offline-banner";
-import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
+import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
+import { AppleIcon, LinuxIcon, WindowsIcon } from "./app/platform-icons";
 import { BlogToc, type TocItem } from "./blog-toc";
-import { postTransition } from "./blog-transitions";
 
 const POST_SLUG = "openmouse-bridge";
 const RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
@@ -36,14 +34,14 @@ function Post(): ReactNode {
   return (
     <article className="blog-article">
       <div className="blog-kicker">Release · Bridge 1.0 beta</div>
-      <h1 style={postTransition(POST_SLUG, "title")}>OpenMouse Bridge is here, and Razer mice work on Windows again</h1>
+      <h1>OpenMouse Bridge is here, and Razer mice work on Windows again</h1>
       <p className="blog-dek">
         A small helper app that runs next to your browser and talks to your mouse directly, so a browser
         update can't lock it out again.
       </p>
       <p className="blog-byline">snekxs, September 23, 2026</p>
 
-      <figure className="blog-hero-shot" style={postTransition(POST_SLUG, "image")}>
+      <figure className="blog-hero-shot">
         <img
           src="/bridge-panel.png"
           alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
@@ -108,11 +106,23 @@ function Post(): ReactNode {
       <h2 id="install">Install it</h2>
       <ol className="blog-steps">
         <li>
-          Download the zip for your computer:{" "}
-          <a href={WINDOWS_ZIP_URL}>Windows</a> or <a href={MAC_ZIP_URL}>macOS</a>. Both come straight from our{" "}
-          <a href={RELEASES_URL} target="_blank" rel="noreferrer">GitHub releases page</a>, next to a checksum
-          file if you want to verify the download. The newest version is always on our{" "}
-          <a href="/download.html">download page</a>.
+          Download Bridge for your computer:
+          <div className="blog-download">
+            <a className="blog-download-btn is-primary" href={WINDOWS_ZIP_URL}>
+              <WindowsIcon /> Windows
+            </a>
+            <a className="blog-download-btn" href={MAC_ZIP_URL}>
+              <AppleIcon /> macOS
+            </a>
+            <span className="blog-download-btn is-disabled" aria-disabled="true">
+              <LinuxIcon /> Linux <span className="blog-download-soon">Soon</span>
+            </span>
+          </div>
+          <span className="blog-download-note">
+            Straight from our <a href={RELEASES_URL} target="_blank" rel="noreferrer">GitHub releases</a>, with a
+            checksum if you want to verify it. The newest version is always on our{" "}
+            <a href="/download.html">download page</a>.
+          </span>
         </li>
         <li>
           Unzip it somewhere you'll keep it, like your Documents folder. Keep the <code>native-hid</code> folder
@@ -282,13 +292,6 @@ function BlogPostPage(): ReactNode {
   );
 }
 
-const postApp = document.querySelector<HTMLDivElement>("#blog-post-app");
+export default BlogPostPage;
 
-if (!postApp) {
-  throw new Error("OpenMouse could not find the blog post root.");
-}
-
-createRoot(postApp).render(<BlogPostPage />);
-
-registerServiceWorker();
-mountOfflineBanner();
+mountBlogPage(BlogPostPage, "#blog-post-app");
