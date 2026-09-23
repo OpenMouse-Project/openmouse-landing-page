@@ -151,15 +151,6 @@
   padding-top: 2.2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
-.blog-section h2 {
-  margin: 0 0 1.2rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #9fb0b4;
-}
 .blog-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

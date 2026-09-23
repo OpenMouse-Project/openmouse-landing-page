@@ -84,8 +84,7 @@ function BlogIndex(): ReactNode {
         const posts = older.filter((post) => post.category === category);
         if (posts.length === 0) return null;
         return (
-          <section className="blog-section" key={category}>
-            <h2>{category}</h2>
+          <section className="blog-section" key={category} aria-label={category}>
             <div className="blog-grid">
               {posts.map((post) => <PostCard post={post} key={post.slug} />)}
             </div>
