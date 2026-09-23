@@ -1,14 +1,12 @@
 import type { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
 // Blog shares landing.css so the header/footer render identically to the
 // other marketing pages — see src/app/site-chrome.tsx for the shared nav.
 import "./landing.css";
 import "./blog.css";
-import { mountOfflineBanner } from "./offline-banner";
-import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
+import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
-import { BLOG_POSTS, type BlogPost } from "./blog-posts";
+import { BLOG_CATEGORIES, BLOG_POSTS, type BlogPost } from "./blog-posts";
 
 function formatDate(iso: string): string {
   return new Date(`${iso}T00:00:00Z`).toLocaleDateString("en-US", {
@@ -79,11 +77,17 @@ function BlogIndex(): ReactNode {
     <section className="blog-index">
       <h1 className="blog-visually-hidden">Blog</h1>
       {latest && <FeaturedPost post={latest} />}
-      {older.length > 0 && (
-        <div className="blog-grid">
-          {older.map((post) => <PostCard post={post} key={post.slug} />)}
-        </div>
-      )}
+      {BLOG_CATEGORIES.map((category) => {
+        const posts = older.filter((post) => post.category === category);
+        if (posts.length === 0) return null;
+        return (
+          <section className="blog-section" key={category} aria-label={category}>
+            <div className="blog-grid">
+              {posts.map((post) => <PostCard post={post} key={post.slug} />)}
+            </div>
+          </section>
+        );
+      })}
     </section>
   );
 }
@@ -99,13 +103,6 @@ function BlogIndexPage(): ReactNode {
   );
 }
 
-const blogApp = document.querySelector<HTMLDivElement>("#blog-app");
+export default BlogIndexPage;
 
-if (!blogApp) {
-  throw new Error("OpenMouse could not find the blog page root.");
-}
-
-createRoot(blogApp).render(<BlogIndexPage />);
-
-registerServiceWorker();
-mountOfflineBanner();
+mountBlogPage(BlogIndexPage, "#blog-app");

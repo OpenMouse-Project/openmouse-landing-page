@@ -5,8 +5,10 @@ import { readFileSync } from "node:fs";
 
 import { pwa } from "./build/pwa-vite-plugin";
 import { sites } from "./build/sites-vite-plugin";
+import { blogPrerender } from "./build/blog-prerender";
 
 const rootDir = fileURLToPath(new URL(".", import.meta.url));
+
 
 const packageVersion = JSON.parse(
   readFileSync(resolve(rootDir, "package.json"), "utf8"),
@@ -18,7 +20,7 @@ const buildChannel = process.env.OPENMOUSE_BUILD_CHANNEL ?? "beta";
 // repo (control-panel branch) — see build/sites-vite-plugin.ts for the
 // _redirects file that routes the root request to landing.html.
 export default defineConfig({
-  plugins: [sites(), pwa(packageVersion.version)],
+  plugins: [sites(), pwa(packageVersion.version), blogPrerender()],
   resolve: {
     // Prefix aliases, so react-dom/client and react/jsx-runtime follow too.
     alias: {
@@ -45,6 +47,7 @@ export default defineConfig({
         blog: resolve(__dirname, "blog.html"),
         "blog-razer-windows-chrome-153": resolve(__dirname, "blog-razer-windows-chrome-153.html"),
         download: resolve(__dirname, "download.html"),
+        "blog-openmouse-bridge": resolve(__dirname, "blog-openmouse-bridge.html"),
         privacy: resolve(__dirname, "privacy.html"),
         terms: resolve(__dirname, "terms.html"),
       },

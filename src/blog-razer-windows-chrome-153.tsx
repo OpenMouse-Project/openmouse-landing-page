@@ -1,10 +1,8 @@
 import type { ReactNode } from "react";
-import { createRoot } from "react-dom/client";
 import "./landing.css";
 import "./blog.css";
-import { mountOfflineBanner } from "./offline-banner";
-import { registerServiceWorker } from "./register-sw";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
+import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
@@ -31,6 +29,14 @@ function Post(): ReactNode {
         and the fix for it, landing in Chrome 153.
       </p>
       <p className="blog-byline">snekxs, updated September 12, 2026</p>
+
+      <div className="blog-finding">
+        <p>
+          <strong>Update, September 23:</strong> the fix is out.{" "}
+          <a href="/blog-openmouse-bridge.html">Install OpenMouse Bridge</a> and Razer mice connect on Windows
+          again. The workaround below is no longer needed.
+        </p>
+      </div>
 
       <dl className="blog-glance">
         <div>
@@ -229,13 +235,6 @@ function BlogPostPage(): ReactNode {
   );
 }
 
-const postApp = document.querySelector<HTMLDivElement>("#blog-post-app");
+export default BlogPostPage;
 
-if (!postApp) {
-  throw new Error("OpenMouse could not find the blog post root.");
-}
-
-createRoot(postApp).render(<BlogPostPage />);
-
-registerServiceWorker();
-mountOfflineBanner();
+mountBlogPage(BlogPostPage, "#blog-post-app");

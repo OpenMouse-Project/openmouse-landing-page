@@ -14,7 +14,7 @@ import { usePageLocale } from "./app/page-locale";
 const BRIDGE_RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
 const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64.zip`;
 const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-macos-universal.zip`;
-const BRIDGE_POST_URL = "/blog-openmouse-bridge.html";
+const BRIDGE_POST_URL = "/blog-openmouse-bridge.html#install";
 
 // Bridge's public launch: 11:00 AM Mountain (MDT) on Sep 23, 2026. Until
 // then the card shows the moment in the visitor's own time zone, and flips
