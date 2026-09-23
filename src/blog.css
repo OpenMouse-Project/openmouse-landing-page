@@ -135,8 +135,11 @@
 }
 .blog-featured .blog-read:hover { background: #7ce39d; }
 .blog-date-pill {
-  padding: 0.35rem 0.85rem;
-  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  align-self: stretch;
+  padding: 0 1.1rem;
+  border-radius: 10px;
   background: rgba(105, 210, 141, 0.1);
   color: #69d28d;
   font-size: 0.85rem;
