@@ -33,7 +33,7 @@ const SECTIONS: readonly TocItem[] = [
 function Post(): ReactNode {
   return (
     <article className="blog-article">
-      <div className="blog-kicker">Release · Bridge 1.0 beta</div>
+      <div className="blog-kicker">Release · Bridge beta</div>
       <h1>OpenMouse Bridge is here, and Razer mice work on Windows again</h1>
       <p className="blog-dek">
         A small helper app that runs next to your browser and talks to your mouse directly, so a browser
@@ -51,10 +51,6 @@ function Post(): ReactNode {
       </figure>
 
       <dl className="blog-glance">
-        <div>
-          <dt>Version</dt>
-          <dd>1.0.0-beta.1</dd>
-        </div>
         <div>
           <dt>Platforms</dt>
           <dd>Windows (x64), macOS (Intel and Apple silicon). Linux is in the works.</dd>

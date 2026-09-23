@@ -32,7 +32,7 @@ export const BLOG_POSTS: readonly BlogPost[] = [
     category: "Announcements",
     coverLabel: "Bridge",
     coverImage: "/bridge-panel.png",
-    coverCaption: "1.0 beta · Windows · macOS",
+    coverCaption: "Beta · Windows · macOS",
   },
   {
     slug: "razer-windows-chrome-153",
