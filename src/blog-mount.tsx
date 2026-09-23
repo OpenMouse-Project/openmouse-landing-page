@@ -7,10 +7,8 @@ import { registerServiceWorker } from "./register-sw";
  * Mounts a blog page into its root. The build pre-renders every blog page
  * into its HTML (see build/blog-prerender.ts), so there is already markup
  * in the root here: Preact adopts those nodes rather than starting from
- * blank, which is what lets a cross-page View Transition find the post's
- * title and cover on the very first frame, in every browser. At build
- * time there is no DOM, so this does nothing and the module can be
- * imported just for its default-exported page component.
+ * blank. At build time there is no DOM, so this does nothing and the
+ * module can be imported just for its default-exported page component.
  */
 export function mountBlogPage(Page: ComponentType, rootSelector: string): void {
   if (typeof document === "undefined") return;

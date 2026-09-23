@@ -9,14 +9,13 @@ const ENTRY = /<script type="module"[^>]*src="([^"]+)"/;
 const ROOT = /(<div id="[^"]+">)(<\/div>)/;
 
 /**
- * Prepares every blog*.html page for cross-page View Transitions:
+ * For every blog*.html page:
  *
  * - Pre-renders the page's Preact component into its root <div>, so the
- *   post's title and cover exist on the first frame. Safari has no way to
- *   hold that frame until a script has run, so without this there would be
- *   nothing to morph into. src/blog-mount.tsx then adopts this markup.
- * - Injects build/blog-view-transitions.html (the opt-in, prerender rules
- *   and card-naming script) into the head.
+ *   content is in the HTML itself (first paint, search engines) instead of
+ *   appearing only once the script runs. src/blog-mount.tsx then adopts
+ *   this markup.
+ * - Injects build/blog-head.html into the head.
  *
  * Each blog entry must `export default` its page component; see
  * src/blog-mount.tsx. Build only: the dev server renders client-side.
@@ -44,7 +43,7 @@ export function blogPrerender(): Plugin {
     apply: "build",
     configResolved(config) {
       root = config.root;
-      headSnippet = readFileSync(resolve(root, "build/blog-view-transitions.html"), "utf8");
+      headSnippet = readFileSync(resolve(root, "build/blog-head.html"), "utf8");
     },
     transformIndexHtml: {
       order: "pre",

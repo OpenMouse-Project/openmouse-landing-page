@@ -3,29 +3,6 @@
    accent) — see that file's header comment. This file adds the post-list
    and long-form article layout landing.css doesn't need. */
 
-/* Cross-page morphs between the index and posts. The opt-in itself
-   (@view-transition) and the script that names the clicked card are
-   injected into every blog page's head by build/blog-prerender.ts. */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation-duration: 0.22s;
-}
-::view-transition-group(*) {
-  animation-duration: 0.42s;
-  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-group(*),
-  ::view-transition-old(*),
-  ::view-transition-new(*) {
-    animation: none;
-  }
-}
-
-/* A post's headline and hero image are what an index card morphs into. */
-.blog-article > h1 { view-transition-name: post-title; }
-.blog-article > .blog-hero-shot { view-transition-name: post-image; }
-
 .blog-index {
   max-width: 1080px;
   margin: 0 auto;
