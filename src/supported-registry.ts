@@ -4,6 +4,7 @@ import { KEYCHRON_NAPE_PRODUCTS } from "@openmouse/protocol/keychron";
 import { ORBITAL_DEVICES } from "@openmouse/protocol/orbital";
 import { FANTECH_PRODUCTS } from "@openmouse/protocol/fantech";
 import { GWOLVES_PRODUCTS } from "@openmouse/protocol/drivers/gwolves/products";
+import { LOGITECH_PRODUCTS } from "@openmouse/protocol/logitech";
 
 import { MICE, REGISTRY_REQ, type Mouse } from "./supported-mice.ts";
 
@@ -116,6 +117,14 @@ export function registrySupportedModels(): Mouse[] {
   for (const [pid, info] of GLORIOUS_CLASSIC_PRODUCTS) {
     if (/receiver/i.test(info.name)) continue;
     rows.push({ brand: "Glorious", model: info.name, status: "supported", req: 0, note: "", pids: [pid] });
+  }
+  // Logitech direct-connect models. The catalog carries its own per-model
+  // status (everything named there is currently writable) and flags wireless
+  // entries, which get no USB id of their own and stay receiver-curated static
+  // rows, so skip them here just like the WLMouse loop does.
+  for (const [pid, info] of LOGITECH_PRODUCTS) {
+    if (info.wireless) continue;
+    rows.push({ brand: "Logitech", model: info.name, status: info.status, req: 0, note: "", pids: [pid] });
   }
 
   for (const row of rows) row.req = REGISTRY_REQ[`${row.brand}|${row.model}`] ?? 0;

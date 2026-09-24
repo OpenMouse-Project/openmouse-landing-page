@@ -107,6 +107,9 @@ const PID_UNIVERSE = new Set<number>([
   ...LOGITECH_BOLT_PRODUCT_IDS,
   // Logitech Lightspeed receivers (drivers/vendors.ts).
   0xc54d, 0xc539, 0xc0a8, 0xc547,
+  // Logitech next-gen direct USB ids: G PRO 2 LIGHTSPEED (0xc09a),
+  // PRO X SUPERLIGHT 2 (0xc09b) and PRO X SUPERLIGHT 2 DEX (0xc0a0).
+  0xc09a, 0xc09b, 0xc0a0,
   ...RAZER_PRODUCTS.keys(),
   // Razer models with dedicated drivers, deliberately excluded from the
   // RAZER_PRODUCTS registry (drivers/razer/devices.ts): Cobra, Viper Mini,
