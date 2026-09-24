@@ -7,7 +7,7 @@ import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "
 import { BITMOUSE_PRODUCT_IDS } from "@openmouse/protocol/bitmouse";
 import { EGG_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-op1";
 import { KEYCHRON_M6_PRODUCT_ID, KEYCHRON_NAPE_PRODUCTS, KEYCHRON_M6_RECEIVER_PRODUCT_ID } from "@openmouse/protocol/keychron";
-import { LAMZU_PRODUCTS } from "@openmouse/protocol/lamzu";
+import { LAMZU_PRODUCTS, LAMZU_INCA_PRODUCTS } from "@openmouse/protocol/lamzu";
 import { MICROSOFT_PRODUCTS } from "@openmouse/protocol/microsoft";
 import {
   LOGITECH_BOLT_PRODUCT_IDS,
@@ -35,6 +35,14 @@ import { CORSAIR_PRODUCT_IDS } from "@openmouse/protocol/corsair";
 import { KSNAKE_PRODUCTS } from "@openmouse/protocol/ksnake";
 import { HYPERX_PULSEFIRE_HASTE_PIDS } from "@openmouse/protocol/hyperx";
 import { INCOTT_PRODUCT_IDS } from "@openmouse/protocol/incott";
+import { VAXEE_PRODUCT_IDS } from "@openmouse/protocol/vaxee";
+import { RYUNIX_PRODUCT_IDS } from "@openmouse/protocol/ryunix";
+import { DELUX_PRODUCT_IDS } from "@openmouse/protocol/delux";
+import { DAREU_PRODUCT_IDS } from "@openmouse/protocol/dareu";
+import { REDRAGON_PRODUCT_IDS } from "@openmouse/protocol/redragon";
+import { RAWM_PRODUCT_IDS } from "@openmouse/protocol/rawm";
+import { GEARHUB_PRODUCTS } from "@openmouse/protocol/gearhub";
+import { MCHOSE_A5_GEN1_PRODUCTS } from "@openmouse/protocol/mchose";
 
 import { MICE, STATUS, type Mouse, type Status } from "./supported-mice.ts";
 
@@ -177,6 +185,33 @@ const PID_UNIVERSE = new Set<number>([
   // Incott's 2.4 GHz dongle and wired link, shared by all six model
   // families (src/incott).
   ...INCOTT_PRODUCT_IDS,
+  // VAXEE wireless mice, including the report-0x0e receiver ids
+  // (src/vaxee/index.ts).
+  ...VAXEE_PRODUCT_IDS,
+  // Ryunix KYU Pro MX1 — wired 0x026e and wireless 0x026f (src/ryunix).
+  ...RYUNIX_PRODUCT_IDS,
+  // Delux M800 Mini — wireless 0xfa60 and wired 0xfa55 links (src/delux).
+  ...DELUX_PRODUCT_IDS,
+  // Dareu A950 PRO Mg — wired direct 0x1117 and TM265 receiver 0x1114
+  // (src/dareu).
+  ...DAREU_PRODUCT_IDS,
+  // Redragon M724 K1NG 1K (src/redragon).
+  ...REDRAGON_PRODUCT_IDS,
+  // RAWM HUB family mice and receivers (src/rawm).
+  ...RAWM_PRODUCT_IDS,
+  // GearHub dongle 0x402d + cable 0x4026, shared by the Lingbao M5 Pro and
+  // Attack Shark R2 / R3 (src/gearhub).
+  ...GEARHUB_PRODUCTS.keys(),
+  // MCHOSE A5 Pro Max, first-generation A5 protocol (src/mchose/a5-gen1.ts).
+  ...MCHOSE_A5_GEN1_PRODUCTS.keys(),
+  // ASUS ROG Gladius II P502 (src/asus — has no exported subpath, so pinned
+  // as a literal like the dedicated Razer drivers above).
+  0x1845,
+  // Lamzu Inca 8K — wired 0x0009, 1K receiver 0x000f, 8K receiver 0x0010
+  // (src/lamzu).
+  ...LAMZU_INCA_PRODUCTS.keys(),
+  // SteelSeries Rival 3 wired (drivers/steelseries/rival3-hid.ts).
+  0x1824, 0x184c,
 ]);
 test("every pinned PID on a coverage claim exists in the protocol registry", () => {
   const withPids: Array<Mouse & { pids: readonly number[] }> = MICE.filter(
