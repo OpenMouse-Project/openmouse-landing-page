@@ -15,7 +15,7 @@ function Privacy(): ReactNode {
     <LegalPage
       kicker="Privacy Policy"
       title="Privacy Policy"
-      updated="September 19, 2026"
+      updated="September 24, 2026"
     >
       <p className="land-legal-intro">
         This policy explains how the OpenMouse website at{" "}
@@ -44,11 +44,6 @@ function Privacy(): ReactNode {
           <li>
             interface preferences such as language, color theme, and color
             mode (<code>openmouse-interface-settings-v1</code>);
-          </li>
-          <li>
-            a randomly generated, pseudonymous identifier used to make sure
-            the supported-devices voting feature counts one voice per device (
-            <code>openmouse.support-request-voter</code>);
           </li>
           <li>
             a cached snapshot of public GitHub contributor data shown on the
@@ -88,32 +83,12 @@ function Privacy(): ReactNode {
         </p>
       </LegalSection>
 
-      <LegalSection heading="The supported-devices request and voting feature">
+      <LegalSection heading="Supported-devices requests">
         <p>
-          On the supported-devices page you can request support for a mouse and
-          vote on existing requests. Submitting a request or a vote requires
-          completing a{" "}
-          <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Turnstile</a>{" "}
-          anti-spam check. If you submit or vote, the Site records:
-        </p>
-        <ul>
-          <li>
-            the request data you enter — manufacturer, model, and connection
-            type — which is displayed publicly in the supported-devices
-            catalog; and
-          </li>
-          <li>
-            a one-way hash of your IP address (keyed HMAC-SHA-256), used only
-            to enforce one vote per device per request. Raw IP addresses are
-            not stored with requests or votes, and the hash cannot be reversed
-            to recover your IP address.
-          </li>
-        </ul>
-        <p>
-          Request and vote data is stored in a Postgres database (Supabase)
-          behind the Site's API functions. The maintainers can pause request
-          and vote submission at any time (the site ships with an emergency
-          write kill-switch).
+          The supported-devices page no longer accepts new mouse requests or
+          votes. Requests submitted earlier are shown on the page by
+          manufacturer, model, and connection type, with their vote counts.
+          Nothing else collected with them is used or published by the Site.
         </p>
       </LegalSection>
 
@@ -142,11 +117,7 @@ function Privacy(): ReactNode {
           <li>
             Google Fonts — fonts load from{" "}
             <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>{" "}
-            for page rendering;
-          </li>
-          <li>
-            Cloudflare Turnstile — an anti-spam challenge rendered on the
-            supported-devices page and verified by the Site's functions.
+            for page rendering.
           </li>
         </ul>
         <p>
@@ -167,10 +138,10 @@ function Privacy(): ReactNode {
       <LegalSection heading="How data is shared">
         <p>
           The Site does not sell or rent personal data. Data is shared only
-          with the service providers that operate the Site — the hosting and
-          database infrastructure (Cloudflare and Supabase) and the providers
+          with the service providers that operate the Site — the hosting
+          infrastructure (Cloudflare) and the providers
           listed under third-party services — as needed to deliver it. Content
-          you publish (support requests, votes, and blog comments) is public
+          you publish (blog comments, and support requests submitted earlier) is public
           and visible to anyone, as is the supported-devices catalog itself.
         </p>
       </LegalSection>
@@ -179,8 +150,7 @@ function Privacy(): ReactNode {
         <ul>
           <li>
             Clear your browser's site data or local storage for openmouse.app
-            to delete the device-local preferences and identifier described
-            above.
+            to delete the device-local preferences described above.
           </li>
           <li>
             If you want a published support request or comment removed — for

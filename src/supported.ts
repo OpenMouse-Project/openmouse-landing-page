@@ -17,14 +17,13 @@ const HTML_LANG: Partial<Record<InterfaceLocale, string>> = {
   pt: "pt-BR",
   zh: "zh-Hans",
 };
-import { fetchLiveData, mergeLiveMice, type LiveData } from "./supported-live.ts";
+import { withRegistryMice } from "./supported-registry.ts";
 import { GITHUB_URL } from "./app/social-links";
 
 // ── Data ──────────────────────────────────────────────────────────────────
 // Mouse/status data lives in ./supported-mice.ts (verified at build time by
-// ./supported-mice.test.ts). Live request counts, new community requests, and
-// registry-listed supported models are merged in at runtime from
-// ./supported-live.ts.
+// ./supported-mice.test.ts). Registry-listed supported models are appended
+// from ./supported-registry.ts.
 
 // ── Theme ─────────────────────────────────────────────────────────────────
 const THEME_KEY = "openmouse.theme";
@@ -108,10 +107,10 @@ let activeBrand: string | null = null;
 let searchQuery = "";
 let brandQuery = "";
 let tagsQuery = "";
-let mice: Mouse[] = MICE;
+const mice: Mouse[] = withRegistryMice(MICE);
 
-// When live data lands while a panel is open, defer that panel's rebuild
-// until it closes so focus and scroll position survive the refresh.
+// When the list re-renders while a panel is open, defer that panel's rebuild
+// until it closes so focus and scroll position survive it.
 let brandDirty = false;
 let tagsDirty = false;
 
@@ -630,29 +629,6 @@ if (locale !== "en") {
     renderList();
   });
 }
-
-// ── Live updates ──────────────────────────────────────────────────────────
-async function refresh(): Promise<void> {
-  let live: LiveData | null = null;
-  try {
-    live = await fetchLiveData();
-  } catch {
-    // Support catalog not configured or unreachable: keep the static table.
-  }
-  mice = mergeLiveMice(MICE, live);
-
-  fillBrands();
-  fillTags();
-  renderList();
-}
-
-void refresh();
-setInterval(() => void refresh(), 60_000);
-
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") void refresh();
-});
-window.addEventListener("focus", () => void refresh());
 
 registerServiceWorker();
 mountOfflineBanner();
