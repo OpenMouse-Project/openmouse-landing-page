@@ -22,7 +22,7 @@
 //
 // `src/supported-mice.test.ts` re-checks every `supported`/`quickwin` claim and
 // every PID against the protocol package so this table cannot silently drift
-// from the code again. `src/supported-live.ts` additionally adds the
+// from the code again. `src/supported-registry.ts` additionally adds the
 // registry-listed supported models.
 
 export type Status = "supported" | "pr" | "quickwin" | "likely" | "driver" | "unknown" | "bridge" | "pending";

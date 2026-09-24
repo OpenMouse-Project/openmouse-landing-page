@@ -11,15 +11,13 @@ the [openmouse](https://github.com/OpenMouse-Project/openmouse) repo's
 - `landing.html` — the marketing home page
 - `faq.html` — frequently asked questions
 - `check.html` — WebHID compatibility checker
-- `supported.html` — supported device list, with mouse request/voting
+- `supported.html` — supported device list
 - `donate.html` — support/funding page
 
 ## Stack
 
 Vite + Preact + TypeScript, no build-time server framework. `functions/api/*`
-are Cloudflare Pages Functions backing the mouse request/vote/config
-endpoints used by `supported.html`. `supabase/migrations/*` defines the
-Postgres tables those functions read and write.
+are Cloudflare Pages Functions (currently the blog comments endpoint).
 
 ## Developing
 
@@ -29,9 +27,6 @@ npm run dev      # local dev server
 npm run build    # type-check + production build
 npm test         # unit tests
 ```
-
-Copy `.env.example` to `.env` and fill in a Supabase project URL/anon key to
-exercise the request/vote flow locally.
 
 ## Scope
 

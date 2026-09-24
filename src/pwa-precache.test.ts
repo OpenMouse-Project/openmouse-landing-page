@@ -23,9 +23,8 @@ test("every other page keeps its own path", () => {
 
 const bypassed = (path: string): boolean => BYPASS.some((pattern) => pattern.test(path));
 
-test("vote and request endpoints bypass the cache", () => {
-  assert.equal(bypassed("/api/mouse-vote"), true);
-  assert.equal(bypassed("/api/voting-config"), true);
+test("API endpoints bypass the cache", () => {
+  assert.equal(bypassed("/api/comments"), true);
 });
 
 // The gated control app and admin dashboard live in the separate openmouse
