@@ -22,9 +22,8 @@ import { GITHUB_URL } from "./app/social-links";
 
 // ── Data ──────────────────────────────────────────────────────────────────
 // Mouse/status data lives in ./supported-mice.ts (verified at build time by
-// ./supported-mice.test.ts). Live request counts, new community requests, and
-// registry-listed supported models are merged in at runtime from
-// ./supported-registry.ts.
+// ./supported-mice.test.ts). Registry-listed supported models are appended
+// from ./supported-registry.ts.
 
 // ── Theme ─────────────────────────────────────────────────────────────────
 const THEME_KEY = "openmouse.theme";
