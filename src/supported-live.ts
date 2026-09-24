@@ -5,7 +5,7 @@ import { ORBITAL_DEVICES } from "@openmouse/protocol/orbital";
 import { FANTECH_PRODUCTS } from "@openmouse/protocol/fantech";
 import { GWOLVES_PRODUCTS } from "@openmouse/protocol/drivers/gwolves/products";
 
-import { MICE, type Mouse } from "./supported-mice.ts";
+import { MICE, REGISTRY_REQ, type Mouse } from "./supported-mice.ts";
 import { listSupportRequests, type SupportRequest } from "./support-requests.ts";
 
 /**
@@ -162,6 +162,8 @@ export function registrySupportedModels(): Mouse[] {
     if (/receiver/i.test(info.name)) continue;
     rows.push({ brand: "Glorious", model: info.name, status: "supported", req: 0, note: "", pids: [pid] });
   }
+
+  for (const row of rows) row.req = REGISTRY_REQ[`${row.brand}|${row.model}`] ?? 0;
 
   const seen = new Set<string>();
   return rows.filter((row) => {

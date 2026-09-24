@@ -17,7 +17,7 @@ const HTML_LANG: Partial<Record<InterfaceLocale, string>> = {
   pt: "pt-BR",
   zh: "zh-Hans",
 };
-import { fetchLiveData, mergeLiveMice, type LiveData } from "./supported-live.ts";
+import { mergeLiveMice } from "./supported-live.ts";
 import { GITHUB_URL } from "./app/social-links";
 
 // ── Data ──────────────────────────────────────────────────────────────────
@@ -108,7 +108,7 @@ let activeBrand: string | null = null;
 let searchQuery = "";
 let brandQuery = "";
 let tagsQuery = "";
-let mice: Mouse[] = MICE;
+let mice: Mouse[] = mergeLiveMice(MICE, null);
 
 // When live data lands while a panel is open, defer that panel's rebuild
 // until it closes so focus and scroll position survive the refresh.
@@ -630,29 +630,6 @@ if (locale !== "en") {
     renderList();
   });
 }
-
-// ── Live updates ──────────────────────────────────────────────────────────
-async function refresh(): Promise<void> {
-  let live: LiveData | null = null;
-  try {
-    live = await fetchLiveData();
-  } catch {
-    // Support catalog not configured or unreachable: keep the static table.
-  }
-  mice = mergeLiveMice(MICE, live);
-
-  fillBrands();
-  fillTags();
-  renderList();
-}
-
-void refresh();
-setInterval(() => void refresh(), 60_000);
-
-document.addEventListener("visibilitychange", () => {
-  if (document.visibilityState === "visible") void refresh();
-});
-window.addEventListener("focus", () => void refresh());
 
 registerServiceWorker();
 mountOfflineBanner();
