@@ -689,6 +689,9 @@ export const MICE: Mouse[] = [
   { brand: "WLMouse", model: "Beast Max",               status: "supported", req: 1,
     pids: [0xa880, 0xa881],
     note: "PIDs 0xa880 / 0xa881 in WLMouse driver" },
+  { brand: "WLMouse", model: "Beast X 4K",              status: "pr",        req: 1,
+    pids: [0xa887],
+    note: "Own report-4 protocol, not compx; driver open in mouse-protocol, awaiting a hardware test" },
 
   // PULSAR ──────────────────────────────────────────────────────────────
   { brand: "Pulsar", model: "Tenz Signature",           status: "supported", req: 9,
