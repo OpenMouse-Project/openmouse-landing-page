@@ -977,6 +977,8 @@ export const MICE: Mouse[] = [
     note: "Protocol unknown" },
   { brand: "Gravastar",     model: "M2",                status: "unknown",   req: 4,
     note: "Protocol unknown" },
+  { brand: "Gravastar",     model: "Mercury M1 Pro",    status: "likely",    req: 1,
+    note: "GravaStar's Control Hub web app speaks the Pulsar/Compx report-8 protocol (VID 0x3554, PIDs 0xF54B/0xF575/0xF548/0xF577 wireless, 0xF576/0xF549 wired); needs a hardware test" },
   { brand: "G-Wolves",      model: "HT-M-H ACE Wireless",status: "unknown", req: 1,
     note: "Protocol unknown" },
   { brand: "Angry Miao",    model: "Infinity Mouse",    status: "unknown",   req: 3,
