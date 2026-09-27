@@ -808,10 +808,10 @@ export const MICE: Mouse[] = [
   // MICROSOFT ───────────────────────────────────────────────────────────
   { brand: "Microsoft", model: "Pro Intellimouse",      status: "supported", req: 0,
     pids: [0x082a],
-    note: "For LOD, Low is 2mm, High is 3mm. Calibrated surface 1/2/3 is not supported yet. On Windows, reading device status requires the Desktop App." },
+    note: "For LOD, Low is 2mm, High is 3mm. Calibrated surface 1/2/3 is not supported yet. On Windows, reading device status requires the Desktop App or OpenMouse Bridge companion." },
   { brand: "Microsoft", model: "Classic Intellimouse",  status: "supported", req: 0,
     pids: [0x0823],
-    note: "DPI configuration only. On Windows, reading device status requires the Desktop App." },
+    note: "DPI configuration only. On Windows, reading device status requires the Desktop App or OpenMouse Bridge companion." },
 
   // KEYCHRON ────────────────────────────────────────────────────────────
   { brand: "Keychron", model: "Nape Pro",               status: "supported", req: 1,
