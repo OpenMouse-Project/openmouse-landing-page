@@ -120,7 +120,7 @@ export const MICE: Mouse[] = [
     note: "Lightspeed receivers 0xc0a8 (USB) / 0x40bd (dedicated) — HID++ 2.0 protocol supported" },
   { brand: "Logitech", model: "PRO X3 SUPERSTRIKE",     status: "supported", req: 0,
     pids: [0xc54f],
-    note: "Lightspeed receiver 0xc54f — HID++ 2.0 protocol supported; verified on hardware (DPI stage list not decoded yet)" },
+    note: "Lightspeed receiver 0xc54f — HID++ 2.0 protocol supported; verified on hardware, including the settings write round-trip (DPI stage list not decoded yet)" },
   { brand: "Logitech", model: "G305",                   status: "supported", req: 27,
     note: "Lightspeed receiver — HID++ 2.0 protocol supported" },
   { brand: "Logitech", model: "MX Master 3S",           status: "supported", req: 32,
