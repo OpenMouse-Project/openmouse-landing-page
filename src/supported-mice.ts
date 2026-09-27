@@ -820,6 +820,16 @@ export const MICE: Mouse[] = [
   { brand: "Keychron", model: "M6",                     status: "supported", req: 1,
     pids: [0xd060, 0xd029],
     note: "Wired and Link-KM 2.4 GHz. DPI stages, polling, lift-off, motion sync, angle snapping, ripple control, angle tuning, debounce, sleep, onboard profiles and battery. No Bluetooth control channel." },
+  { brand: "Keychron", model: "M4 4K",                  status: "pr",        req: 0,
+    note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd040." },
+  { brand: "Keychron", model: "M6 4K",                  status: "pr",        req: 0,
+    note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd046." },
+  { brand: "Keychron", model: "M3 4K",                  status: "pr",        req: 0,
+    note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd03c." },
+  { brand: "Keychron", model: "M3 Mini 4K",             status: "pr",        req: 0,
+    note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd037 / 0xd041." },
+  { brand: "Keychron", model: "M2 4K",                  status: "pr",        req: 0,
+    note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd045." },
 
   // Asus ────────────────────────────────────────────────────────────────
   { brand: "Asus",     model: "Harpe Ace Aim Lab",      status: "driver",    req: 10,
