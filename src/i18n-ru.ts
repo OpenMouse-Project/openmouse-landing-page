@@ -73,6 +73,7 @@ export const ru: Record<I18nKey, string> = {
   "set.chinese": "中文",
   "set.japanese": "日本語",
   "set.korean": "한국어",
+  "set.arabic": "العربية",
   "set.motion": "АНИМАЦИЯ",
   "set.animations": "Анимации",
   "set.animationsBody": "Включить переходы интерфейса и анимацию смены состояний.",

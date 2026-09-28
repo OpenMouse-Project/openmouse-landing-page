@@ -142,7 +142,7 @@ function CheckApp(): ReactNode {
 
   return (
     <div className="check-shell">
-      <header className="check-header">
+      <header className="check-header" dir="ltr">
         <a className="check-wordmark" href="/">OpenMouse <span>/ Mouse Check</span></a>
         <PageLocaleToggle locale={locale} onChange={setLocale} />
         <a className="check-back" href="/">{t(locale, "chk.back")}</a>

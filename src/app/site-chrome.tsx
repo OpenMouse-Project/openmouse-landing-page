@@ -21,7 +21,7 @@ const LICENSE_URL = "https://github.com/OpenMouse-Project/openmouse-landing-page
 // and faq.tsx both render these so the two pages look coherent.
 export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocale: (next: InterfaceLocale) => void }): ReactNode {
   return (
-    <header className="land-nav">
+    <header className="land-nav" dir="ltr">
       <a className="land-brand" href="/">
         <img src="/logo.png" alt="" width={22} height={32} />
         <span className="land-brand-name">OpenMouse</span>

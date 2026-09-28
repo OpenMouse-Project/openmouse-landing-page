@@ -5,7 +5,7 @@ import {
   saveInterfacePreferences,
   type InterfaceLocale,
 } from "../interface-preferences";
-import { ensureLocale, LOCALE_NAME_KEYS, t } from "../i18n";
+import { ensureLocale, LOCALE_NAME_KEYS, t, textDirection } from "../i18n";
 
 /** BCP-47 tag for the <html lang> attribute; only locales whose region
     matters for correct rendering need an entry here (others fall through
@@ -47,6 +47,7 @@ export function usePageLocale(): [InterfaceLocale, (next: InterfaceLocale) => vo
   useEffect(() => {
     try {
       document.documentElement.lang = HTML_LANG[locale] ?? locale;
+      document.documentElement.dir = textDirection(locale);
     } catch {
       /* non-DOM environment (tests) */
     }
