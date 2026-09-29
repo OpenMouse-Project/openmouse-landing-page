@@ -2,7 +2,7 @@ import "./supported.css";
 import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { MICE, STATUS, type Mouse, type Status } from "./supported-mice.ts";
-import { ensureLocale, LOCALE_NAME_KEYS, t, tp, type I18nKey } from "./i18n.ts";
+import { ensureLocale, LOCALE_NAME_KEYS, t, textDirection, tp, type I18nKey } from "./i18n.ts";
 import {
   detectLocale,
   loadInterfacePreferences,
@@ -205,8 +205,9 @@ function buildShell(): void {
   const root = document.querySelector<HTMLDivElement>("#app");
   if (!root) return;
   document.documentElement.lang = HTML_LANG[locale] ?? locale;
+  document.documentElement.dir = textDirection(locale);
   root.innerHTML = `
-  <header class="site-header">
+  <header class="site-header" dir="ltr">
     <div class="page-wrap">
       <a class="wordmark" href="/" aria-label="OpenMouse home">
         <img class="wordmark-logo" src="/logo.png" alt="" width="181" height="268">

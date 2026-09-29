@@ -464,7 +464,7 @@ function DonateApp(): ReactNode {
     <div className="don-shell">
       <div className="don-bg" aria-hidden="true" />
 
-      <header className="don-header">
+      <header className="don-header" dir="ltr">
         <a className="don-wordmark" href="/" aria-label="OpenMouse home">
           <img className="don-logo" src="/logo.png" alt="" width={181} height={268} />
           OpenMouse

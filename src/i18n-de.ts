@@ -74,6 +74,7 @@ export const de: Record<I18nKey, string> = {
   "set.japanese": "日本語",
   "set.korean": "한국어",
   "set.russian": "Русский",
+  "set.arabic": "العربية",
   "set.motion": "BEWEGUNG",
   "set.animations": "Animationen",
   "set.animationsBody": "Aktiviert Oberflächenübergänge und animierte Zustandsänderungen.",

@@ -77,6 +77,7 @@ const en = {
   "set.japanese": "日本語",
   "set.korean": "한국어",
   "set.russian": "Русский",
+  "set.arabic": "العربية",
   "set.motion": "MOTION",
   "set.animations": "Animations",
   "set.animationsBody": "Enable interface transitions and animated state changes.",
@@ -825,7 +826,16 @@ export const LOCALE_NAME_KEYS: ReadonlyArray<[InterfaceLocale, I18nKey]> = [
   ["ja", "set.japanese"],
   ["ko", "set.korean"],
   ["ru", "set.russian"],
+  ["ar", "set.arabic"],
 ];
+
+/** Locales written right-to-left; every other locale lays out LTR. */
+const RTL_LOCALES: ReadonlySet<InterfaceLocale> = new Set(["ar"]);
+
+/** Value for the <html dir> attribute. */
+export function textDirection(locale: InterfaceLocale): "rtl" | "ltr" {
+  return RTL_LOCALES.has(locale) ? "rtl" : "ltr";
+}
 
 /** Non-English tables load on demand so the initial bundle ships English
     only (see i18n-pt.ts etc., each split into its own chunk by the
@@ -846,6 +856,7 @@ const LOCALE_LOADERS: Record<Exclude<InterfaceLocale, "en">, () => Promise<Local
   ja: () => import("./i18n-ja.ts").then((m) => m.ja),
   ko: () => import("./i18n-ko.ts").then((m) => m.ko),
   ru: () => import("./i18n-ru.ts").then((m) => m.ru),
+  ar: () => import("./i18n-ar.ts").then((m) => m.ar),
 };
 
 export function ensureLocale(locale: InterfaceLocale): Promise<void> {
