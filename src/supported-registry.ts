@@ -1,6 +1,12 @@
 import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "@openmouse/protocol/drivers/vendors";
 import { LAMZU_PRODUCTS } from "@openmouse/protocol/lamzu";
-import { KEYCHRON_NAPE_PRODUCTS } from "@openmouse/protocol/keychron";
+import {
+  KEYCHRON_4K_MICE,
+  KEYCHRON_8K_NORDIC_MICE,
+  KEYCHRON_LAUNCHER_MICE,
+  KEYCHRON_NAPE_PRODUCTS,
+} from "@openmouse/protocol/keychron";
+import { REDRAGON_PRODUCTS } from "@openmouse/protocol/redragon";
 import { ORBITAL_DEVICES } from "@openmouse/protocol/orbital";
 import { FANTECH_PRODUCTS } from "@openmouse/protocol/fantech";
 import { GWOLVES_PRODUCTS } from "@openmouse/protocol/drivers/gwolves/products";
@@ -11,8 +17,9 @@ import { MICE, REGISTRY_REQ, type Mouse } from "./supported-mice.ts";
 /**
  * Adds the models named by the `@openmouse/protocol` product registries to the
  * supported-devices table as `supported` rows, so a model the drivers cover can
- * never be missing from the page. Rows the table already tracks (by exact or
- * fuzzy name match) are left alone.
+ * never be missing from the page. A row the table tracks under the exact same
+ * name is upgraded to `supported` when it still says the driver is missing;
+ * fuzzy name matches are left alone.
  */
 
 export function normalizeKey(part: string): string {
@@ -126,6 +133,23 @@ export function registrySupportedModels(): Mouse[] {
     if (info.wireless) continue;
     rows.push({ brand: "Logitech", model: info.name, status: info.status, req: 0, note: "", pids: [pid] });
   }
+  // Redragon names its models after the code ("M724") plus a retail name;
+  // keep the retail name alone when it already contains the code.
+  for (const [pid, info] of REDRAGON_PRODUCTS) {
+    const model = info.name.includes(info.model) ? info.name : `${info.model} ${info.name}`;
+    rows.push({ brand: "Redragon", model, status: "supported", req: 0, note: "", pids: [pid] });
+  }
+  // Keychron Launcher mice: the "8k"/"1k" catalog, the 4K family, and the 8K
+  // Nordic models. Launcher lists some models under several PIDs (wired
+  // revisions), so the PIDs are grouped per model.
+  const keychronLauncher = new Map<string, number[]>();
+  for (const mouse of [...KEYCHRON_LAUNCHER_MICE, ...KEYCHRON_4K_MICE, ...KEYCHRON_8K_NORDIC_MICE]) {
+    const model = mouse.name.replace(/^Keychron\s+/, "");
+    keychronLauncher.set(model, [...(keychronLauncher.get(model) ?? []), mouse.productId]);
+  }
+  for (const [model, pids] of keychronLauncher) {
+    rows.push({ brand: "Keychron", model, status: "supported", req: 0, note: "", pids });
+  }
 
   for (const row of rows) row.req = REGISTRY_REQ[`${row.brand}|${row.model}`] ?? 0;
 
@@ -138,9 +162,24 @@ export function registrySupportedModels(): Mouse[] {
   });
 }
 
-/** The static table plus every registry-listed model it does not track yet. */
+/**
+ * Statuses a driver landing in the protocol makes stale. `likely` (Test
+ * Needed) and `quickwin` are deliberate calls about hardware confirmation, so
+ * the registry never overrides them.
+ */
+const UPGRADABLE: ReadonlySet<Mouse["status"]> = new Set(["pr", "driver", "unknown", "pending"]);
+
+/**
+ * The static table plus every registry-listed model it does not track yet.
+ * A tracked row under the exact same name that still claims the driver is
+ * missing (or pending, or in a PR) is upgraded to `supported`, so a driver
+ * merged upstream shows on the page without waiting for a hand edit. Fuzzy
+ * name matches only suppress duplicates; they never change a status.
+ * `bridge`, `likely`, and `quickwin` rows stay as they are.
+ */
 export function withRegistryMice(base: Mouse[]): Mouse[] {
-  const known = new Set(base.map((m) => brandModelKey(m.brand, m.model)));
+  const rows = [...base];
+  const indexByKey = new Map(rows.map((m, index) => [brandModelKey(m.brand, m.model), index] as const));
   const byBrand = new Map<string, Mouse[]>();
   for (const m of base) {
     const bk = normalizeKey(canonicalBrand(m.brand));
@@ -148,14 +187,25 @@ export function withRegistryMice(base: Mouse[]): Mouse[] {
     byBrand.get(bk)!.push(m);
   }
 
-  const rows = [...base];
   for (const model of registrySupportedModels()) {
     const key = brandModelKey(model.brand, model.model);
-    if (known.has(key)) continue;
+    const tracked = indexByKey.get(key);
+    if (tracked !== undefined) {
+      const row = rows[tracked]!;
+      if (model.status === "supported" && UPGRADABLE.has(row.status)) {
+        rows[tracked] = {
+          ...row,
+          status: "supported",
+          pids: row.pids ?? model.pids,
+          note: "Driver in the @openmouse/protocol registry (listed automatically).",
+        };
+      }
+      continue;
+    }
     const bk = normalizeKey(canonicalBrand(model.brand));
     if (byBrand.get(bk)?.some((s) => modelsMatch(s.model, model.model))) continue;
     rows.push({ ...model, note: "Auto-listed from the @openmouse/protocol driver registry." });
-    known.add(key);
+    indexByKey.set(key, rows.length - 1);
     if (!byBrand.has(bk)) byBrand.set(bk, []);
     byBrand.get(bk)!.push(model);
   }

@@ -6,7 +6,14 @@ import { ATK_COMPX_PRODUCT_IDS } from "@openmouse/protocol/drivers/atk/products"
 import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "@openmouse/protocol/drivers/vendors";
 import { BITMOUSE_PRODUCT_IDS } from "@openmouse/protocol/bitmouse";
 import { EGG_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-op1";
-import { KEYCHRON_M6_PRODUCT_ID, KEYCHRON_NAPE_PRODUCTS, KEYCHRON_M6_RECEIVER_PRODUCT_ID } from "@openmouse/protocol/keychron";
+import {
+  KEYCHRON_4K_MICE,
+  KEYCHRON_8K_NORDIC_MICE,
+  KEYCHRON_LAUNCHER_MICE,
+  KEYCHRON_M6_PRODUCT_ID,
+  KEYCHRON_NAPE_PRODUCTS,
+  KEYCHRON_M6_RECEIVER_PRODUCT_ID,
+} from "@openmouse/protocol/keychron";
 import { LAMZU_PRODUCTS, LAMZU_INCA_PRODUCTS } from "@openmouse/protocol/lamzu";
 import { MICROSOFT_PRODUCTS } from "@openmouse/protocol/microsoft";
 import {
@@ -40,6 +47,7 @@ import { RYUNIX_PRODUCT_IDS } from "@openmouse/protocol/ryunix";
 import { DELUX_PRODUCT_IDS } from "@openmouse/protocol/delux";
 import { DAREU_PRODUCT_IDS } from "@openmouse/protocol/dareu";
 import { REDRAGON_PRODUCT_IDS } from "@openmouse/protocol/redragon";
+import { RAPOO_PRODUCT_IDS } from "@openmouse/protocol/rapoo";
 import { RAWM_PRODUCT_IDS } from "@openmouse/protocol/rawm";
 import { GEARHUB_PRODUCTS } from "@openmouse/protocol/gearhub";
 import { MCHOSE_A5_GEN1_PRODUCTS } from "@openmouse/protocol/mchose";
@@ -80,6 +88,8 @@ const DRIVER_BRANDS = new Set<string>([
   // brand after identification.
   "crdrako",
   "vxe",
+  // Noir Gear's M2-NEX runs the K-snake X11 protocol (src/ksnake).
+  "noir gear",
 ]);
 
 test("supported / PR / quickwin claims require a registered driver brand", () => {
@@ -198,8 +208,15 @@ const PID_UNIVERSE = new Set<number>([
   // Dareu A950 PRO Mg — wired direct 0x1117 and TM265 receiver 0x1114
   // (src/dareu).
   ...DAREU_PRODUCT_IDS,
-  // Redragon M724 K1NG 1K (src/redragon).
+  // Redragon M724 K1NG 1K and Predator M612 (src/redragon).
   ...REDRAGON_PRODUCT_IDS,
+  // Rapoo VT9 Pro receiver 0x1205 and cable 0x4405 (src/rapoo).
+  ...RAPOO_PRODUCT_IDS,
+  // Keychron Launcher mice: the "8k"/"1k" catalog, the 4K family, and the
+  // 8K Nordic G3 Air (src/keychron).
+  ...KEYCHRON_LAUNCHER_MICE.map((mouse) => mouse.productId),
+  ...KEYCHRON_4K_MICE.map((mouse) => mouse.productId),
+  ...KEYCHRON_8K_NORDIC_MICE.map((mouse) => mouse.productId),
   // RAWM HUB family mice and receivers (src/rawm).
   ...RAWM_PRODUCT_IDS,
   // GearHub dongle 0x402d + cable 0x4026, shared by the Lingbao M5 Pro and
