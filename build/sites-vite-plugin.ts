@@ -33,12 +33,18 @@ export function sites(): Plugin {
       // route the root request to it. This is the Cloudflare Pages project
       // served at openmouse.app. contribute.html is retired in favor of the
       // real docs site (docs.openmouse.app) — send both its old paths there
-      // permanently.
+      // permanently. The Linux Bridge installer lives in the OpenMouse-Bridge
+      // repo; redirect here so `curl -fsSL
+      // https://openmouse.app/bridge/download/install-linux.sh | bash` (and
+      // the short alias) always serves the current script. 302 so clients
+      // re-resolve it instead of caching the target permanently.
       await writeFile(
         resolve(root, outputDirectory, "_redirects"),
         "/    /landing.html   200\n" +
           "/contribute.html    https://docs.openmouse.app   301\n" +
-          "/contribute    https://docs.openmouse.app   301\n",
+          "/contribute    https://docs.openmouse.app   301\n" +
+          "/bridge/download/install-linux.sh    https://raw.githubusercontent.com/OpenMouse-Project/OpenMouse-Bridge/main/install-linux.sh   302\n" +
+          "/install-linux.sh    https://raw.githubusercontent.com/OpenMouse-Project/OpenMouse-Bridge/main/install-linux.sh   302\n",
       );
     },
   };
