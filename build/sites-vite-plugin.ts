@@ -34,17 +34,11 @@ export function sites(): Plugin {
       // served at openmouse.app. contribute.html is retired in favor of the
       // real docs site (docs.openmouse.app) — send both its old paths there
       // permanently.
-      // Linux Bridge installer: short URL plus a namespaced alias that
-      // mentions bridge/download. Both 302 to the canonical script in the
-      // OpenMouse-Bridge repo (curl follows with -fsSL), so the script has
-      // a single source of truth.
       await writeFile(
         resolve(root, outputDirectory, "_redirects"),
         "/    /landing.html   200\n" +
           "/contribute.html    https://docs.openmouse.app   301\n" +
-          "/contribute    https://docs.openmouse.app   301\n" +
-          "/install-linux.sh    https://raw.githubusercontent.com/OpenMouse-Project/OpenMouse-Bridge/main/install-linux.sh   302\n" +
-          "/bridge/download/install-linux.sh    https://raw.githubusercontent.com/OpenMouse-Project/OpenMouse-Bridge/main/install-linux.sh   302\n",
+          "/contribute    https://docs.openmouse.app   301\n",
       );
     },
   };
