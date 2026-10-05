@@ -225,6 +225,11 @@ export const MICE: Mouse[] = [
     pids: [0xfc7a],
     note: "PID 0xfc7a in Redragon driver — DPI table writes (5 stages, up to 12400) verified on hardware" },
 
+  // FATER ───────────────────────────────────────────────────────────────
+  { brand: "Fater",    model: "MCR-9000B",              status: "pr",        req: 1,
+    pids: [0xa09f],
+    note: "Holtek E-Signal firmware (VID 0x04d9). Read-only driver open in mouse-protocol: polling rate and active profile over the 8-byte feature frame; DPI needs a capture of the vendor app" },
+
   // RYUNIX ──────────────────────────────────────────────────────────────
   { brand: "Ryunix",   model: "KYU Pro MX1",            status: "supported", req: 0,
     pids: [0x026e, 0x026f],
