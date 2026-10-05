@@ -837,6 +837,8 @@ export const MICE: Mouse[] = [
     note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd037 / 0xd041." },
   { brand: "Keychron", model: "M2 4K",                  status: "pr",        req: 0,
     note: "Wired and 4K receiver. DPI stages, polling up to 4000 Hz, lift-off, motion sync, angle snapping, ripple control, debounce, onboard profiles and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd045." },
+  { brand: "Keychron", model: "G3 Air",                 status: "pr",        req: 0,
+    note: "Wired and Ultra-Link 8K receiver. DPI stages up to 30000, polling up to 8000 Hz, lift-off 0.7/1/2 mm, motion sync, angle snapping, ripple control, 20K FPS mode, angle tuning, debounce, sleep, onboard profiles, button remapping and battery. Decoded from Keychron Launcher; needs a hardware test. Wired PID 0xd077." },
 
   // Asus ────────────────────────────────────────────────────────────────
   { brand: "Asus",     model: "Harpe Ace Aim Lab",      status: "driver",    req: 10,
