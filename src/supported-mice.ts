@@ -775,6 +775,14 @@ export const MICE: Mouse[] = [
     pids: [0x006a, 0x006b],
     note: "PIDs 0x006a/0x006b in Lamzu/CompX driver" },
 
+  // LUNAFURY ────────────────────────────────────────────────────────────
+  { brand: "LunaFury", model: "LUNA33",                 status: "supported", req: 0,
+    pids: [0x0032, 0x0033],
+    note: "VID 0x373e — wired 0x0032 and 8K receiver 0x0033 verified on hardware with firmware 0.0.26.0" },
+  { brand: "LunaFury", model: "TYPE33",                 status: "likely",    req: 0,
+    pids: [0x0054, 0x0084],
+    note: "VID 0x373e — wired 0x0054 and 8K receiver 0x0084 in the Lamzu/CompX driver; source-verified, not yet tested on hardware" },
+
   // NINJUTSO ────────────────────────────────────────────────────────────
   { brand: "Ninjutso", model: "Sora V2",                status: "supported", req: 1,
     pids: [0xae11, 0xae12, 0xae13, 0xae14, 0xae15, 0xae16],

@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { type Mouse } from "./supported-mice.ts";
+import { MICE, type Mouse } from "./supported-mice.ts";
 import { normalizeKey, registrySupportedModels, withRegistryMice } from "./supported-registry.ts";
 
 const BASE: Mouse[] = [
@@ -81,4 +81,16 @@ test("bridge, test-needed, and fuzzy-matched rows keep their status", () => {
   const fantech = merged.filter((m) => m.brand === "Fantech" && /WG14P/.test(m.model));
   assert.equal(fantech.length, 1);
   assert.equal(fantech[0]!.status, "likely");
+});
+
+test("LunaFury registry entries preserve curated verification without duplicates", () => {
+  const models = registrySupportedModels().filter((m) => m.brand === "LunaFury");
+  assert.deepEqual(models.map((m) => m.model).sort(), ["LUNA33", "TYPE33"]);
+
+  const curated = MICE.filter((m) => m.brand === "LunaFury");
+  assert.equal(curated.length, 2);
+  const merged = withRegistryMice(MICE).filter((m) => m.brand === "LunaFury");
+  assert.deepEqual(merged, curated, "statuses, notes, and both connection PIDs are kept");
+  assert.equal(merged.find((m) => m.model === "LUNA33")?.status, "supported");
+  assert.equal(merged.find((m) => m.model === "TYPE33")?.status, "likely");
 });

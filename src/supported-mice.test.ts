@@ -87,6 +87,7 @@ const DRIVER_BRANDS = new Set<string>([
   // These products are driven by a shared protocol family and report their own
   // brand after identification.
   "crdrako",
+  "lunafury",
   "vxe",
   // Noir Gear's M2-NEX runs the K-snake X11 protocol (src/ksnake).
   "noir gear",
@@ -279,5 +280,31 @@ test("no A7 V3 row claims to be confirmed on hardware", () => {
   for (const row of MICE.filter((m) => m.brand === "Mchose" && /^A7 V3/.test(m.model))) {
     assert.equal(row.status, "likely", `${row.model}: nothing V3 has been tested`);
     assert.match(row.note ?? "", /not confirmed on hardware|untested/i);
+  }
+});
+
+test("LUNA33 records both hardware-verified runtime identities and firmware", () => {
+  const rows = MICE.filter((m) => m.brand === "LunaFury" && m.model === "LUNA33");
+  assert.equal(rows.length, 1);
+  const row = rows[0]!;
+  assert.equal(row.status, "supported");
+  assert.deepEqual(row.pids, [0x0032, 0x0033]);
+  assert.match(row.note, /wired.*8K receiver.*verified.*0\.0\.26\.0/i);
+  for (const pid of row.pids!) {
+    assert.equal(LAMZU_PRODUCTS.get(pid)?.brand, "LunaFury");
+    assert.equal(LAMZU_PRODUCTS.get(pid)?.model, row.model);
+  }
+});
+
+test("TYPE33 keeps its source-verified runtime identities marked test needed", () => {
+  const rows = MICE.filter((m) => m.brand === "LunaFury" && m.model === "TYPE33");
+  assert.equal(rows.length, 1);
+  const row = rows[0]!;
+  assert.equal(row.status, "likely");
+  assert.deepEqual(row.pids, [0x0054, 0x0084]);
+  assert.match(row.note, /not (?:yet )?tested on hardware/i);
+  for (const pid of row.pids!) {
+    assert.equal(LAMZU_PRODUCTS.get(pid)?.brand, "LunaFury");
+    assert.equal(LAMZU_PRODUCTS.get(pid)?.model, row.model);
   }
 });
