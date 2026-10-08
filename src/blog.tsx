@@ -6,6 +6,7 @@ import "./blog.css";
 import { SiteFooter, SiteNav } from "./app/site-chrome";
 import { mountBlogPage } from "./blog-mount";
 import { usePageLocale } from "./app/page-locale";
+import { usePointerAurora, useScrollReveal } from "./app/motion";
 import { BLOG_CATEGORIES, BLOG_POSTS, type BlogPost } from "./blog-posts";
 
 function formatDate(iso: string): string {
@@ -40,7 +41,7 @@ function BlogCover({ post }: { post: BlogPost }): ReactNode {
 
 function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
   return (
-    <article className="blog-featured">
+    <article className="blog-featured" data-reveal>
       <div className="blog-featured-body">
         <h2>
           <a href={postUrl(post)}>{post.title}</a>
@@ -60,9 +61,9 @@ function FeaturedPost({ post }: { post: BlogPost }): ReactNode {
 
 function PostCard({ post }: { post: BlogPost }): ReactNode {
   return (
-    <a className="blog-card" href={postUrl(post)}>
+    <a className="land-card blog-post-card" href={postUrl(post)} data-reveal>
       <BlogCover post={post} />
-      <div className="blog-card-body">
+      <div className="blog-post-card-body">
         <h3>{post.title}</h3>
         <p>{post.description}</p>
         <time dateTime={post.date}>{formatDate(post.date)}</time>
@@ -72,30 +73,52 @@ function PostCard({ post }: { post: BlogPost }): ReactNode {
 }
 
 function BlogIndex(): ReactNode {
+  const aurora = usePointerAurora();
   const [latest, ...older] = BLOG_POSTS;
   return (
-    <section className="blog-index">
-      <h1 className="blog-visually-hidden">Blog</h1>
-      {latest && <FeaturedPost post={latest} />}
+    <div className="land-page">
+      <header
+        className="land-page-head land-aurora"
+        ref={(node) => {
+          aurora.current = node;
+        }}
+        data-reveal
+      >
+        <h1 className="land-page-title">Blog</h1>
+        <p className="land-page-lead">
+          Incident reports, driver deep-dives, and everything else worth writing down.
+        </p>
+      </header>
+
+      {latest && (
+        <section className="land-section">
+          <FeaturedPost post={latest} />
+        </section>
+      )}
+
       {BLOG_CATEGORIES.map((category) => {
         const posts = older.filter((post) => post.category === category);
         if (posts.length === 0) return null;
         return (
-          <section className="blog-section" key={category} aria-label={category}>
-            <div className="blog-grid">
+          <section className="land-section" key={category}>
+            <div className="land-section-head">
+              <h2>{category}</h2>
+            </div>
+            <div className="land-grid blog-post-grid">
               {posts.map((post) => <PostCard post={post} key={post.slug} />)}
             </div>
           </section>
         );
       })}
-    </section>
+    </div>
   );
 }
 
 function BlogIndexPage(): ReactNode {
   const [locale, setLocale] = usePageLocale();
+  useScrollReveal();
   return (
-    <div className="land-shell">
+    <div className="land-shell land-shell--marketing">
       <SiteNav locale={locale} onLocale={setLocale} />
       <BlogIndex />
       <SiteFooter locale={locale} />

@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import {
   DISCORD_URL,
-  GITHUB_URL,
+  GitHubLink,
   TWITTER_URL,
 } from "./social-links";
 import { t, tp } from "../i18n";
@@ -22,20 +22,22 @@ const LICENSE_URL = "https://github.com/OpenMouse-Project/openmouse-landing-page
 export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocale: (next: InterfaceLocale) => void }): ReactNode {
   return (
     <header className="land-nav" dir="ltr">
-      <a className="land-brand" href="/">
-        <img src="/logo.png" alt="" width={22} height={32} />
-        <span className="land-brand-name">OpenMouse</span>
-      </a>
-      <nav className="land-nav-links">
-        <a href="/supported.html">{t(locale, "land.supported")}</a>
-        <a href="/blog.html">Blog</a>
-        <a href="/faq.html">FAQ</a>
-        <a href="/download.html">{t(locale, "land.download")}</a>
-        <a href="/donate.html">{t(locale, "land.donate")}</a>
-        <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
-      </nav>
-      <PageLocaleToggle locale={locale} onChange={onLocale} />
-      <a className="land-nav-cta" href={APP_URL}>{t(locale, "land.openApp")}</a>
+      <div className="land-nav-inner">
+        <a className="land-brand" href="/">
+          <img src="/favicon-dark.svg" alt="" width={22} height={22} />
+          <span className="land-brand-name">OpenMouse</span>
+        </a>
+        <nav className="land-nav-links">
+          <a href="/supported.html">{t(locale, "land.supported")}</a>
+          <a href="/blog.html">Blog</a>
+          <a href="/faq.html">FAQ</a>
+          <a href="/download.html">{t(locale, "land.download")}</a>
+          <a href="/donate.html">{t(locale, "land.donate")}</a>
+          <GitHubLink locale={locale} />
+        </nav>
+        <PageLocaleToggle locale={locale} onChange={onLocale} />
+        <a className="land-nav-cta" href={APP_URL}>{t(locale, "land.openApp")}</a>
+      </div>
     </header>
   );
 }
@@ -46,7 +48,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
       <div className="land-footer-grid">
         <div className="land-footer-brand">
           <a className="land-fwordmark" href="/">
-            <img src="/logo.png" alt="" width={22} height={32} />
+            <img src="/favicon-dark.svg" alt="" width={22} height={22} />
             OpenMouse
           </a>
           <p className="land-footer-tagline">{t(locale, "don.tagline")}</p>
@@ -65,7 +67,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
 
         <nav className="land-footer-col" aria-label={t(locale, "don.contributeCol")}>
           <h3>{t(locale, "don.contributeCol")}</h3>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+          <GitHubLink locale={locale} />
           <a href="https://github.com/OpenMouse-Project/openmouse/issues" target="_blank" rel="noreferrer">
             {t(locale, "don.reportIssue")}
           </a>
@@ -83,9 +85,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
           <a href={TWITTER_URL} target="_blank" rel="noreferrer" aria-label={t(locale, "don.community")}>
             X / Twitter
           </a>
-          <a href={GITHUB_URL} target="_blank" rel="noreferrer" aria-label={t(locale, "don.community")}>
-            GitHub
-          </a>
+          <GitHubLink locale={locale} />
         </nav>
       </div>
 

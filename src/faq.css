@@ -1,0 +1,89 @@
+/* ── FAQ page (openmouse.app/faq.html) ───────────────────────────────────
+   The page itself runs on the shared primitives in landing.css: the page
+   column, the aurora page head, kicker/lead type, sections and the closing
+   panel. Only the Q&A list lives here, so landing.css stays free of FAQ-only
+   presentation. It stays a real definition list - one card per question and
+   answer pair - in a two-up grid that collapses on its own. */
+
+.land-faq-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+}
+
+/* Same surface as .land-card: mint hairline along the top edge, panel fill,
+   and the same lift on hover, so a question reads as one of the page's
+   cards. */
+.land-faq-item {
+  position: relative;
+  padding: 1.5rem 1.45rem 1.6rem;
+  border: 1px solid var(--land-line);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012) 46%, rgba(255, 255, 255, 0) 100%),
+    var(--land-panel);
+  transition: transform 0.4s var(--land-ease), border-color 0.4s var(--land-ease), box-shadow 0.4s var(--land-ease);
+}
+.land-faq-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(105, 210, 141, 0.55), transparent);
+  opacity: 0.45;
+  transition: opacity 0.4s var(--land-ease);
+}
+.land-faq-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(105, 210, 141, 0.28);
+  box-shadow: 0 34px 64px -36px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(105, 210, 141, 0.07);
+}
+.land-faq-item:hover::before {
+  opacity: 1;
+}
+
+/* Question: the same mint dot as .land-eyebrow, so every question opens with
+   a marker instead of a bare line of bold text. */
+.land-faq-item dt {
+  display: flex;
+  gap: 0.62rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.014em;
+}
+.land-faq-item dt::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--land-mint);
+  box-shadow: 0 0 0 3px rgba(105, 210, 141, 0.16);
+}
+
+/* Answer indents to the question text, not to the dot. */
+.land-faq-item dd {
+  margin: 0.6rem 0 0 calc(0.62rem + 6px);
+  font-size: 0.93rem;
+  line-height: 1.68;
+  color: var(--land-dim);
+}
+.land-faq-item dd a {
+  color: var(--land-mint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.land-faq-item dd a:hover {
+  color: var(--land-mint-bright);
+}
+
+/* The closing panel pairs the app CTA with the docs one, so the secondary
+   button sits on the row instead of keeping the panel's own top offset. */
+.land-faq-cta .land-cta-secondary {
+  margin-top: 0;
+}

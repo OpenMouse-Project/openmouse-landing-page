@@ -276,7 +276,7 @@ function BlogPostPage(): ReactNode {
       <SiteNav locale={locale} onLocale={setLocale} />
       <div className="blog-layout">
         <BlogToc items={SECTIONS} />
-        <div className="blog-main">
+        <div>
           <Post />
           <div className="blog-comments-wrap">
             <BlogComments slug={POST_SLUG} />

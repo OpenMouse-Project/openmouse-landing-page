@@ -1,170 +1,107 @@
 /* ── Download (openmouse.app/download.html) ──────────────────────────────
-   One card per way to run OpenMouse. Uses landing.css's tokens. */
+   One card per way to run OpenMouse. The page head, the cards, the steps and
+   the note all come from landing.css's shared primitives, so this file only
+   holds the card internals and the install list. */
 
-.dl-page {
-  max-width: 1080px;
-  margin: 0 auto;
-  padding: clamp(2.5rem, 7vw, 4.5rem) 1.5rem clamp(3rem, 6vw, 4.5rem);
-}
-
-.dl-head {
-  max-width: 620px;
-  margin: 0 auto 2.8rem;
-  text-align: center;
-}
-.dl-head h1 {
-  margin: 0 0 0.8rem;
-  font-size: clamp(2rem, 5vw, 2.8rem);
-  font-weight: 600;
-  letter-spacing: -0.03em;
-}
-.dl-head p {
-  margin: 0;
-  font-size: 1.02rem;
-  line-height: 1.65;
-  color: var(--land-dim);
-}
-
-.dl-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.2rem;
+/* Three options across on desktop, like the landing page's feature row. */
+.dl-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 @media (max-width: 900px) {
-  .dl-grid { grid-template-columns: 1fr; max-width: 520px; margin: 0 auto; }
+  .dl-options {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
 }
 
-.dl-card {
-  display: flex;
-  flex-direction: column;
-  padding: 1.6rem;
-  border: 1px solid var(--land-line);
-  border-radius: 16px;
-  background: var(--land-panel);
-}
+/* Bridge is the card with something to download today, so it carries the
+   accent edge. */
 .dl-card-featured {
-  border-color: rgba(105, 210, 141, 0.35);
-  background:
-    radial-gradient(420px 220px at 50% 0%, rgba(105, 210, 141, 0.08), transparent 70%),
-    var(--land-panel);
+  border-color: rgba(105, 210, 141, 0.3);
 }
-.dl-card-soon { opacity: 0.85; }
+.dl-card-featured::before {
+  opacity: 1;
+}
+/* The desktop app isn't out yet, so that card sits a step back. Dimmed with a
+   filter rather than opacity so the scroll reveal still owns the card's own
+   opacity (they would fight over the same property). */
+.dl-card-soon {
+  filter: opacity(0.85);
+}
 
-/* Product shots: each card opens with an image on a soft "wallpaper". */
+/* The Bridge panel, in the same framed "wallpaper" as the landing page's
+   bridge shot, sitting next to the install steps so both pages show the same
+   surface. */
+.dl-install-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.6rem, 4vw, 3rem);
+}
+@media (max-width: 860px) {
+  .dl-install-body {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
 .dl-shot {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  aspect-ratio: 16 / 10;
-  margin: -0.4rem -0.4rem 1.4rem;
-  overflow: hidden;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  place-items: center;
+  padding: 0.9rem;
+  border: 1px solid var(--land-line);
+  border-radius: 14px;
   background:
-    radial-gradient(90% 80% at 15% 0%, rgba(105, 210, 141, 0.35), transparent 60%),
-    radial-gradient(80% 90% at 100% 100%, rgba(56, 120, 170, 0.35), transparent 60%),
-    linear-gradient(160deg, #10251c, #0b1320 70%);
+    radial-gradient(120% 90% at 50% 0%, rgba(105, 210, 141, 0.09), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 60%),
+    var(--land-panel);
 }
-
-.dl-shot-bridge img {
-  width: 58%;
+.dl-shot img {
+  display: block;
+  width: min(100%, 400px);
   height: auto;
   border-radius: 10px;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 18px 40px -12px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 30px 60px -34px rgba(0, 0, 0, 0.9);
 }
 
-/* The web app screenshot peeks in from the corner, like a window behind. */
-.dl-shot-web {
-  align-items: flex-start;
-  justify-content: flex-start;
-  background:
-    radial-gradient(90% 80% at 85% 0%, rgba(105, 210, 141, 0.3), transparent 60%),
-    radial-gradient(80% 90% at 0% 100%, rgba(120, 90, 200, 0.3), transparent 60%),
-    linear-gradient(200deg, #10251c, #120f22 70%);
-}
-.dl-shot-web img {
-  width: 150%;
-  max-width: none;
-  height: auto;
-  margin: 12% 0 0 10%;
-  border-radius: 8px 0 0 0;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.08),
-    0 18px 40px -12px rgba(0, 0, 0, 0.7);
-}
-
-.dl-shot-desktop {
-  flex-direction: column;
-  gap: 0.8rem;
-  background:
-    radial-gradient(80% 80% at 50% 0%, rgba(255, 255, 255, 0.08), transparent 60%),
-    linear-gradient(180deg, #15181d, #0d0f13);
-}
-.dl-shot-desktop img {
-  width: 36px;
-  height: auto;
-  opacity: 0.55;
-}
-.dl-shot-desktop span {
-  font-family: var(--land-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: #6f8387;
-}
-
+/* Card kickers that carry a badge lay out as a row; the type itself is
+   landing.css's .land-kicker. */
 .dl-kicker {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0 0 0.6rem;
-  font-family: var(--land-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--land-mint);
 }
 .dl-badge {
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
   background: rgba(232, 178, 103, 0.14);
   color: #e8b267;
+  font-size: 0.7rem;
   letter-spacing: 0.06em;
 }
 
-.dl-card h2 {
-  margin: 0 0 0.6rem;
-  font-size: 1.35rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-.dl-desc {
-  margin: 0 0 1.1rem;
-  font-size: 0.93rem;
+/* The card's own gap owns the vertical rhythm, so the lists and button rows
+   inside it carry no margin of their own. */
+.dl-meta {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.84rem;
   line-height: 1.6;
   color: var(--land-dim);
 }
-.dl-meta {
-  list-style: none;
-  margin: 0 0 1.5rem;
-  padding: 0;
-  font-size: 0.84rem;
-  color: #6f8387;
-}
-.dl-meta li + li { margin-top: 0.3rem; }
-.dl-count {
-  font-variant-numeric: tabular-nums;
-  color: var(--land-mint);
+.dl-meta li + li {
+  margin-top: 0.3rem;
 }
 
 .dl-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
+  gap: 0.55rem;
   margin-top: auto;
+  padding-top: 0.4rem;
 }
 .dl-btn {
   display: inline-flex;
@@ -185,7 +122,9 @@
   margin-right: 0.5rem;
   flex: none;
 }
-.dl-btn-wide { flex-basis: 100%; }
+.dl-btn-wide {
+  flex-basis: 100%;
+}
 .dl-soon {
   margin-left: 0.5rem;
   padding: 0.05rem 0.45rem;
@@ -220,24 +159,38 @@
 .dl-foot {
   display: flex;
   gap: 0.5rem;
-  margin: 1rem 0 0;
+  margin: 0;
   font-size: 0.82rem;
-  color: #55666a;
+  color: var(--land-dim);
 }
-.dl-foot a,
-.dl-note a {
+.dl-foot a {
   color: var(--land-dim);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.dl-foot a:hover,
-.dl-note a:hover { color: var(--land-text); }
+.dl-foot a:hover {
+  color: var(--land-text);
+}
 
-.dl-note {
-  margin: 2rem auto 0;
-  max-width: 620px;
-  text-align: center;
-  font-size: 0.85rem;
-  line-height: 1.6;
-  color: #6f8387;
+/* ── Installing Bridge ─────────────────────────────────────────────────── */
+/* The steps themselves are landing.css's .land-steps; this is the note that
+   follows them, plus the one command-line name the steps mention. */
+.dl-install .land-note {
+  margin-top: 1.5rem;
+}
+.dl-install .land-note a {
+  color: var(--land-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dl-install .land-note a:hover {
+  color: var(--land-text);
+}
+.dl-install code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--land-mono);
+  font-size: 0.85em;
+  color: var(--land-mint);
 }

@@ -18,7 +18,7 @@ const HTML_LANG: Partial<Record<InterfaceLocale, string>> = {
   zh: "zh-Hans",
 };
 import { withRegistryMice } from "./supported-registry.ts";
-import { GITHUB_URL } from "./app/social-links";
+import { formatCount, GITHUB_URL, loadGitHubStars } from "./app/social-links";
 
 // ── Data ──────────────────────────────────────────────────────────────────
 // Mouse/status data lives in ./supported-mice.ts (verified at build time by
@@ -613,8 +613,30 @@ function bindShell(): void {
 }
 window.addEventListener("resize", hideTagTip);
 
+/* The supported page builds its own header, so its GitHub link gets the same
+   star count as the shared chrome, from the same cached request. */
+function mountGitHubStars(): void {
+  void loadGitHubStars().then((count) => {
+    const link = document.querySelector<HTMLAnchorElement>(".github-link");
+    if (!link || count === null) return;
+    const label = formatCount(count);
+    link.setAttribute("aria-label", `OpenMouse on GitHub, ${tp(locale, "don.stars", { n: label })}`);
+    const existing = link.querySelector<HTMLSpanElement>(".github-stars");
+    if (existing) {
+      existing.textContent = label;
+      return;
+    }
+    const pill = document.createElement("span");
+    pill.className = "github-stars";
+    pill.setAttribute("aria-hidden", "true");
+    pill.textContent = label;
+    link.append(pill);
+  });
+}
+
 buildShell();
 bindShell();
+mountGitHubStars();
 fillBrands();
 fillTags();
 renderList();
@@ -625,6 +647,7 @@ if (locale !== "en") {
   void ensureLocale(locale).then(() => {
     buildShell();
     bindShell();
+    mountGitHubStars();
     fillBrands();
     fillTags();
     renderList();
