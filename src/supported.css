@@ -178,6 +178,17 @@ a:focus-visible, button:focus-visible, input:focus-visible {
 .github-link:hover { color: var(--ink); border-color: var(--ink-3); }
 .github-link svg { width: 14px; height: 14px; }
 
+.github-stars {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--bg-border2);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Page head ──────────────────────────────────────────────────────────── */
 .page-head { padding: 3rem 0 1.25rem; }
 
@@ -589,6 +600,7 @@ footer {
   .nav-links { display: none; }
   .header-nav { margin-left: 0; }
   .github-link span { display: none; }
+  .github-link .github-stars { display: none; }
   .page-head { padding: 2rem 0 1rem; }
   .page-head h1 { font-size: 1.7rem; }
   .toolbar { top: 0; }

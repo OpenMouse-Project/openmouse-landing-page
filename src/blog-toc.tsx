@@ -39,8 +39,8 @@ function useActiveSection(items: readonly TocItem[]): string | null {
 
 /**
  * "On this page" list for long posts: a sticky rail beside the article on
- * wide screens, a plain list above it on narrow ones. Highlights the
- * section currently being read.
+ * wide screens, hidden below 960px where the post runs full width.
+ * Highlights the section currently being read.
  */
 export function BlogToc({ items }: { items: readonly TocItem[] }): ReactNode {
   const active = useActiveSection(items);

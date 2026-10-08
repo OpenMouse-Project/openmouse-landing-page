@@ -1,4 +1,6 @@
 import { useEffect, useState, type ReactNode } from "react";
+import { tp } from "../i18n";
+import type { InterfaceLocale } from "../interface-preferences";
 
 /* Shared social/community links and icon marks — used by the launch
    countdown gate (control.openmouse.app) and the marketing landing page
@@ -46,23 +48,81 @@ export function formatCount(value: number): string {
   return value >= 1000 ? `${(value / 1000).toFixed(value >= 10_000 ? 0 : 1)}k` : String(value);
 }
 
+/* One request per session, shared by every star badge on the page and kept
+   for STARS_TTL_MS, so the nav, the footer and page copy don't each spend an
+   unauthenticated api.github.com call (60/hour per IP). A failed request
+   clears the shared promise so a later mount can retry. */
+const STARS_CACHE_KEY = "openmouse-github-stars";
+const STARS_TTL_MS = 15 * 60 * 1000;
+let starsRequest: Promise<number | null> | null = null;
+
+export function loadGitHubStars(): Promise<number | null> {
+  starsRequest ??= fetch(`https://api.github.com/repos/${GITHUB_REPO}`)
+    .then((response) => (response.ok ? response.json() : null))
+    .then((data) => {
+      const count = data && typeof data.stargazers_count === "number" ? (data.stargazers_count as number) : null;
+      if (count !== null) {
+        try {
+          window.sessionStorage.setItem(STARS_CACHE_KEY, JSON.stringify({ at: Date.now(), count }));
+        } catch {
+          // Storage is optional; the count still shows for this page view.
+        }
+      }
+      return count;
+    })
+    .catch(() => {
+      starsRequest = null;
+      return null;
+    });
+  return starsRequest;
+}
+
 export function useGitHubStars(): number | null {
-  const [stars, setStars] = useState<number | null>(null);
+  const [stars, setStars] = useState<number | null>(() => {
+    try {
+      const raw = window.sessionStorage.getItem(STARS_CACHE_KEY);
+      const cached = raw ? (JSON.parse(raw) as { at: number; count: number }) : null;
+      if (cached && typeof cached.count === "number" && Date.now() - cached.at < STARS_TTL_MS) {
+        return cached.count;
+      }
+    } catch {
+      // No session storage (private mode, prerender): fall through to the fetch.
+    }
+    return null;
+  });
 
   useEffect(() => {
-    let cancelled = false;
-    fetch(`https://api.github.com/repos/${GITHUB_REPO}`)
-      .then((response) => (response.ok ? response.json() : null))
-      .then((data) => {
-        if (!cancelled && data && typeof data.stargazers_count === "number") {
-          setStars(data.stargazers_count);
-        }
-      })
-      .catch(() => undefined);
+    let live = true;
+    void loadGitHubStars().then((count) => {
+      if (live && count !== null) setStars(count);
+    });
     return () => {
-      cancelled = true;
+      live = false;
     };
   }, []);
 
   return stars;
+}
+
+/** A GitHub link that carries the live star count. Used wherever the site
+    names GitHub, so the number is never stale copy. */
+export function GitHubLink({ locale, className }: { locale: InterfaceLocale; className?: string }): ReactNode {
+  const stars = useGitHubStars();
+  return (
+    <a
+      className={className ? `gh-link ${className}` : "gh-link"}
+      href={GITHUB_URL}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={stars === null ? undefined : `GitHub, ${tp(locale, "don.stars", { n: formatCount(stars) })}`}
+    >
+      GitHub
+      {stars === null ? null : (
+        <span className="gh-stars" aria-hidden="true">
+          <StarIcon />
+          {formatCount(stars)}
+        </span>
+      )}
+    </a>
+  );
 }
