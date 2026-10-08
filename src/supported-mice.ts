@@ -595,6 +595,9 @@ export const MICE: Mouse[] = [
     note: "iCUE protocol — not implemented" },
   { brand: "Corsair", model: "Ironclaw RGB",              status: "driver",   req: 5,
     note: "iCUE protocol — not implemented" },
+  { brand: "Corsair", model: "Ironclaw RGB Wireless",     status: "pr",       req: 0,
+    pids: [0x1b4c, 0x1b66, 0x1bdc],
+    note: "Corsair Bragi protocol, over the cable (0x1b4c) or a SLIPSTREAM receiver (0x1b66, 0x1bdc). Read-only driver open in mouse-protocol: DPI, polling rate, battery and firmware. Written from an iCUE capture plus ckb-next and OpenRGB, not yet run on hardware" },
 
   // GLORIOUS ────────────────────────────────────────────────────────────
   // Three tiers: the Pixart Model O 2 / I 2 family (write-only,
