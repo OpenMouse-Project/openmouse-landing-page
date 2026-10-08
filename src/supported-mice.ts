@@ -601,7 +601,8 @@ export const MICE: Mouse[] = [
   // drivers/glorious/hid.ts); the pre-Pixart "core1" classic Model O/D/I
   // family (full DPI/polling/LOD/debounce/RGB write + read battery,
   // drivers/glorious/classic-hid.ts, ported from glorious-ctl + mxw); and the
-  // newer 8000Hz-class "core2" devices on the SAME classic-hid.ts driver but
+  // newer 8000Hz-class "core2" devices (the Model O2 Pro 4K/8K has its own
+  // driver, drivers/glorious/core2-hid.ts) on the SAME classic-hid.ts driver but
   // gated to RGB/debounce/battery only — DPI/polling/LOD stay off for core2
   // because korkje/mxw's own device list never included them, and (for
   // polling specifically) github.com/AMarcinkiewicz/GloriousAutoPollingRate
@@ -621,9 +622,9 @@ export const MICE: Mouse[] = [
   { brand: "Glorious", model: "Model D",                 status: "supported",   req: 8,
     pids: [0x2012],
     note: "Same PID as Model D Wireless's wired mode — classic driver (VID 0x258a)" },
-  { brand: "Glorious", model: "Model O2 Pro 4K/8K",     status: "likely",   req: 5,
+  { brand: "Glorious", model: "Model O2 Pro 4K/8K",     status: "pr",       req: 5,
     pids: [0x201b, 0x2035],
-    note: "Classic driver recognizes this PID (VID 0x258a) but only writes RGB/debounce and reads battery — DPI/polling/LOD are unconfirmed on this newer \"core2\" firmware and stay off" },
+    note: "Own driver open in mouse-protocol, from a Glorious CORE capture and CORE's own code: DPI stages and colors, polling rate up to 8000 Hz on the cable (4000 Hz on the receiver), debounce, motion sync, three profiles, battery and firmware. Settings cannot be read back, so the panel shows the last values written. Not yet run on hardware" },
   { brand: "Glorious", model: "Model O Pro",             status: "supported", req: 1,
     pids: [0x2015, 0x2027],
     note: "Classic driver (VID 0x258a) — full DPI/polling/LOD/debounce/RGB write, battery read, per RealCrystalNight/Glorious-Mouse-Toolkit-Linux's device table" },
