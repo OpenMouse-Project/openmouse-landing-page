@@ -7,6 +7,7 @@ import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "
 import { GLORIOUS_CORE2_PRODUCTS } from "@openmouse/protocol/glorious-core2";
 import { BITMOUSE_PRODUCT_IDS } from "@openmouse/protocol/bitmouse";
 import { EGG_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-op1";
+import { OT_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-ot";
 import {
   KEYCHRON_4K_MICE,
   KEYCHRON_8K_NORDIC_MICE,
@@ -140,6 +141,8 @@ const PID_UNIVERSE = new Set<number>([
   ...NINJUTSO_RECEIVER_PRODUCT_IDS,
   ...ORBITAL_DEVICES.keys(),
   ...EGG_DEVICE_PROFILES.keys(),
+  // Endgame OT platform: XM1r, OP1, OP1 RGB (src/endgame-gear/ot.ts).
+  ...OT_DEVICE_PROFILES.keys(),
   // Endgame WE-series cables/receivers (drivers/endgame/egg-we-hid.ts).
   0x1960, 0x1961, 0x1962, 0x1968, 0x1970, 0x1972, 0x1982,
   // VGN Dragonfly F2 Master+ (drivers/vgn/hid.ts).
