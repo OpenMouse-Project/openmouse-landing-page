@@ -636,9 +636,9 @@ export const MICE: Mouse[] = [
   // driver does not speak yet (polling capped at 1000 Hz). PID/name pairings
   // re-checked against Glorious CORE v2.1.3's own SupportDevice.DB — notably
   // PID 0x2033 is the Model O 2 PRO receiver, not "Model O 2 Wireless".
-  { brand: "Glorious", model: "Model O 2 PRO",  status: "pr", req: 5,
+  { brand: "Glorious", model: "Model O 2 PRO",  status: "supported", req: 5,
     pids: [0x2019, 0x2033],
-    note: "Classic driver (VID 0x258a, wired 0x2019 + receiver 0x2033) — Glorious CORE's own device table pairs these PIDs as the O 2 PRO. DPI/polling/LOD/debounce/RGB are write-only, battery is read. Polling tops out at 1000 Hz on this generation. Driver lands with mouse-protocol#198; flips to supported once the protocol pin picks it up" },
+    note: "Classic driver (VID 0x258a, wired 0x2019 + receiver 0x2033) — Glorious CORE's own device table pairs these PIDs as the O 2 PRO. DPI/polling/LOD/debounce/RGB are write-only, battery is read. Polling tops out at 1000 Hz on this generation" },
   { brand: "Glorious", model: "Model O",                 status: "supported", req: 54,
     pids: [0x2011, 0x2022],
     note: "Classic driver (VID 0x258a). DPI/polling/LOD/debounce/RGB are write-only, battery is read" },
