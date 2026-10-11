@@ -622,22 +622,22 @@ export const MICE: Mouse[] = [
     note: "Corsair Bragi protocol, over the cable (0x1b4c) or a SLIPSTREAM receiver (0x1b66, 0x1bdc). Read-only driver open in mouse-protocol: DPI, polling rate, battery and firmware. Written from an iCUE capture plus ckb-next and OpenRGB, not yet run on hardware" },
 
   // GLORIOUS ────────────────────────────────────────────────────────────
-  // Three tiers: the Pixart Model O 2 / I 2 family (write-only,
+  // Three tiers: the Pixart Model O 2 / I 2 / D 2 family (write-only,
   // drivers/glorious/hid.ts); the pre-Pixart "core1" classic Model O/D/I
   // family (full DPI/polling/LOD/debounce/RGB write + read battery,
   // drivers/glorious/classic-hid.ts, ported from glorious-ctl + mxw); and the
-  // newer 8000Hz-class "core2" devices (the Model O2 Pro 4K/8K has its own
-  // driver, drivers/glorious/core2-hid.ts) on the SAME classic-hid.ts driver but
-  // gated to RGB/debounce/battery only — DPI/polling/LOD stay off for core2
-  // because korkje/mxw's own device list never included them, and (for
-  // polling specifically) github.com/AMarcinkiewicz/GloriousAutoPollingRate
-  // shows the D2 Pro 4K/8K's real polling command uses an entirely different
-  // usage page/report layout, confirming core2 isn't just core1 with new
-  // values. See [[glorious-classic-protocol]] in project memory for the full
-  // writeup, including the exact (unwired) D2 Pro 4K/8K polling-rate bytes.
-  { brand: "Glorious", model: "Model O 2 Pro Wireless",  status: "supported", req: 5,
-    pids: [0x2033],
-    note: "Same PID (0x2033) as the classic driver's \"Model O 2 Wireless\" — Glorious's own \"O2 Pro\" name for it, per AwesomeTy18/GloriousBatteryMonitor's device table. DPI/polling/LOD/debounce/RGB are write-only, battery is read" },
+  // newer 8000Hz-class "core2" devices (Model O2/D2 Pro 4K/8K, own driver
+  // drivers/glorious/core2-hid.ts). Model O3 Wireless stays on the SAME
+  // classic-hid.ts driver but gated to RGB/debounce/battery only —
+  // DPI/polling/LOD stay off for it because korkje/mxw's own device list
+  // never included it. Series 2 PRO is classic-protocol for everything except
+  // its 2K/4K/8K polling rates, which need a newer per-profile command this
+  // driver does not speak yet (polling capped at 1000 Hz). PID/name pairings
+  // re-checked against Glorious CORE v2.1.3's own SupportDevice.DB — notably
+  // PID 0x2033 is the Model O 2 PRO receiver, not "Model O 2 Wireless".
+  { brand: "Glorious", model: "Model O 2 PRO",  status: "supported", req: 5,
+    pids: [0x2019, 0x2033],
+    note: "Classic driver (VID 0x258a, wired 0x2019 + receiver 0x2033) — Glorious CORE's own device table pairs these PIDs as the O 2 PRO. DPI/polling/LOD/debounce/RGB are write-only, battery is read. Polling tops out at 1000 Hz on this generation" },
   { brand: "Glorious", model: "Model O",                 status: "supported", req: 54,
     pids: [0x2011, 0x2022],
     note: "Classic driver (VID 0x258a). DPI/polling/LOD/debounce/RGB are write-only, battery is read" },
@@ -653,9 +653,27 @@ export const MICE: Mouse[] = [
   { brand: "Glorious", model: "Model O Pro",             status: "supported", req: 1,
     pids: [0x2015, 0x2027],
     note: "Classic driver (VID 0x258a) — full DPI/polling/LOD/debounce/RGB write, battery read, per RealCrystalNight/Glorious-Mouse-Toolkit-Linux's device table" },
-  { brand: "Glorious", model: "Model D2 Pro Wireless 8K",status: "likely",  req: 1,
+  { brand: "Glorious", model: "Model D2 Pro 4K/8K",status: "pr",  req: 1,
     pids: [0x201c, 0x2036],
-    note: "Classic driver recognizes this PID (VID 0x258a) but only writes RGB/debounce and reads battery — DPI/polling/LOD are unconfirmed on this newer \"core2\" firmware and stay off" },
+    note: "Full core2 driver (VID 0x258a): CORE's own code builds byte-identical frames for the O2 and D2 (shared SN branch at every site), so DPI stages, polling up to 8000 Hz on the cable (4000 Hz on the receiver), debounce, motion sync, three profiles, battery and firmware all carry over. Not yet run on hardware" },
+  { brand: "Glorious", model: "Series 2 PRO",       status: "likely",   req: 0,
+    pids: [0x201d, 0x2039],
+    note: "Classic driver (VID 0x258a) for DPI/RGB/debounce/battery/LOD — CORE routes it through the classic ModelOSeries handler. Polling above 1000 Hz needs its newer per-profile polling command, which is not wired in yet" },
+  { brand: "Glorious", model: "Model O 2 Mini",     status: "likely",   req: 0,
+    pids: [0x826a, 0x826b, 0x826d, 0x827a],
+    note: "Pixart-family driver (VIDs 0x093a/0x320f): wireless 0x826a, Bluetooth 0x826b, receiver 0x826d, wired 0x827a. Not yet run on hardware" },
+  { brand: "Glorious", model: "Model D 2 Wireless", status: "likely",   req: 1,
+    pids: [0x824a, 0x824b, 0x824d],
+    note: "Pixart-family driver (VID 0x093a): wireless 0x824a, Bluetooth 0x824b, receiver 0x824d. Not yet run on hardware" },
+  { brand: "Glorious", model: "Model D 2 Wired",    status: "likely",   req: 0,
+    pids: [0x825a],
+    note: "Pixart-family driver (VID 0x320f). Not yet run on hardware" },
+  { brand: "Glorious", model: "Model D- 2 Wired",   status: "likely",   req: 0,
+    pids: [0x832a],
+    note: "Pixart-family driver (VID 0x320f). Not yet run on hardware" },
+  { brand: "Glorious", model: "Model I 2",          status: "likely",   req: 0,
+    pids: [0x821a, 0x821b, 0x821d, 0x831a],
+    note: "Wireless 0x821a, Bluetooth 0x821b and receiver 0x821d on the Pixart driver (VID 0x093a); wired 0x831a on the classic driver (VID 0x320f, unconfirmed report layout). Not yet run on hardware" },
   { brand: "Glorious", model: "Model O3 Wireless",       status: "likely",   req: 5,
     pids: [0xa312, 0xa300],
     note: "8000Hz mouse on VID 0x3794. glorious-ctl's own device list includes it for RGB/debounce/battery, so the classic driver recognizes it for those — DPI/polling/LOD have no confirmed protocol and stay off" },
@@ -1403,8 +1421,6 @@ export const MICE: Mouse[] = [
     note: "Wired USB" },
   { brand: "Gigabyte", model: "Aorus M6", status: "pending", req: 1,
     note: "Wired and wireless" },
-  { brand: "Glorious", model: "Model D 2 Wireless", status: "pending", req: 1,
-    note: "Wireless USB receiver" },
   { brand: "Glorious", model: "Model D-", status: "pending", req: 0,
     note: "Wired and wireless" },
   { brand: "Hator", model: "Pulsar 3 Ultra 4K Wireless", status: "pending", req: 1,
