@@ -635,9 +635,9 @@ export const MICE: Mouse[] = [
   // driver does not speak yet (polling capped at 1000 Hz). PID/name pairings
   // re-checked against Glorious CORE v2.1.3's own SupportDevice.DB — notably
   // PID 0x2033 is the Model O 2 PRO receiver, not "Model O 2 Wireless".
-  { brand: "Glorious", model: "Model O 2 PRO",  status: "supported", req: 5,
+  { brand: "Glorious", model: "Model O 2 PRO",  status: "pr", req: 5,
     pids: [0x2019, 0x2033],
-    note: "Classic driver (VID 0x258a, wired 0x2019 + receiver 0x2033) — Glorious CORE's own device table pairs these PIDs as the O 2 PRO. DPI/polling/LOD/debounce/RGB are write-only, battery is read. Polling tops out at 1000 Hz on this generation" },
+    note: "Classic driver (VID 0x258a, wired 0x2019 + receiver 0x2033) — Glorious CORE's own device table pairs these PIDs as the O 2 PRO. DPI/polling/LOD/debounce/RGB are write-only, battery is read. Polling tops out at 1000 Hz on this generation. Driver lands with mouse-protocol#198; flips to supported once the protocol pin picks it up" },
   { brand: "Glorious", model: "Model O",                 status: "supported", req: 54,
     pids: [0x2011, 0x2022],
     note: "Classic driver (VID 0x258a). DPI/polling/LOD/debounce/RGB are write-only, battery is read" },
@@ -673,7 +673,7 @@ export const MICE: Mouse[] = [
     note: "Pixart-family driver (VID 0x320f). Not yet run on hardware" },
   { brand: "Glorious", model: "Model I 2",          status: "likely",   req: 0,
     pids: [0x821a, 0x821b, 0x821d, 0x831a],
-    note: "Wireless 0x821a, Bluetooth 0x821b and receiver 0x821d on the Pixart driver (VID 0x093a); wired 0x831a on the classic driver (VID 0x320f, unconfirmed report layout). Not yet run on hardware" },
+    note: "Bluetooth 0x821b and receiver 0x821d on the Pixart driver (VID 0x093a); wireless 0x821a and wired 0x831a are registered on the classic driver with unconfirmed report layouts, so expect no settings support for those two yet. Not yet run on hardware" },
   { brand: "Glorious", model: "Model O3 Wireless",       status: "likely",   req: 5,
     pids: [0xa312, 0xa300],
     note: "8000Hz mouse on VID 0x3794. glorious-ctl's own device list includes it for RGB/debounce/battery, so the classic driver recognizes it for those — DPI/polling/LOD have no confirmed protocol and stay off" },
