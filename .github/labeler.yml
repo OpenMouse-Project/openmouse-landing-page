@@ -1,0 +1,18 @@
+"area: ui":
+  - changed-files:
+      - any-glob-to-any-file: ["src/**", "*.html"]
+"area: functions":
+  - changed-files:
+      - any-glob-to-any-file: ["functions/**"]
+"area: artwork":
+  - changed-files:
+      - any-glob-to-any-file: ["public/**/*.{png,jpg,jpeg,webp,svg,avif}", "social/**"]
+"area: documentation":
+  - changed-files:
+      - any-glob-to-any-file: ["**/*.md", "**/*.mdx", "docs/**"]
+"area: dependencies":
+  - changed-files:
+      - any-glob-to-any-file: ["**/package.json", "**/package-lock.json", "**/Cargo.toml", "**/Cargo.lock"]
+"area: ci":
+  - changed-files:
+      - any-glob-to-any-file: [".github/**", "build/**", "scripts/**", "**/build.rs", "vite.config.*", "tsconfig*.json"]
