@@ -4,6 +4,7 @@ import test from "node:test";
 import { DEVICE_DRIVERS } from "@openmouse/protocol/drivers/registry";
 import { ATK_COMPX_PRODUCT_IDS } from "@openmouse/protocol/drivers/atk/products";
 import { WLMOUSE_PRODUCTS, GLORIOUS_PRODUCTS, GLORIOUS_CLASSIC_PRODUCTS } from "@openmouse/protocol/drivers/vendors";
+import { GLORIOUS_CORE2_PRODUCTS } from "@openmouse/protocol/glorious-core2";
 import { BITMOUSE_PRODUCT_IDS } from "@openmouse/protocol/bitmouse";
 import { EGG_DEVICE_PROFILES } from "@openmouse/protocol/endgame-gear-op1";
 import {
@@ -179,8 +180,9 @@ const PID_UNIVERSE = new Set<number>([
   // SteelSeries Prime Mini Wireless, wired mode + 2.4 GHz mode
   // (drivers/steelseries/prime-mini-wireless-hid.ts).
   0x184a, 0x1848,
-  // Glorious Pixart Model O 2 / I 2 family (drivers/glorious/hid.ts) and
-  // classic pre-Pixart Model O/D/I family (drivers/glorious/classic-hid.ts).
+  // Glorious Pixart Model O 2 / I 2 family (drivers/glorious/hid.ts),
+  // classic pre-Pixart Model O/D/I family (drivers/glorious/classic-hid.ts)
+  // and the 4K/8K core2 family (drivers/glorious/core2-hid.ts).
   // MCHOSE A7 V2 family: model ids plus the receiver/Bluetooth link ids
   // (drivers/mchose/hid.ts).
   ...MCHOSE_PRODUCTS.map((product) => product.productId),
@@ -191,6 +193,7 @@ const PID_UNIVERSE = new Set<number>([
   ...MCHOSE_V3_PRODUCT_IDS,
   ...GLORIOUS_PRODUCTS.keys(),
   ...GLORIOUS_CLASSIC_PRODUCTS.keys(),
+  ...GLORIOUS_CORE2_PRODUCTS.keys(),
   ...MICROSOFT_PRODUCTS,
   // K-snake X11 wired + 2.4 GHz dongle share PID 0x2255 (src/ksnake).
   ...KSNAKE_PRODUCTS.keys(),

@@ -35,11 +35,18 @@ jobs:
           node <<'NODE'
           const { dependencies = {} } = require("./package.json");
           const approved = {
-            "@openmouse/protocol": "https://github.com/OpenMouse-Project/mouse-protocol.git",
+            "@openmouse/protocol": "semver",
             "preact": "^10.29.8",
           };
 
-          if (JSON.stringify(dependencies) !== JSON.stringify(approved)) {
+          const names = Object.keys(dependencies);
+          const expected = Object.keys(approved);
+          const protocolOk = typeof dependencies["@openmouse/protocol"] === "string"
+            && /^\d+\.\d+\.\d+(-[\w.]+)?$/.test(dependencies["@openmouse/protocol"]);
+
+          if (JSON.stringify(names.sort()) !== JSON.stringify(expected.sort())
+            || dependencies["preact"] !== approved["preact"]
+            || !protocolOk) {
             console.error("Runtime dependencies differ from the maintainer-approved list.");
             console.error("Expected:", approved);
             console.error("Received:", dependencies);
