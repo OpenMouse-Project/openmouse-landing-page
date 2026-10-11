@@ -696,6 +696,8 @@ export const MICE: Mouse[] = [
     note: "ATK firmware device id 1,8 — PAW3950Ultra, not yet verified on hardware" },
   { brand: "ATK", model: "A9 Mini +",                    status: "likely",      req: 0,
     note: "ATK firmware device id 1,31/1,52 — PAW3955Master, not yet verified on hardware" },
+  { brand: "ATK", model: "A9 Plus",                     status: "supported", req: 0,
+    note: "ATK firmware device id 2,83 (PAW3395). Cable 0x373b:0x1115 and NearLink receiver 0x373b:0x10c9 verified on hardware with mouse firmware 1.20 and 1.30: DPI, polling up to 1K, lift-off, debounce, sleep, Motion Sync, ripple, straight-line correction and sensor mode. Sensor Rotation is read-only" },
   { brand: "ATK", model: "VXE Mad R Major",             status: "likely",    req: 6,
     note: "ATK driver (0x373b) likely covers — needs hardware test" },
   { brand: "ATK", model: "ZERO",                        status: "supported", req: 1,
