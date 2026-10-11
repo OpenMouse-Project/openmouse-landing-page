@@ -700,7 +700,7 @@ export const MICE: Mouse[] = [
     note: "EggOp1 driver, OP1 8K LE with Glass Mode sensor tuning" },
   { brand: "Endgame Gear", model: "OP1 8K v2",          status: "supported", req: 3,
     pids: [0x1978],
-    note: "EggOp1 driver (PAW3950): v2 sensor controls — CPI downshift, smoothing/ripple tuning, angle tuning, max-FPS, 0.7–2.0 mm stepped LOD, 125–8000 Hz" },
+    note: "EggOp1 driver (PAW3950): v2 sensor controls — CPI downshift, smoothing/ripple tuning, angle tuning, max-FPS, 0.7–2.0 mm stepped LOD, 125–8000 Hz. Raw Input Edition shares the V1.07 tool, so the same PID" },
   { brand: "Endgame Gear", model: "OP1w 4K",            status: "supported", req: 3,
     pids: [0x1972, 0x1970],
     note: "EggOp1 driver (PAW3395, 4K wireless): pairing, battery, deep sleep, power saving, profiles, mouse + shared 0x1970 dongle" },
