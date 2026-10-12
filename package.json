@@ -12,7 +12,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@openmouse/protocol": "0.36.0",
+    "@openmouse/protocol": "0.38.0",
     "preact": "^10.29.8"
   },
   "devDependencies": {
