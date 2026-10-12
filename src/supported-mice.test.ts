@@ -159,6 +159,8 @@ const PID_UNIVERSE = new Set<number>([
   0x1110, 0x0807,
   // SteelSeries Aerox 3 (drivers/steelseries/aerox3-hid.ts).
   0x1836,
+  // SteelSeries Aerox 3 Wireless (drivers/steelseries/aerox3-wireless-hid.ts).
+  0x1838, 0x183a,
   // SteelSeries Rival 3 Wireless (drivers/steelseries/rival3-wireless-hid.ts).
   0x1830,
   // SteelSeries Aerox 5 (drivers/steelseries/aerox5-hid.ts).
