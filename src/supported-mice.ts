@@ -592,6 +592,7 @@ export const MICE: Mouse[] = [
     pids: [0x1838, 0x183a],
     note: "Write-only settings (DPI presets, polling, RGB zones/reactive/sleep-dim timers/default lighting, buttons); battery percentage/charging is read live. PID 0x183a (wired mode) and 0x1838 (2.4 GHz mode) in SteelSeries Aerox 3 Wireless driver" },
   { brand: "SteelSeries", model: "Aerox 3 Wireless Gen 2",  status: "supported", req: 2,
+    pids: [0x1838, 0x183a],
     note: "Shares the Aerox 3 Wireless PIDs 0x1838/0x183a — 2022 edition refresh with virgin PTFE skates; identical electronics and protocol" },
   { brand: "SteelSeries", model: "Prime+",               status: "supported", req: 12,
     pids: [0x182c],
