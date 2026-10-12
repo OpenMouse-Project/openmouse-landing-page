@@ -33,13 +33,40 @@ export const BRANDS: Record<number, string> = {
   0x0C45: "Redragon",
   0x1BCF: "Alienware",
   0x3151: "Fantech",
+  // 0xA8A4/0xA8A5 are shared: the K-snake X11 (0x2255) and the AJAZZ
+  // NJ07/NJ08 family (0x2157, 0x2158, 0x2167, 0x2168, 0x2177, 0x2178) are
+  // different mice on the same vendor ids. `brandFor` refines these by
+  // product id; the entry stays so SCAN_FILTERS still requests them.
   0xA8A4: "K-snake",
   0xA8A5: "K-snake",
 };
 
+/** AJAZZ NJ07/NJ08 family product ids on the shared K-snake vendor ids. */
+const AJAZZ_PIDS = new Set([0x2157, 0x2158, 0x2167, 0x2168, 0x2177, 0x2178]);
+/** K-snake X11 product id. */
+const KSNAKE_PID = 0x2255;
+/** Vendor ids used by both the K-snake X11 and the AJAZZ NJ07/NJ08 family. */
+const SHARED_KSNAKE_AJAZZ_VIDS = new Set([0xA8A4, 0xA8A5]);
+
+/**
+ * Brand label for a scanned device. Vendor-id-only labels would call an
+ * AJAZZ NJ07 MC "K-snake", so the shared vendor ids are resolved by product
+ * id; an unknown product id on them stays explicitly ambiguous.
+ */
+export function brandFor(vendorId: number, productId: number): string | null {
+  if (SHARED_KSNAKE_AJAZZ_VIDS.has(vendorId)) {
+    if (AJAZZ_PIDS.has(productId)) return "AJAZZ";
+    if (productId === KSNAKE_PID) return "K-snake";
+    return "K-snake / AJAZZ";
+  }
+  return BRANDS[vendorId] ?? null;
+}
+
 const OPENMOUSE_SUPPORTED = new Set([
   0x1532, 0x046D, 0x3710, 0x3367, 0x36A7, 0x373E, 0x3554, 0x373B, 0x361D, 0x3434, 0x2FE3, 0x1915,
   0x3151,
+  // K-snake X11 and the AJAZZ NJ07/NJ08 family (both supported drivers).
+  0xA8A4, 0xA8A5,
 ]);
 
 /**
@@ -157,7 +184,7 @@ export async function scanDevices(devices: HIDDevice[], locale: InterfaceLocale 
   for (const device of devices) {
     const vendorId = device.vendorId;
     const productId = device.productId;
-    const brand = BRANDS[vendorId] ?? tp(locale, "chk.unknownVid", { vid: `0x${hex(vendorId)}` });
+    const brand = brandFor(vendorId, productId) ?? tp(locale, "chk.unknownVid", { vid: `0x${hex(vendorId)}` });
     const isRazer = vendorId === 0x1532 || vendorId === 0x31E3;
     const openmouseSupported = OPENMOUSE_SUPPORTED.has(vendorId);
 
