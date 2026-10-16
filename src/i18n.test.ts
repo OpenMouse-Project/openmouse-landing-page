@@ -1,7 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 
-import { batteryStateText, connectLabelText, ensureLocale, missingTranslations, t } from "./i18n.ts";
+import { batteryStateText, connectLabelText, ensureLocale, LOCALE_NAME_KEYS, missingTranslations, t, textDirection, tp } from "./i18n.ts";
+import { tr } from "./i18n-tr.ts";
 
 test("i18n falls back to English until the locale table resolves", async () => {
   assert.equal(t("pt", "nav.settings"), "Settings");
@@ -28,4 +29,25 @@ test("i18n maps known connect labels and passes dynamic ones through", () => {
 
 test("every locale translates every key", async () => {
   assert.deepEqual(await missingTranslations(), []);
+});
+
+test("Turkish is selectable and loads the public website copy", async () => {
+  await ensureLocale("tr");
+  assert.ok(LOCALE_NAME_KEYS.some(([code, key]) => code === "tr" && t("tr", key) === "Türkçe"));
+  assert.equal(textDirection("tr"), "ltr");
+  assert.equal(t("tr", "land.hero"), "Her fare için tek uygulama.");
+  assert.equal(t("tr", "land.download"), "İndir");
+  assert.equal(t("tr", "faq.title"), "Sık sorulan sorular");
+  assert.equal(t("tr", "supp.title"), "Desteklenen cihazlar");
+  assert.equal(tp("tr", "chk.testing", { n: 2, s: "s" }), "2 cihaz test ediliyor…");
+  assert.equal(tp("tr", "don.chargeMonthly", { v: "$5" }), "GitHub Sponsors üzerinden her ay $5 bağış yapacaksınız.");
+});
+
+test("Turkish templates preserve substitution values without English plural suffixes", () => {
+  const placeholders = (value: string) => [...value.matchAll(/\{(\w+)\}/g)].map((match) => match[1]).sort();
+  for (const key of Object.keys(tr) as Array<keyof typeof tr>) {
+    const source = t("en", key);
+    const pluralSuffix = /\w\{s\}/.test(source);
+    assert.deepEqual(placeholders(tr[key]), placeholders(source).filter((name) => !pluralSuffix || name !== "s"), key);
+  }
 });

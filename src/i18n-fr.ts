@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** French strings, split into a lazy chunk so the initial bundle ships
     English only. Loaded via ensureLocale() before first use. */
 export const fr: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "Langue",
   "nav.settings": "Paramètres",
   "nav.support": "Soutenir",
@@ -581,6 +582,9 @@ export const fr: Record<I18nKey, string> = {
   "land.contribute": "Contribuer",
   "land.donate": "Faire un don",
   "land.openApp": "Ouvrir l'application",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "Télécharger",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "Besoin de plus que le navigateur ?",
@@ -599,6 +603,11 @@ export const fr: Record<I18nKey, string> = {
   "land.contribTitle": "Aidez à ajouter le support pour plus de souris",
   "land.contribBody": "OpenMouse ne prend en charge que ce que la communauté a rétro-ingénié et testé. Si votre souris n'est pas encore listée, le guide de contribution explique les pratiques de rétro-ingénierie sûres et comment les dépôts de drivers s'articulent.",
   "land.contribCta": "Lire le guide de contribution",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← Retour au site",
   "chk.overline": "DIAGNOSTIC HID",
   "chk.heroBody": "Scannez vos souris gaming connectées pour voir quelles interfaces sont accessibles via WebHID — et lesquelles nécessitent un driver natif.",

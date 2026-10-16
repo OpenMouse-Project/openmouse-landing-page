@@ -69,6 +69,7 @@ const en = {
   "set.languageTitle": "Language",
   "set.languageBody": "Choose the interface language. Device messages stay English for now.",
   "set.english": "English",
+  "set.turkish": "Türkçe",
   "set.portuguese": "Português",
   "set.spanish": "Español",
   "set.french": "Français",
@@ -584,6 +585,9 @@ const en = {
   "land.contribute": "Contribute",
   "land.donate": "Donate",
   "land.openApp": "Open the app",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "Download",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "Need more than the browser?",
@@ -602,6 +606,11 @@ const en = {
   "land.contribTitle": "Help add support for more mice",
   "land.contribBody": "OpenMouse only supports what the community has reverse-engineered and tested. If your mouse isn't listed yet, the contribution guide walks through safe reverse-engineering practices and how the driver repos fit together.",
   "land.contribCta": "Read the contribution guide",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← Back to site",
   "chk.overline": "HID DIAGNOSTICS",
   "chk.heroBody": "Scan your connected gaming mice to see which interfaces are accessible via WebHID — and which require a native driver.",
@@ -827,6 +836,7 @@ export const LOCALE_NAME_KEYS: ReadonlyArray<[InterfaceLocale, I18nKey]> = [
   ["ko", "set.korean"],
   ["ru", "set.russian"],
   ["ar", "set.arabic"],
+  ["tr", "set.turkish"],
 ];
 
 /** Locales written right-to-left; every other locale lays out LTR. */
@@ -857,6 +867,7 @@ const LOCALE_LOADERS: Record<Exclude<InterfaceLocale, "en">, () => Promise<Local
   ko: () => import("./i18n-ko.ts").then((m) => m.ko),
   ru: () => import("./i18n-ru.ts").then((m) => m.ru),
   ar: () => import("./i18n-ar.ts").then((m) => m.ar),
+  tr: () => import("./i18n-tr.ts").then((m) => m.tr),
 };
 
 export function ensureLocale(locale: InterfaceLocale): Promise<void> {

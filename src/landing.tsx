@@ -60,7 +60,7 @@ function Hero({ locale }: { locale: InterfaceLocale }): ReactNode {
           <div className="land-screenshot-pad">
             <img
               src="/screenshot-app.png"
-              alt="The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse"
+              alt={t(locale, "land.screenshotAlt")}
               width={1572}
               height={811}
               loading="lazy"
@@ -97,7 +97,7 @@ function Bridge({ locale }: { locale: InterfaceLocale }): ReactNode {
       <div className="land-bridge-shot" data-reveal>
         <img
           src="/bridge-panel.png"
-          alt="The OpenMouse Bridge companion panel listing connected mice and their per-device settings status"
+          alt={t(locale, "land.bridgeAlt")}
           width={320}
           height={306}
           loading="lazy"

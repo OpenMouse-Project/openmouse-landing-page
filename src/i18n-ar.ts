@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** Arabic strings, split into a lazy chunk so the initial bundle ships
     English only. Loaded via ensureLocale() before first use. */
 export const ar: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "اللغة",
   "nav.settings": "الإعدادات",
   "nav.support": "الدعم",
@@ -581,6 +582,9 @@ export const ar: Record<I18nKey, string> = {
   "land.contribute": "ساهم",
   "land.donate": "تبرّع",
   "land.openApp": "افتح التطبيق",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "تنزيل",
   "land.bridgeKicker": "OpenMouse Bridge",
   "land.bridgeTitle": "تحتاج أكثر مما يقدمه المتصفح؟",
@@ -599,6 +603,11 @@ export const ar: Record<I18nKey, string> = {
   "land.contribTitle": "ساعدنا في دعم المزيد من الماوسات",
   "land.contribBody": "يدعم OpenMouse فقط ما حلّله المجتمع بالهندسة العكسية واختبره. إذا لم يكن الماوس الخاص بك في القائمة بعد، فدليل المساهمة يشرح ممارسات الهندسة العكسية الآمنة وكيف ترتبط مستودعات التعريفات ببعضها.",
   "land.contribCta": "اقرأ دليل المساهمة",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← العودة إلى الموقع",
   "chk.overline": "تشخيص HID",
   "chk.heroBody": "افحص ماوسات الألعاب المتصلة لمعرفة الواجهات التي يمكن الوصول إليها عبر WebHID، وتلك التي تحتاج إلى تعريف أصلي على النظام.",

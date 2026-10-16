@@ -30,7 +30,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
         <nav className="land-nav-links">
           <a href="/supported.html">{t(locale, "land.supported")}</a>
           <a href="/blog.html">Blog</a>
-          <a href="/faq.html">FAQ</a>
+          <a href="/faq.html">{t(locale, "land.faq")}</a>
           <a href="/download.html">{t(locale, "land.download")}</a>
           <a href="/donate.html">{t(locale, "land.donate")}</a>
           <GitHubLink locale={locale} />
@@ -60,7 +60,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
           <a href="/supported.html">{t(locale, "land.supported")}</a>
           <a href="/download.html">{t(locale, "land.download")}</a>
           <a href="/blog.html">Blog</a>
-          <a href="/faq.html">FAQ</a>
+          <a href="/faq.html">{t(locale, "land.faq")}</a>
           <a href="/check.html">{t(locale, "don.check")}</a>
           <a href="/donate.html">{t(locale, "land.donate")}</a>
         </nav>

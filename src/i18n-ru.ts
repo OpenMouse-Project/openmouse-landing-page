@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** Russian strings, split into a lazy chunk so the initial bundle ships
     English only. Loaded via ensureLocale() before first use. */
 export const ru: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "Язык",
   "nav.settings": "Настройки",
   "nav.support": "Поддержка",
@@ -579,6 +580,9 @@ export const ru: Record<I18nKey, string> = {
   "land.contribute": "Участвовать",
   "land.donate": "Поддержать",
   "land.openApp": "Открыть приложение",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "Скачать",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "Нужно больше, чем браузер?",
@@ -597,6 +601,11 @@ export const ru: Record<I18nKey, string> = {
   "land.contribTitle": "Помогите добавить поддержку новых мышей",
   "land.contribBody": "OpenMouse поддерживает только то, что сообщество разобрало и проверило. Если вашей мыши ещё нет в списке, руководство для участников объясняет безопасные приёмы обратной разработки и то, как связаны репозитории драйверов.",
   "land.contribCta": "Читать руководство для участников",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← Назад на сайт",
   "chk.overline": "ДИАГНОСТИКА HID",
   "chk.heroBody": "Просканируйте подключённые игровые мыши, чтобы увидеть, какие интерфейсы доступны через WebHID, а каким нужен нативный драйвер.",

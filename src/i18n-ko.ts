@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** Korean strings, split into a lazy chunk so the initial bundle ships
     English only. Loaded via ensureLocale() before first use. */
 export const ko: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "언어",
   "nav.settings": "설정",
   "nav.support": "후원",
@@ -581,6 +582,9 @@ export const ko: Record<I18nKey, string> = {
   "land.contribute": "기여하기",
   "land.donate": "후원하기",
   "land.openApp": "앱 열기",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "다운로드",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "브라우저만으로는 부족하신가요?",
@@ -599,6 +603,11 @@ export const ko: Record<I18nKey, string> = {
   "land.contribTitle": "더 많은 마우스 지원을 추가하는 데 도움을 주세요",
   "land.contribBody": "OpenMouse는 커뮤니티가 리버스 엔지니어링하고 테스트한 것만 지원합니다. 사용 중인 마우스가 아직 목록에 없다면, 기여 가이드에서 안전한 리버스 엔지니어링 방법과 각 드라이버 저장소가 어떻게 연결되는지 확인할 수 있습니다.",
   "land.contribCta": "기여 가이드 읽기",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← 사이트로 돌아가기",
   "chk.overline": "HID 진단",
   "chk.heroBody": "연결된 게이밍 마우스를 스캔하여 어떤 인터페이스가 WebHID를 통해 접근 가능한지, 어떤 것이 네이티브 드라이버를 필요로 하는지 확인하세요.",
