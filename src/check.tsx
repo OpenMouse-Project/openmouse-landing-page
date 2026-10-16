@@ -4,24 +4,32 @@ import "./check.css";
 import { mountOfflineBanner } from "./offline-banner";
 import { registerServiceWorker } from "./register-sw";
 import { interfaceThemeSlug, loadInterfacePreferences } from "./interface-preferences";
-import { t, tp } from "./i18n";
+import { t, tp, type I18nKey } from "./i18n";
 import type { InterfaceLocale } from "./interface-preferences";
 import { PageLocaleToggle, usePageLocale } from "./app/page-locale";
 import {
   SCAN_FILTERS,
-  VERDICT_LABEL,
   buildDiscordSummary,
   hex,
   reportSummary,
   scanDevices,
   usagePageLabel,
   type DeviceResult,
+  type Verdict,
 } from "./check-scan";
 
 document.documentElement.setAttribute(
   "data-interface-theme",
   interfaceThemeSlug(loadInterfacePreferences(window.localStorage).theme),
 );
+
+const VERDICT_KEYS = {
+  full: "chk.verdict.full",
+  partial: "chk.verdict.partial",
+  limited: "chk.verdict.limited",
+  blocked: "chk.verdict.blocked",
+  unknown: "chk.verdict.unknown",
+} satisfies Record<Verdict, I18nKey>;
 
 function DeviceCard({ result, locale }: { result: DeviceResult; locale: InterfaceLocale }): ReactNode {
   const name = result.device.productName || tp(locale, "chk.mouseFallback", { brand: result.brand });
@@ -36,7 +44,7 @@ function DeviceCard({ result, locale }: { result: DeviceResult; locale: Interfac
           {result.openmouseSupported ? (
             <span className="verdict-badge verdict-full" style={{ fontSize: ".52rem" }}>OPENMOUSE</span>
           ) : null}
-          <span className={`verdict-badge verdict-${result.verdict}`}>{VERDICT_LABEL[result.verdict]}</span>
+          <span className={`verdict-badge verdict-${result.verdict}`}>{t(locale, VERDICT_KEYS[result.verdict])}</span>
         </div>
       </div>
 
@@ -143,14 +151,14 @@ function CheckApp(): ReactNode {
   return (
     <div className="check-shell">
       <header className="check-header" dir="ltr">
-        <a className="check-wordmark" href="/">OpenMouse <span>/ Mouse Check</span></a>
+        <a className="check-wordmark" href="/">OpenMouse <span>/ {t(locale, "nav.mouseCheck")}</span></a>
         <PageLocaleToggle locale={locale} onChange={setLocale} />
         <a className="check-back" href="/">{t(locale, "chk.back")}</a>
       </header>
 
       <section className="check-hero">
         <p className="overline">{t(locale, "chk.overline")}</p>
-        <h1>Mouse Check</h1>
+        <h1>{t(locale, "nav.mouseCheck")}</h1>
         <p>
           {t(locale, "chk.heroBody")}
         </p>

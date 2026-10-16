@@ -209,7 +209,7 @@ function buildShell(): void {
   root.innerHTML = `
   <header class="site-header" dir="ltr">
     <div class="page-wrap">
-      <a class="wordmark" href="/" aria-label="OpenMouse home">
+      <a class="wordmark" href="/" aria-label="OpenMouse — ${t(locale, "don.home")}">
         <img class="wordmark-logo" src="/logo.png" alt="" width="181" height="268">
         OpenMouse
       </a>
@@ -224,7 +224,7 @@ function buildShell(): void {
               `<option value="${option}"${option === locale ? " selected" : ""}>${t(locale, nameKey)}</option>`).join("")}
           </select>
           <button class="theme-toggle" id="theme-btn" aria-label="${t(locale, "supp.theme")}">${themeIcon(getTheme())}</button>
-          <a class="github-link" href="${GITHUB_URL}" target="_blank" rel="noreferrer" aria-label="OpenMouse on GitHub">
+          <a class="github-link" href="${GITHUB_URL}" target="_blank" rel="noreferrer" aria-label="OpenMouse · GitHub">
             ${GH_SVG}
             <span>GitHub</span>
           </a>
@@ -526,7 +526,7 @@ function renderList(): void {
         <svg class="brand-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
         <span>${brand}</span>
         <span class="brand-count-total">${items.length}</span>
-        ${totalReq > 0 ? `<span class="brand-reqs">(${totalReq} request${totalReq === 1 ? "" : "s"})</span>` : ""}
+        ${totalReq > 0 ? `<span class="brand-reqs">${tp(locale, totalReq === 1 ? "supp.oneRequest" : "supp.manyRequests", { n: totalReq })}</span>` : ""}
       </button>
       <table class="device-table">
         <thead><tr><th>${t(locale, "supp.thStatus")}</th><th>${t(locale, "supp.thModel")}</th><th>${t(locale, "supp.thNotes")}</th><th style="text-align:right">${t(locale, "supp.thVotes")}</th></tr></thead>
@@ -620,7 +620,7 @@ function mountGitHubStars(): void {
     const link = document.querySelector<HTMLAnchorElement>(".github-link");
     if (!link || count === null) return;
     const label = formatCount(count);
-    link.setAttribute("aria-label", `OpenMouse on GitHub, ${tp(locale, "don.stars", { n: label })}`);
+    link.setAttribute("aria-label", `OpenMouse · GitHub, ${tp(locale, "don.stars", { n: label })}`);
     const existing = link.querySelector<HTMLSpanElement>(".github-stars");
     if (existing) {
       existing.textContent = label;

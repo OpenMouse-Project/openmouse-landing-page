@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** Japanese strings, split into a lazy chunk so the initial bundle ships
     English only. Loaded via ensureLocale() before first use. */
 export const ja: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "言語",
   "nav.settings": "設定",
   "nav.support": "サポート",
@@ -581,6 +582,9 @@ export const ja: Record<I18nKey, string> = {
   "land.contribute": "貢献する",
   "land.donate": "寄付する",
   "land.openApp": "アプリを開く",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "ダウンロード",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "ブラウザだけでは足りない？",
@@ -599,6 +603,11 @@ export const ja: Record<I18nKey, string> = {
   "land.contribTitle": "対応マウスを増やすのに協力してください",
   "land.contribBody": "OpenMouseはコミュニティがリバースエンジニアリングし、テストしたものだけをサポートしています。お使いのマウスがまだ掲載されていない場合、コントリビューションガイドで安全なリバースエンジニアリングの方法と各ドライバーリポジトリの関係を解説しています。",
   "land.contribCta": "コントリビューションガイドを読む",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← サイトに戻る",
   "chk.overline": "HID診断",
   "chk.heroBody": "接続中のゲーミングマウスをスキャンし、どのインターフェースがWebHID経由でアクセス可能か、どれがネイティブドライバーを必要とするかを確認します。",

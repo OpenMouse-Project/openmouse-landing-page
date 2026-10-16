@@ -3,6 +3,7 @@ import type { I18nKey } from "./i18n.ts";
 /** Simplified Chinese strings, split into a lazy chunk so the initial
     bundle ships English only. Loaded via ensureLocale() before first use. */
 export const zh: Record<I18nKey, string> = {
+  "set.turkish": "Türkçe",
   "nav.language": "语言",
   "nav.settings": "设置",
   "nav.support": "支持",
@@ -581,6 +582,9 @@ export const zh: Record<I18nKey, string> = {
   "land.contribute": "参与贡献",
   "land.donate": "捐赠",
   "land.openApp": "打开应用",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app showing a connected Logitech PRO X Superlight 2 mouse with battery, polling rate, and wireless status, plus an option to add another mouse",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
   "land.download": "下载",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "浏览器还不够用？",
@@ -599,6 +603,11 @@ export const zh: Record<I18nKey, string> = {
   "land.contribTitle": "帮助我们支持更多鼠标",
   "land.contribBody": "OpenMouse 只支持社区已经逆向工程并测试过的设备。如果你的鼠标尚未列出，贡献指南介绍了安全的逆向工程实践，以及各驱动仓库之间的协作方式。",
   "land.contribCta": "阅读贡献指南",
+  "chk.verdict.full": "WEBHID FULL",
+  "chk.verdict.partial": "PARTIAL",
+  "chk.verdict.limited": "LIMITED",
+  "chk.verdict.blocked": "NATIVE ONLY",
+  "chk.verdict.unknown": "UNKNOWN",
   "chk.back": "← 返回网站",
   "chk.overline": "HID 诊断",
   "chk.heroBody": "扫描已连接的游戏鼠标，查看哪些接口可通过 WebHID 访问——哪些需要原生驱动。",
