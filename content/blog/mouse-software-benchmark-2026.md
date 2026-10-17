@@ -20,6 +20,10 @@ outro: Have a different result on your PC? Tell us what you measured and how.
 
 We ran the same benchmark against SteelSeries GG, Logitech G HUB, Razer Synapse, and OpenMouse Desktop. The four cards below show the headline results. We also want to make the counting method clear, especially for memory: someone looking at one process in Task Manager can reasonably see a much smaller number.
 
+:::finding Results vary from PC to PC
+Yes, your numbers can be different. CPU model and core count, Windows version, installed devices, app version, optional modules, background services, cached memory, and the exact pages you open all affect a run. This is one PC measured with one defined method. Compare the method and process scope before comparing the figures.
+:::
+
 ## Test machine and scope
 
 The measurements were taken on **October 16, 2026** on a Windows 11 Home PC with an **AMD Ryzen 5 5600X** (6 physical cores, 12 logical processors) and about **32 GiB of installed memory**. CPU percentages below are shares of all 12 logical processors. On this scale, one logical processor held fully busy for a whole sample would be about **8.33%**, not 100%.
