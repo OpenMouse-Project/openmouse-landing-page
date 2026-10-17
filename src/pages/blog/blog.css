@@ -318,6 +318,12 @@ html { scroll-behavior: smooth; }
   color: var(--text-1);
 }
 .blog-article p { margin: 0 0 1.1rem; }
+.blog-prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
 .blog-prose > ul,
 .blog-prose > ol {
   margin: 0 0 1.2rem;
