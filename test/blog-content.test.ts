@@ -1,6 +1,8 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { parseFrontmatter, parsePost, renderMarkdown } from "../build/blog.ts";
+import { renderShell } from "../build/pages.ts";
+import { sitePages } from "../build/site.ts";
 
 const POST = `---
 title: A post
@@ -76,4 +78,24 @@ test("a post with a bad file name, category or date is rejected", () => {
   assert.throws(() => parsePost("My Post", POST), /file names/);
   assert.throws(() => parsePost("x", POST.replace("Guides", "News")), /category/);
   assert.throws(() => parsePost("x", POST.replace("2026-10-01", "Oct 1")), /date/);
+});
+
+test("blog posts publish their own social preview image", () => {
+  const page = sitePages(".").find((item) => item.path === "/blog/mouse-software-benchmark-2026");
+  assert.ok(page);
+  const html = renderShell(page);
+  assert.match(html, /property="og:image" content="https:\/\/openmouse\.app\/benchmark-startup\.jpg"/);
+  assert.match(html, /name="twitter:image" content="https:\/\/openmouse\.app\/benchmark-startup\.jpg"/);
+  assert.match(html, /property="og:image:alt" content="Startup time comparison/);
+});
+
+test("pages without a social image keep the default preview", () => {
+  const html = renderShell({
+    file: "example.html",
+    path: "/example",
+    entry: "/example.tsx",
+    title: "Example",
+    description: "Example page",
+  });
+  assert.match(html, /property="og:image" content="https:\/\/openmouse\.app\/og-image\.png"/);
 });

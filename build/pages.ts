@@ -8,6 +8,8 @@ export interface PageSpec {
   description: string;
   socialTitle?: string;
   socialDescription?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
   type?: "website" | "article";
   jsonLd?: Record<string, unknown>;
   prerender?: boolean;
@@ -133,6 +135,7 @@ const FONTS =
 
 export function renderShell(page: PageSpec, body = ""): string {
   const url = `${SITE_URL}${page.path}`;
+  const socialImage = new URL(page.socialImage ?? "/og-image.png", SITE_URL).href;
   const lines = [
     `<meta charset="UTF-8" />`,
     `<meta name="viewport" content="width=device-width, initial-scale=1.0" />`,
@@ -150,8 +153,10 @@ export function renderShell(page: PageSpec, body = ""): string {
     `<meta property="og:url" content="${url}" />`,
     `<meta property="og:title" content="${escapeHtml(page.socialTitle ?? page.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(page.socialDescription ?? page.description)}" />`,
-    `<meta property="og:image" content="${SITE_URL}/og-image.png" />`,
+    `<meta property="og:image" content="${escapeHtml(socialImage)}" />`,
+    ...(page.socialImageAlt ? [`<meta property="og:image:alt" content="${escapeHtml(page.socialImageAlt)}" />`] : []),
     `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:image" content="${escapeHtml(socialImage)}" />`,
     `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
     `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
     `<link href="${FONTS}" rel="stylesheet" />`,

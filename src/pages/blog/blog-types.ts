@@ -17,6 +17,8 @@ export interface PostMeta {
   coverCaption?: string;
   hero?: string;
   heroAlt?: string;
+  socialImage?: string;
+  socialImageAlt?: string;
   toc: boolean;
   outro?: string;
 }
