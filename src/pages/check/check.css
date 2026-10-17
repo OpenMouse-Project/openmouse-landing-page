@@ -1,0 +1,56 @@
+.chk-main { width: min(860px, calc(100% - 48px)); margin-inline: auto; padding-block: clamp(48px, 7vw, 80px) clamp(56px, 8vw, 96px); display: grid; gap: 20px; }
+
+.check-hero { display: grid; gap: 12px; margin-bottom: 8px; }
+.check-hero h1 { margin: 0; font-size: clamp(36px, 5.4vw, 56px); font-weight: 750; letter-spacing: -0.045em; line-height: 1.02; }
+.check-hero p:not(.land-kicker) { margin: 0; max-width: 62ch; color: var(--text-2); font-size: 16px; line-height: 1.6; }
+
+.check-panel { display: grid; gap: 18px; padding: 20px; border-radius: var(--r-lg); background: var(--sheen), var(--surface-1); box-shadow: var(--lit); }
+.compat-banner { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: var(--r-md); background: var(--well); box-shadow: var(--inset-shadow); color: var(--text-1); font-size: 14px; }
+.compat-banner-dot { width: 8px; height: 8px; flex: none; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgb(var(--accent-rgb) / 0.16); }
+.compat-banner.warn .compat-banner-dot { background: var(--warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--warn) 18%, transparent); }
+.scan-row { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.scan-button:disabled { opacity: 0.5; cursor: not-allowed; }
+.scan-note { color: var(--text-3); font-size: 13px; }
+
+.scanning-state, .check-empty { padding: 28px 20px; border-radius: var(--r-lg); background: var(--surface-1); box-shadow: var(--lit); color: var(--text-2); font-size: 14px; text-align: center; }
+.scanning-state { color: var(--accent); }
+
+.results-heading { margin: 12px 0 2px; font-size: 18px; font-weight: 650; letter-spacing: -0.02em; }
+.results-list { display: grid; gap: 12px; }
+
+.device-card { display: grid; gap: 14px; padding: 18px 20px; border-radius: var(--r-lg); background: var(--sheen), var(--surface-1); box-shadow: var(--lit); }
+.device-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.device-card-identity { display: grid; gap: 4px; min-width: 0; }
+.device-card-identity strong { font-size: 16px; font-weight: 650; }
+.device-card-identity small { color: var(--text-3); font-family: var(--font-mono); font-size: 12px; }
+.device-card-badges { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.verdict-badge { display: inline-flex; align-items: center; height: 22px; padding-inline: 8px; border-radius: var(--r-xs); font-size: 12px; font-weight: 650; white-space: nowrap; background: var(--surface-2); color: var(--text-2); }
+.verdict-full { background: var(--accent-soft); color: var(--accent); }
+.verdict-partial, .verdict-limited { background: color-mix(in srgb, var(--warn) 14%, transparent); color: var(--warn); }
+.verdict-blocked { background: color-mix(in srgb, var(--bad) 14%, transparent); color: var(--bad); }
+
+.iface-section, .tx-section { display: grid; gap: 2px; padding: 6px; border-radius: var(--r-md); background: var(--well); box-shadow: var(--inset-shadow); }
+.iface-label, .tx-label { padding: 6px 8px 4px; color: var(--text-3); font-size: 12.5px; font-weight: 600; }
+.iface-row, .tx-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; padding: 6px 8px; border-radius: var(--r-xs); font-family: var(--font-mono); font-size: 12px; }
+.iface-row:hover, .tx-row:hover { background: var(--surface-1); }
+.iface-page { color: var(--text-1); min-width: 150px; }
+.iface-type, .tx-id { color: var(--text-2); }
+.iface-reports, .tx-fw { color: var(--text-3); }
+.tx-ok { color: var(--accent); }
+.tx-fail { color: var(--bad); }
+
+.open-result { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--text-2); }
+.open-dot { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--ok); }
+.open-result.err { color: var(--bad); }
+.open-result.err .open-dot { background: var(--bad); }
+.device-card-note { margin: 0; color: var(--text-3); font-size: 13px; line-height: 1.55; }
+
+.copy-section { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 8px; padding: 18px 20px; border-radius: var(--r-lg); background: rgb(var(--accent-rgb) / 0.06); box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.18); }
+.copy-section p { margin: 0; color: var(--text-1); font-size: 14.5px; }
+.copy-button.copied { color: var(--accent); }
+
+@media (max-width: 560px) {
+  .chk-main { width: calc(100% - 32px); }
+  .device-card-head { flex-direction: column; }
+  .device-card-badges { justify-content: flex-start; }
+}

@@ -36,6 +36,7 @@ jobs:
           const { dependencies = {} } = require("./package.json");
           const approved = {
             "@openmouse/protocol": "semver",
+            "lucide-preact": "^1.59.0",
             "preact": "^10.29.8",
           };
 
@@ -46,6 +47,7 @@ jobs:
 
           if (JSON.stringify(names.sort()) !== JSON.stringify(expected.sort())
             || dependencies["preact"] !== approved["preact"]
+            || dependencies["lucide-preact"] !== approved["lucide-preact"]
             || !protocolOk) {
             console.error("Runtime dependencies differ from the maintainer-approved list.");
             console.error("Expected:", approved);
