@@ -1,5 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Plugin } from "vite";
+import { pageUrl } from "./site.ts";
 
 /**
  * Public files that are not referenced by the page markup but are still needed
@@ -13,29 +14,6 @@ const STATIC_PRECACHE = [
   "/icon-512.png",
   "/favicon-dark.svg",
 ];
-
-/**
- * Pages this build produces, mirroring the rollup inputs in vite.config.ts.
- * The root is reached through the _redirects file that
- * build/sites-vite-plugin.ts writes.
- */
-const PAGES = [
-  "landing.html", "check.html", "supported.html", "donate.html", "faq.html",
-  "blog.html", "blog-razer-windows-chrome-153.html", "download.html", "blog-openmouse-bridge.html",
-  "privacy.html", "terms.html",
-];
-
-export const ROOT_PAGE = "landing.html";
-
-/** Pages whose emitted markup is scanned for the hashed assets to precache. */
-export function precachePages(): string[] {
-  return PAGES;
-}
-
-/** The root page is served from "/", every other page from its own filename. */
-export function pageUrl(file: string): string {
-  return file === ROOT_PAGE ? "/" : `/${file}`;
-}
 
 /**
  * Same-origin paths the worker must never serve from its own cache. The vote
@@ -172,7 +150,7 @@ self.addEventListener("fetch", (event) => {
 }
 
 /** Emits a service worker that precaches the public pages and their assets. */
-export function pwa(appVersion: string): Plugin {
+export function pwa(appVersion: string, pages: () => readonly { file: string }[]): Plugin {
   return {
     name: "openmouse-pwa",
     apply: "build",
@@ -184,7 +162,7 @@ export function pwa(appVersion: string): Plugin {
       handler(_options, bundle) {
         const urls = new Set<string>(STATIC_PRECACHE);
 
-        for (const file of precachePages()) {
+        for (const { file } of pages()) {
           const emitted = bundle[file];
           if (emitted?.type !== "asset") {
             this.error(`${file} is missing from the bundle; the precache list would be wrong.`);

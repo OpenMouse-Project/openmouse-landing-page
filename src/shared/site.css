@@ -1,0 +1,728 @@
+@import "./site-chrome.css";
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: #08090b;
+}
+
+.land-shell {
+  overflow-x: clip;
+  --land-bg: var(--ink-1);
+  --land-panel: var(--solid-1);
+  --land-line: var(--line-1);
+  --land-line-strong: var(--line-2);
+  --land-text: var(--text-1);
+  --land-dim: var(--text-2);
+  --land-mint: var(--accent);
+  --land-mint-bright: var(--accent);
+  --land-mono: var(--font-mono);
+  --land-radius: var(--r-lg);
+  --land-ease: var(--ease);
+
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  color: var(--text-1);
+  background:
+    radial-gradient(1000px 520px at 50% -10%, rgb(var(--accent-rgb) / 0.075), transparent 64%),
+    var(--ink-1);
+  background-repeat: no-repeat;
+  -webkit-font-smoothing: antialiased;
+}
+
+:where(.land-shell) a {
+  color: inherit;
+  text-decoration: none;
+}
+:where(.land-shell) button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.land-shell ::selection {
+  background: rgb(var(--accent-rgb) / 0.32);
+}
+.land-shell a:focus-visible,
+.land-shell button:focus-visible,
+.land-shell select:focus-visible,
+.land-shell input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Full-bleed sticky bar: the background and blur span the window, while the
+   row inside it lines up with the 1160px content column. A centered 1160px
+   bar would leave the page visible in the side gutters as you scroll. */
+.land-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(9, 9, 11, 0.72);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.land-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+}
+
+.land-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--land-text);
+}
+.land-brand img {
+  width: 22px;
+  height: auto;
+  vertical-align: middle;
+}
+
+.land-nav-links {
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--land-dim);
+}
+.land-nav-links a {
+  padding: 0.2rem 0;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.land-nav-links a:hover {
+  color: var(--land-text);
+}
+
+/* The six links need ~1000px alongside the brand, language picker and CTA;
+   below that they're hidden (all of them are also in the footer). */
+@media (min-width: 1000px) {
+  .land-nav-links {
+    display: flex;
+  }
+}
+
+.page-locale-select {
+  padding: 0.4rem 1.7rem 0.4rem 0.7rem;
+  border: 1px solid var(--land-line-strong);
+  border-radius: 8px;
+  background: transparent
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239fb0b4' stroke-width='1.5'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E")
+    no-repeat right 0.5rem center;
+  background-size: 0.65rem;
+  color: var(--land-text);
+  font: inherit;
+  font-size: 0.78rem;
+  appearance: none;
+  cursor: pointer;
+}
+.page-locale-select:hover {
+  border-color: rgba(105, 210, 141, 0.5);
+}
+.page-locale-select option {
+  background: var(--land-bg);
+  color: var(--land-text);
+}
+
+.land-nav-cta {
+  margin-left: auto;
+  padding: 0.5rem 1.15rem;
+  border-radius: 999px;
+  background: var(--land-mint);
+  color: #041412;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 8px 20px -10px rgba(105, 210, 141, 0.55);
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.land-nav-cta:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+@media (max-width: 999px) {
+  .land-nav-inner .page-locale-select { margin-left: auto; }
+  .land-nav-cta { margin-left: 0; }
+}
+@media (max-width: 520px) {
+  .land-nav-inner {
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+  }
+  .land-nav-cta { padding: 0.45rem 0.9rem; }
+}
+@media (max-width: 380px) {
+  .land-brand-name { display: none; }
+}
+
+.land-aurora {
+  position: relative;
+  isolation: isolate;
+}
+.land-aurora::before {
+  content: "";
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  width: min(1400px, 100vw);
+  height: 640px;
+  transform: translateX(-50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(40% 50% at 50% 42%, rgb(var(--accent-rgb) / 0.09), transparent 72%);
+}
+
+.land-page {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(48px, 7vw, 80px) 24px clamp(56px, 8vw, 96px);
+}
+
+.land-page-head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 760px;
+  margin: 0 auto;
+  text-align: center;
+}
+.land-page-title {
+  margin: 0;
+  font-size: clamp(36px, 5.4vw, 60px);
+  font-weight: 750;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  color: var(--text-1);
+}
+.land-page-lead {
+  margin: 0;
+  max-width: 60ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.land-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.land-kicker {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.land-section {
+  margin-top: clamp(48px, 7vw, 88px);
+}
+.land-section-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 62ch;
+  margin: 0 0 22px;
+}
+.land-section-head h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.land-section-head p {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.land-body {
+  margin: 0;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+.land-cta,
+.land-cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding-inline: 18px;
+  border: 0;
+  border-radius: var(--r-sm);
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+.land-cta {
+  background: var(--accent);
+  color: var(--on-accent);
+  box-shadow: var(--primary-shadow), 0 12px 30px -14px rgb(var(--accent-rgb) / 0.9);
+}
+.land-cta:hover {
+  background: color-mix(in srgb, var(--accent) 88%, white);
+}
+.land-cta-secondary {
+  background: var(--btn);
+  color: var(--text-1);
+  box-shadow: var(--btn-shadow);
+}
+.land-cta-secondary:hover {
+  background: var(--btn-hover);
+}
+
+.land-grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(248px, 1fr));
+}
+.land-grid--two {
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.land-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border-radius: var(--r-lg);
+  background: var(--sheen), var(--surface-1);
+  box-shadow: var(--lit);
+  transition: background var(--t-base) var(--ease);
+}
+.land-card:hover {
+  background: var(--sheen), var(--surface-2);
+}
+.land-card h2,
+.land-card h3 {
+  margin: 2px 0 0;
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  line-height: 1.3;
+}
+.land-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+.land-card p a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+}
+
+.land-card-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, rgb(var(--accent-rgb) / 0.2), rgb(var(--accent-rgb) / 0.08));
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.22), 0 4px 14px -6px rgb(var(--accent-rgb) / 0.55);
+  color: var(--accent);
+}
+.land-card-icon svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.land-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(32px, 5vw, 56px) clamp(22px, 4vw, 48px);
+  overflow: hidden;
+  border-radius: var(--r-lg);
+  background:
+    radial-gradient(60% 100% at 50% 0%, rgb(var(--accent-rgb) / 0.1), transparent 70%),
+    var(--sheen), var(--surface-1);
+  box-shadow: var(--lit);
+}
+.land-panel--center {
+  align-items: center;
+  text-align: center;
+}
+.land-panel h2 {
+  margin: 0;
+  font-size: clamp(26px, 3.4vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.land-panel .land-body {
+  max-width: 62ch;
+}
+
+.land-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: land-step;
+}
+.land-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: var(--r-md);
+  background: var(--sheen), var(--surface-1);
+  box-shadow: var(--lit);
+}
+.land-step::before {
+  counter-increment: land-step;
+  content: counter(land-step);
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+}
+.land-step h3 {
+  margin: 2px 0 4px;
+  font-size: 15px;
+  font-weight: 650;
+}
+.land-step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-2);
+}
+
+.land-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.land-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.land-stat-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-1);
+}
+.land-stat-label {
+  font-size: 12.5px;
+  color: var(--text-3);
+}
+
+.land-note {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: var(--r-md);
+  background: rgb(var(--accent-rgb) / 0.06);
+  box-shadow: inset 0 0 0 1px rgb(var(--accent-rgb) / 0.18);
+  color: var(--text-1);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.land-note a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.gh-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.gh-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.1rem 0.45rem;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.gh-stars svg {
+  width: 0.72rem;
+  height: 0.72rem;
+}
+.gh-link:hover .gh-stars {
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* data-reveal is dropped by the animationend handler once land-rise has
+   played, so hover transforms on the same elements stay immediate. */
+[data-reveal] {
+  opacity: 0;
+}
+[data-reveal].land-in {
+  animation: land-rise 0.7s var(--ease) var(--land-delay, 0ms) both;
+}
+@keyframes land-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.land-footer {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem clamp(1.8rem, 4vw, 3rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.land-footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 2.2rem;
+}
+
+@media (max-width: 860px) {
+  .land-footer-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .land-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.land-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.land-fwordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.land-fwordmark img {
+  width: 22px;
+  height: auto;
+  vertical-align: middle;
+}
+
+.land-footer-tagline {
+  margin: 0;
+  max-width: 30ch;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--land-dim);
+}
+
+.land-footer-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+.land-footer-col h3 {
+  margin: 0 0 0.35rem;
+  font-family: var(--land-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--land-dim);
+}
+.land-footer-col a {
+  color: var(--land-dim);
+  font-size: 0.92rem;
+  transition: color 0.15s;
+}
+.land-footer-col a:hover {
+  color: var(--land-mint);
+}
+
+.land-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem 2rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.land-footer-bottom p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--land-dim);
+}
+.land-footer-bottom p a {
+  color: var(--land-dim);
+  transition: color 0.15s;
+}
+.land-footer-bottom p a:hover {
+  color: var(--land-mint);
+}
+
+.land-footer-legal {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.land-legal {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(48px, 8vw, 80px) 24px clamp(56px, 8vw, 96px);
+}
+.land-legal-kicker {
+  margin: 0 0 12px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent);
+}
+.land-legal h1 {
+  margin: 0;
+  font-size: clamp(34px, 5vw, 52px);
+  font-weight: 750;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+}
+.land-legal-updated {
+  display: inline-flex;
+  margin: 16px 0 0;
+  padding: 4px 10px;
+  border-radius: var(--r-xs);
+  background: var(--surface-1);
+  box-shadow: var(--lit);
+  color: var(--text-3);
+  font-size: 12.5px;
+}
+.land-legal-intro {
+  margin: 28px 0 40px;
+  padding: 18px 20px;
+  border-radius: var(--r-md);
+  background: var(--sheen), var(--surface-1);
+  box-shadow: var(--lit);
+  color: var(--text-1);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.land-legal-section {
+  margin: 0;
+  padding: 26px 0;
+  border-top: 1px solid var(--line-1);
+}
+.land-legal-section h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+.land-legal-section p {
+  margin: 8px 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-2);
+}
+.land-legal-section ul {
+  margin: 8px 0;
+  padding-inline-start: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+.land-legal-section li::marker {
+  color: var(--accent);
+}
+.land-legal a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+}
+.land-legal code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--surface-2);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal].land-in {
+    opacity: 1;
+    animation: none;
+  }
+  .land-cta,
+  .land-cta-secondary,
+  .land-card {
+    transition: none;
+  }
+}
