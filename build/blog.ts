@@ -221,6 +221,8 @@ export function parsePost(slug: string, source: string, file = `${slug}.md`): Po
     coverCaption: optional(data, "coverCaption"),
     hero: optional(data, "hero"),
     heroAlt: optional(data, "heroAlt"),
+    socialImage: optional(data, "socialImage"),
+    socialImageAlt: optional(data, "socialImageAlt"),
     toc: data.toc === true,
     outro: optional(data, "outro"),
     html,

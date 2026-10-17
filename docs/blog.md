@@ -59,6 +59,8 @@ toc: true
 | `cover` | An image for the post's card on the index, shown on a soft backdrop. |
 | `coverLabel` | Without `cover`, the card shows generated art with this word or number in large type (default `OpenMouse`). |
 | `coverCaption` | A small line under `coverLabel`, e.g. `Chrome · Windows · WebHID`. |
+| `socialImage` | Image for link previews in Discord, X and other apps. Use a path to an image in `public/`, e.g. `/benchmark-startup.jpg`. Falls back to `hero`, then `cover`, then the site's default image. |
+| `socialImageAlt` | Text describing the preview image. Falls back to `heroAlt`, then the post title. |
 | `outro` | A closing line at the end of the post, followed by Discord, X and GitHub links. |
 
 ## Writing the post

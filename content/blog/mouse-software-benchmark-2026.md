@@ -8,6 +8,8 @@ category: Announcements
 kicker: Benchmark · Windows
 coverLabel: Benchmark
 coverCaption: Four apps · One Windows PC
+socialImage: /benchmark-startup.jpg
+socialImageAlt: Startup time comparison for OpenMouse Desktop, Logitech G HUB, Razer Synapse, and SteelSeries GG
 toc: true
 outro: Have a different result on your PC? Tell us what you measured and how.
 ---

@@ -30,6 +30,8 @@ export function sitePages(root: string): SitePage[] {
       title: `${post.title} — OpenMouse`,
       description: post.summary,
       socialTitle: post.title,
+      socialImage: post.socialImage ?? post.hero ?? post.cover,
+      socialImageAlt: post.socialImage || post.hero || post.cover ? (post.socialImageAlt ?? post.heroAlt ?? post.title) : undefined,
       type: "article",
       prerender: true,
       data: { post: postMeta(post), headings: post.headings },
