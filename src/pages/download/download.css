@@ -1,0 +1,177 @@
+.dl-options {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 900px) {
+  .dl-options {
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+  }
+}
+
+.dl-card-featured {
+  border-color: rgba(105, 210, 141, 0.3);
+}
+.dl-card-featured::before {
+  opacity: 1;
+}
+/* The desktop app isn't out yet, so that card sits a step back. Dimmed with a
+   filter rather than opacity so the scroll reveal still owns the card's own
+   opacity (they would fight over the same property). */
+.dl-card-soon {
+  filter: opacity(0.85);
+}
+
+.dl-install-body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.6rem, 4vw, 3rem);
+}
+@media (max-width: 860px) {
+  .dl-install-body {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+.dl-shot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 0.9rem;
+  border: 0;
+  box-shadow: var(--lit);
+  border-radius: 14px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(105, 210, 141, 0.09), transparent 70%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 60%),
+    var(--land-panel);
+}
+.dl-shot img {
+  display: block;
+  width: min(100%, 400px);
+  height: auto;
+  border-radius: 10px;
+  box-shadow: var(--lit), 0 30px 60px -34px rgba(0, 0, 0, 0.9);
+}
+
+.dl-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.dl-badge {
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--r-sm);
+  background: rgba(232, 178, 103, 0.14);
+  color: #e8b267;
+  font-size: 0.7rem;
+  letter-spacing: 0;
+}
+
+.dl-meta {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.84rem;
+  line-height: 1.6;
+  color: var(--land-dim);
+}
+.dl-meta li + li {
+  margin-top: 0.3rem;
+}
+
+.dl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+.dl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1 1 auto;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  border: 0;
+  box-shadow: var(--lit);
+  color: var(--land-text);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: border-color 0.15s, background 0.15s;
+}
+.dl-btn svg {
+  width: 15px;
+  height: 15px;
+  margin-right: 0.5rem;
+  flex: none;
+}
+.dl-btn-wide {
+  flex-basis: 100%;
+}
+.dl-soon {
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: var(--r-sm);
+  background: rgba(255, 255, 255, 0.06);
+  font-size: 0.66rem;
+  letter-spacing: 0;
+}
+.dl-btn:hover {
+  border-color: rgba(105, 210, 141, 0.5);
+  background: rgba(105, 210, 141, 0.07);
+}
+.dl-btn-primary {
+  border-color: transparent;
+  background: var(--land-mint);
+  color: var(--on-accent);
+}
+.dl-btn-primary:hover {
+  border-color: transparent;
+  background: #7ce39d;
+}
+.dl-btn-disabled,
+.dl-btn-disabled:hover {
+  border-style: dashed;
+  background: transparent;
+  color: var(--text-3);
+  cursor: default;
+}
+
+.dl-foot {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--land-dim);
+}
+.dl-foot a {
+  color: var(--land-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dl-foot a:hover {
+  color: var(--land-text);
+}
+
+.dl-install .land-note {
+  margin-top: 1.5rem;
+}
+.dl-install .land-note a {
+  color: var(--land-dim);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.dl-install .land-note a:hover {
+  color: var(--land-text);
+}
+.dl-install code {
+  padding: 0.1rem 0.35rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  font-family: var(--land-mono);
+  font-size: 0.85em;
+  color: var(--land-mint);
+}

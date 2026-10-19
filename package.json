@@ -7,15 +7,17 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
-    "test": "node --test \"src/**/*.test.ts\"",
+    "test": "node --test \"src/**/*.test.ts\" \"test/**/*.test.ts\"",
     "check": "npm run build && npm test",
     "preview": "vite preview"
   },
   "dependencies": {
     "@openmouse/protocol": "0.38.0",
+    "lucide-preact": "^1.59.0",
     "preact": "^10.29.8"
   },
   "devDependencies": {
+    "marked": "^16.4.2",
     "preact-render-to-string": "^6.7.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.5"

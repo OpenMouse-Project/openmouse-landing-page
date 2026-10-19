@@ -1,0 +1,76 @@
+.land-faq-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.land-faq-item {
+  position: relative;
+  padding: 1.5rem 1.45rem 1.6rem;
+  border: 0;
+  box-shadow: var(--lit);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012) 46%, rgba(255, 255, 255, 0) 100%),
+    var(--land-panel);
+  transition: transform 0.4s var(--land-ease), border-color 0.4s var(--land-ease), box-shadow 0.4s var(--land-ease);
+}
+.land-faq-item::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  border-radius: 18px 18px 0 0;
+  background: linear-gradient(90deg, transparent, rgba(105, 210, 141, 0.55), transparent);
+  opacity: 0.45;
+  transition: opacity 0.4s var(--land-ease);
+}
+.land-faq-item:hover {
+  transform: translateY(-4px);
+  border-color: rgba(105, 210, 141, 0.28);
+  box-shadow: 0 34px 64px -36px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(105, 210, 141, 0.07);
+}
+.land-faq-item:hover::before {
+  opacity: 1;
+}
+
+.land-faq-item dt {
+  display: flex;
+  gap: 0.62rem;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.014em;
+}
+.land-faq-item dt::before {
+  content: "";
+  flex: none;
+  width: 6px;
+  height: 6px;
+  margin-top: 0.45rem;
+  border-radius: 50%;
+  background: var(--land-mint);
+  box-shadow: 0 0 0 3px rgba(105, 210, 141, 0.16);
+}
+
+/* Answer indents to the question text, not to the dot. */
+.land-faq-item dd {
+  margin: 0.6rem 0 0 calc(0.62rem + 6px);
+  font-size: 0.93rem;
+  line-height: 1.68;
+  color: var(--land-dim);
+}
+.land-faq-item dd a {
+  color: var(--land-mint);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.land-faq-item dd a:hover {
+  color: color-mix(in srgb, var(--accent) 88%, white);
+}
+
+.land-faq-cta .land-cta-secondary {
+  margin-top: 0;
+}
