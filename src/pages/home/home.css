@@ -234,14 +234,16 @@
 }
 .lp-sponsor-logo {
   display: grid; place-items: center;
-  height: 100%; min-height: 128px; padding: 26px 48px;
+  width: clamp(220px, 26vw, 320px); min-height: 128px; padding: 26px 32px;
   border-radius: var(--r-lg);
   background: var(--sheen), var(--surface-1);
   box-shadow: var(--lit);
   transition: transform var(--t-slow) var(--ease), background var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
 }
 .lp-sponsor-logo:hover { transform: translateY(-3px); background: var(--sheen), var(--surface-2); box-shadow: var(--lit), 0 22px 44px -22px rgb(0 0 0 / 0.8); }
-.lp-sponsor-logo img { display: block; width: clamp(180px, 22vw, 244px); height: auto; }
+/* Logos arrive in different aspect ratios, so normalize on height and let
+   width follow. The max-width stops a very wide wordmark from dominating. */
+.lp-sponsor-logo img { display: block; height: clamp(22px, 3vw, 30px); width: auto; max-width: 240px; }
 
 .lp-final { display: grid; justify-items: center; gap: 16px; padding-block: 120px 40px; text-align: center; }
 .lp-final h2 { max-width: 760px; font-size: clamp(38px, 5.6vw, 72px); font-weight: 750; letter-spacing: -0.045em; line-height: 0.98; }

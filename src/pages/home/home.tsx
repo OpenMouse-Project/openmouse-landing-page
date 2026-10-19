@@ -210,6 +210,7 @@ interface Sponsor {
 /* Add a row here to list another sponsor; the strip wraps as the list grows. */
 const SPONSORS: ReadonlyArray<Sponsor> = [
   { name: "HYPERTUNE", href: "https://hypertune.gg/", logo: "/sponsors/hypertune-logo.svg", width: 1448, height: 150 },
+  { name: "HONE", href: "https://hone.gg/", logo: "/sponsors/hone-logo.svg", width: 94, height: 34 },
 ];
 
 function Sponsors({ locale }: { locale: InterfaceLocale }): ReactNode {
