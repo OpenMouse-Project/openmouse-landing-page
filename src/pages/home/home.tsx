@@ -7,7 +7,7 @@ import { mountOfflineBanner } from "../../platform/offline-banner";
 import { registerServiceWorker } from "../../platform/register-sw";
 import { APP_URL, SiteFooter, SiteNav } from "../../shared/site-chrome";
 import { ChromeLogo, EdgeLogo } from "../../shared/browser-logos";
-import { t } from "../../i18n/index";
+import { t, tp } from "../../i18n/index";
 import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { usePageLocale } from "../../shared/page-locale";
 import { useScrollReveal } from "../../shared/motion";
@@ -199,6 +199,51 @@ function Bridge({ locale }: { locale: InterfaceLocale }): ReactNode {
   );
 }
 
+interface Sponsor {
+  name: string;
+  href: string;
+  logo: string;
+  width: number;
+  height: number;
+}
+
+/* Add a row here to list another sponsor; the strip wraps as the list grows. */
+const SPONSORS: ReadonlyArray<Sponsor> = [
+  { name: "HYPERTUNE", href: "https://hypertune.gg/", logo: "/sponsors/hypertune-logo.svg", width: 1448, height: 150 },
+];
+
+function Sponsors({ locale }: { locale: InterfaceLocale }): ReactNode {
+  return (
+    <section className="lp-section lp-sponsors" data-reveal>
+      <div className="lp-sponsors-copy">
+        <h2>{t(locale, "lp.sponsorsTitle")}</h2>
+        <p>{t(locale, "lp.sponsorsBody")}</p>
+      </div>
+      <ul className="lp-sponsors-list">
+        {SPONSORS.map((sponsor) => (
+          <li key={sponsor.name}>
+            <a
+              className="lp-sponsor-logo"
+              href={sponsor.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={tp(locale, "lp.sponsorVisit", { name: sponsor.name })}
+            >
+              <img
+                src={sponsor.logo}
+                alt={sponsor.name}
+                width={sponsor.width}
+                height={sponsor.height}
+                loading="lazy"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 function SeeForYourself({ locale }: { locale: InterfaceLocale }): ReactNode {
   return (
     <section className="lp-section lp-final" data-reveal>
@@ -227,6 +272,7 @@ function Landing(): ReactNode {
         <TheApp locale={locale} />
         <Bridge locale={locale} />
         <SeeForYourself locale={locale} />
+        <Sponsors locale={locale} />
       </main>
       <SiteFooter locale={locale} />
     </div>
