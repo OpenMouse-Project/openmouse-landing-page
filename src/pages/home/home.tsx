@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import { ArrowRight, Code2, Cpu, Download, Globe2 } from "lucide-preact";
 import "../../shared/site.css";
@@ -12,6 +12,7 @@ import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { usePageLocale } from "../../shared/page-locale";
 import { useScrollReveal } from "../../shared/motion";
 import type { LandingData } from "./landing-data";
+import { AsciiField, AsciiWave } from "./ascii-field";
 
 let dataRequest: Promise<LandingData> | null = null;
 function requestData(): Promise<LandingData> {
@@ -205,17 +206,21 @@ interface Sponsor {
   logo: string;
   width: number;
   height: number;
+  /* Rendered height in px. Logos arrive in very different aspect ratios (a long
+     wordmark next to a mark-and-wordmark lockup), so each one sets its own. */
+  logoHeight: number;
 }
 
 /* Add a row here to list another sponsor; the strip wraps as the list grows. */
 const SPONSORS: ReadonlyArray<Sponsor> = [
-  { name: "HYPERTUNE", href: "https://hypertune.gg/", logo: "/sponsors/hypertune-logo.svg", width: 1448, height: 150 },
-  { name: "HONE", href: "https://hone.gg/", logo: "/sponsors/hone-logo.svg", width: 94, height: 34 },
+  { name: "HYPERTUNE", href: "https://hypertune.gg/", logo: "/sponsors/hypertune-logo.svg", width: 1448, height: 150, logoHeight: 26 },
+  { name: "HONE", href: "https://hone.gg/", logo: "/sponsors/hone-logo.svg", width: 215, height: 82, logoHeight: 52 },
 ];
 
 function Sponsors({ locale }: { locale: InterfaceLocale }): ReactNode {
   return (
     <section className="lp-section lp-sponsors" data-reveal>
+      <AsciiWave className="lp-ascii--divider" seed={33} cols={300} rows={6} />
       <div className="lp-sponsors-copy">
         <h2>{t(locale, "lp.sponsorsTitle")}</h2>
         <p>{t(locale, "lp.sponsorsBody")}</p>
@@ -225,6 +230,7 @@ function Sponsors({ locale }: { locale: InterfaceLocale }): ReactNode {
           <li key={sponsor.name}>
             <a
               className="lp-sponsor-logo"
+              style={{ "--logo-h": `${sponsor.logoHeight}px` } as CSSProperties}
               href={sponsor.href}
               target="_blank"
               rel="noreferrer"
@@ -267,6 +273,8 @@ function Landing(): ReactNode {
       <SiteNav locale={locale} onLocale={setLocale} />
       <main>
         <div className="lp-fold">
+          <AsciiField className="lp-ascii--hero-r" seed={7} cols={104} rows={40} origin={[1.02, -0.04]} reach={0.62} />
+          <AsciiField className="lp-ascii--hero-l" seed={21} cols={64} rows={34} origin={[-0.04, 0.5]} reach={0.5} />
           <Hero locale={locale} />
           <Brands locale={locale} data={data} />
         </div>
