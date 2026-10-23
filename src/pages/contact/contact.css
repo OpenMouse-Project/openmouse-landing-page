@@ -1,0 +1,24 @@
+.contact-cards { grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); }
+
+.contact-card {
+  align-items: center;
+  gap: 12px;
+  padding: 32px 24px;
+  text-align: center;
+}
+.contact-card p { max-width: 36ch; }
+
+.contact-link {
+  margin-top: auto;
+  padding-top: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+}
+.contact-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.contact-link:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
