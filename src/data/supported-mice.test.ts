@@ -53,6 +53,7 @@ import { RAPOO_PRODUCT_IDS } from "@openmouse/protocol/rapoo";
 import { RAWM_PRODUCT_IDS } from "@openmouse/protocol/rawm";
 import { GEARHUB_PRODUCTS } from "@openmouse/protocol/gearhub";
 import { MCHOSE_A5_GEN1_PRODUCTS } from "@openmouse/protocol/mchose";
+import { SCYROX_PRODUCT_IDS } from "@openmouse/protocol/scyrox";
 
 import { MICE, STATUS, type Mouse, type Status } from "./supported-mice.ts";
 
@@ -241,6 +242,8 @@ const PID_UNIVERSE = new Set<number>([
   ...LAMZU_INCA_PRODUCTS.keys(),
   // SteelSeries Rival 3 wired (drivers/steelseries/rival3-hid.ts).
   0x1824, 0x184c,
+  // Scyrox V8S wired 0xf515 and Turbo 8K dongle 0xf517 (src/scyrox).
+  ...SCYROX_PRODUCT_IDS,
 ]);
 test("every pinned PID on a coverage claim exists in the protocol registry", () => {
   const withPids: Array<Mouse & { pids: readonly number[] }> = MICE.filter(
