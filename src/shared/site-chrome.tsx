@@ -72,6 +72,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
           <nav className="land-footer-col" aria-label={t(locale, "foot.support")}>
             <h3>{t(locale, "foot.support")}</h3>
             <a href="/faq">FAQ</a>
+            <a href="/contact">{t(locale, "foot.contact")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/issues" target="_blank" rel="noreferrer">{t(locale, "don.reportIssue")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/discussions" target="_blank" rel="noreferrer">{t(locale, "don.discussions")}</a>
             <a href="/privacy">{t(locale, "don.privacy")}</a>

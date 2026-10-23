@@ -82,6 +82,14 @@ export const PAGES: readonly PageSpec[] = [
     sitemap: { priority: 0.7, changefreq: "monthly" },
   },
   {
+    file: "contact.html",
+    path: "/contact",
+    entry: "/src/pages/contact/contact.tsx",
+    title: "Contact — OpenMouse",
+    description: "Report a bug on GitHub or email the OpenMouse team for general questions, partnerships, or private matters.",
+    sitemap: { priority: 0.5, changefreq: "monthly" },
+  },
+  {
     file: "donate.html",
     path: "/donate",
     entry: "/src/pages/donate/donate.tsx",
