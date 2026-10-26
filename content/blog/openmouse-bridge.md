@@ -23,7 +23,7 @@ Needs admin?: No
 
 :::tldr TL;DR
 - If your Razer mouse stopped connecting on Windows after Chrome 153, install Bridge and it works again.
-- Download it, unzip it, run it. OpenMouse finds it on its own. Nothing else changes.
+- Download it, install it, run it. OpenMouse finds it on its own. Nothing else changes.
 - You can stop using the older-Chromium workaround from our last post.
 - It also adds game profiles that switch on their own, and low-battery alerts.
 :::
@@ -46,18 +46,18 @@ The settings you see don't change, and the drivers don't change. The same code t
 
    :::downloads
    windows: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/openmouse-bridge-windows-x64.zip
-   macos: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/openmouse-bridge-macos-universal.zip
+   macos: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-macos-universal.dmg
    linux: soon
    :::
 
    :::note
    Straight from our [GitHub releases](https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest), with a checksum if you want to verify it. The newest version is always on our [download page](/download).
    :::
-2. Unzip it somewhere you'll keep it, like your Documents folder. Keep the `native-hid` folder next to the app; Bridge needs it.
-3. Open `openmouse-bridge`. An OpenMouse icon shows up in your system tray (Windows) or menu bar (macOS). Click it to open Bridge's panel.
+2. On Windows, unzip it somewhere you'll keep it, like your Documents folder. Keep the `native-hid` folder next to the app; Bridge needs it. On macOS, open the disk image and drag OpenMouse Bridge into Applications.
+3. Open it (on macOS, launch OpenMouse Bridge from Applications). An OpenMouse icon shows up in your system tray (Windows) or menu bar (macOS). Click it to open Bridge's panel.
 
 :::warn Your computer will probably warn you
-This beta isn't code-signed yet, so the first time you open it, Windows shows a blue "Windows protected your PC" screen. Click **More info**, then **Run anyway**. On macOS, if it says the app can't be opened, go to **System Settings → Privacy & Security** and click **Open Anyway**. You only have to do this once. Signed builds are on our list.
+This beta isn't code-signed yet, so the first time you open it, Windows shows a blue "Windows protected your PC" screen. Click **More info**, then **Run anyway**. On macOS, right-click the app and choose **Open** the first time. You only have to do this once. Signed builds are on our list.
 :::
 
 ## Connect your mouse {#connect}

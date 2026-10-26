@@ -151,7 +151,7 @@ The first line is the primary button. `soon` instead of a link shows a disabled 
 ```md
 :::downloads
 windows: https://github.com/.../openmouse-bridge-windows-x64.zip
-macos: https://github.com/.../openmouse-bridge-macos-universal.zip
+macos: https://github.com/.../OpenMouse-Bridge-macos-universal.dmg
 linux: soon
 :::
 ```

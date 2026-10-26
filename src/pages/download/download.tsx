@@ -12,7 +12,7 @@ import { usePointerAurora, useScrollReveal } from "../../shared/motion";
 
 const BRIDGE_RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
 const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64.zip`;
-const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-macos-universal.zip`;
+const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-macos-universal.dmg`;
 const BRIDGE_POST_URL = "/blog/openmouse-bridge#install";
 
 // Bridge's public launch: 11:00 AM Mountain (MDT) on Sep 23, 2026. Until
@@ -218,7 +218,7 @@ function Downloads(): ReactNode {
           <div className="land-section-head">
             <h2>Installing Bridge</h2>
             <p>
-              Bridge is a folder you unzip and run. OpenMouse notices it on its own, so there's nothing to pair
+              Bridge is a small app you install and run. OpenMouse notices it on its own, so there's nothing to pair
               and nothing to configure.
             </p>
           </div>
@@ -239,17 +239,18 @@ function Downloads(): ReactNode {
                 <div>
                   <h3>Download it for your computer</h3>
                   <p>
-                    Grab the Windows or macOS zip from the card above. Every release ships a checksum if you want
+                    Grab the Windows zip or the macOS disk image from the card above. Every release ships a checksum if you want
                     to check the download first.
                   </p>
                 </div>
               </li>
               <li className="land-step" data-reveal>
                 <div>
-                  <h3>Unzip it somewhere you'll keep it</h3>
+                  <h3>Put it somewhere you'll keep it</h3>
                   <p>
-                    Your Documents folder works. Keep the <code>native-hid</code> folder next to the app, because
-                    Bridge needs it.
+                    On Windows, unzip it into your Documents folder and keep the <code>native-hid</code> folder next
+                    to the app, because Bridge needs it. On macOS, open the disk image and drag OpenMouse Bridge into
+                    Applications.
                   </p>
                 </div>
               </li>
@@ -258,14 +259,14 @@ function Downloads(): ReactNode {
                   <h3>Open it once</h3>
                   <p>
                     An OpenMouse icon shows up in your system tray on Windows, or your menu bar on macOS. Click it
-                    to open Bridge's panel.
+                    to open Bridge's panel. On macOS, launch OpenMouse Bridge from Applications.
                   </p>
                 </div>
               </li>
             </ol>
           </div>
           <p className="land-note">
-            Bridge isn't code-signed yet, so Windows and macOS will warn you the first time you open it.{" "}
+            Bridge isn't code-signed yet, so Windows and macOS will warn you the first time you open it. On macOS, right-click the app and choose Open.{" "}
             <a href={BRIDGE_POST_URL}>Here's how to get past that.</a>
           </p>
         </section>
