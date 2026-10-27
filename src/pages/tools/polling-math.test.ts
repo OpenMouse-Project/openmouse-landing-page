@@ -13,7 +13,7 @@ function feed(meter: PollingMeter, intervalMs: number, count: number, start = 0)
 
 test("reads a steady 1000 Hz stream", () => {
   const meter = new PollingMeter();
-  feed(meter, 1, 200);
+  feed(meter, 1, 400);
   const snap = meter.snapshot();
   assert.equal(Math.round(snap?.average ?? 0), 1000);
   assert.equal(Math.round(snap?.current ?? 0), 1000);
@@ -55,10 +55,23 @@ test("snaps to a standard rate only when close", () => {
   assert.equal(nearestStandardRate(0), null);
 });
 
-test("peak never drops once seen, even before the full window fills", () => {
+test("peak never drops once seen", () => {
   const meter = new PollingMeter();
-  feed(meter, 1, 10);
-  const early = meter.snapshot()?.peak ?? 0;
-  feed(meter, 8, 5, 20);
-  assert.ok((meter.snapshot()?.peak ?? 0) >= early);
+  const end = feed(meter, 1, 400);
+  const fast = meter.snapshot()?.peak ?? 0;
+  feed(meter, 8, 100, end);
+  assert.ok(Math.round(fast) >= 990);
+  assert.ok((meter.snapshot()?.peak ?? 0) >= fast);
+});
+
+test("bursts of reports sharing a timestamp do not inflate the peak", () => {
+  // A true 1000 Hz mouse whose reports reach the page in pairs with the same timestamp.
+  const meter = new PollingMeter();
+  for (let i = 0; i < 400; i += 1) {
+    meter.push(i * 2);
+    meter.push(i * 2);
+  }
+  const snap = meter.snapshot();
+  assert.ok((snap?.peak ?? 0) <= 1010, `peak ${snap?.peak}`);
+  assert.ok((snap?.average ?? 0) <= 1010);
 });

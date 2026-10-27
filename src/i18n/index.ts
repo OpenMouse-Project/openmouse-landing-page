@@ -792,7 +792,7 @@ const en = {
   "poll.note": "Browsers and operating systems can limit what a page sees, so treat the result as a lower bound, not a lab measurement. Fast circles work best.",
   "poll.how.title": "How it is calculated",
   "poll.how.p1": "Every pointer report carries a timestamp. The tool measures the gap between consecutive reports and ignores gaps over {ms} ms, which are pauses in your movement.",
-  "poll.how.p2": "Average is the number of gaps divided by the time they add up to. Current uses the last 50 gaps, and peak is the highest current reading so far.",
+  "poll.how.p2": "Average is the number of gaps divided by the time they add up to. Current uses the last quarter second of movement, and peak is the highest of those readings so far. Averaging over time keeps bursts of reports with near-identical timestamps from inflating them.",
   "don.source": "Source code",
   "don.community": "Community",
   "don.rights": "© {year} OpenMouse Project. All rights reserved.",

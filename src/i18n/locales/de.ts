@@ -792,7 +792,7 @@ export const de: Record<I18nKey, string> = {
   "poll.note": "Browser und Betriebssysteme können einschränken, was eine Seite sieht. Betrachte das Ergebnis daher als Untergrenze, nicht als Labormessung. Schnelle Kreise funktionieren am besten.",
   "poll.how.title": "So wird gerechnet",
   "poll.how.p1": "Jede Zeigermeldung trägt einen Zeitstempel. Das Tool misst den Abstand zwischen aufeinanderfolgenden Meldungen und ignoriert Abstände über {ms} ms, also Pausen in deiner Bewegung.",
-  "poll.how.p2": "Der Durchschnitt ist die Anzahl der Abstände geteilt durch ihre Gesamtzeit. Aktuell nutzt die letzten 50 Abstände, die Spitze ist der höchste bisherige Wert.",
+  "poll.how.p2": "Der Durchschnitt ist die Anzahl der Abstände geteilt durch ihre Gesamtzeit. Aktuell nutzt die letzte Viertelsekunde Bewegung, die Spitze ist der höchste bisherige Wert davon. Durch die Mittelung über Zeit blähen Bündel von Meldungen mit fast gleichen Zeitstempeln die Werte nicht auf.",
   "don.source": "Quellcode",
   "don.community": "Community",
   "don.rights": "© {year} OpenMouse Project. Alle Rechte vorbehalten.",

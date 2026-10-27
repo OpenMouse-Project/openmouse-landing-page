@@ -792,7 +792,7 @@ export const es: Record<I18nKey, string> = {
   "poll.note": "Los navegadores y sistemas operativos pueden limitar lo que ve una página, así que toma el resultado como un mínimo, no como una medición de laboratorio. Los círculos rápidos funcionan mejor.",
   "poll.how.title": "Cómo se calcula",
   "poll.how.p1": "Cada informe del puntero lleva una marca de tiempo. La herramienta mide el intervalo entre informes consecutivos e ignora los de más de {ms} ms, que son pausas en tu movimiento.",
-  "poll.how.p2": "La media es el número de intervalos dividido por el tiempo que suman. Actual usa los últimos 50 intervalos y el máximo es la lectura actual más alta hasta ahora.",
+  "poll.how.p2": "La media es el número de intervalos dividido por el tiempo que suman. Actual usa el último cuarto de segundo de movimiento y el máximo es la lectura más alta hasta ahora. Promediar en el tiempo evita que las ráfagas de informes con marcas de tiempo casi idénticas inflen los valores.",
   "don.source": "Código fuente",
   "don.community": "Comunidad",
   "don.rights": "© {year} OpenMouse Project. Todos los derechos reservados.",
