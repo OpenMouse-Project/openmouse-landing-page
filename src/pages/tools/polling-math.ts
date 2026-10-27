@@ -51,11 +51,12 @@ export class PollingMeter {
   snapshot(): PollingSnapshot | null {
     if (this.activeMs <= 0) return null;
     const current = this.recent.length >= MIN_WINDOW ? rate(this.recent) : 0;
+    this.peak = Math.max(this.peak, current);
     return {
       samples: this.samples,
       average: (1000 * this.gapCount) / this.activeMs,
       current,
-      peak: Math.max(this.peak, current),
+      peak: this.peak,
     };
   }
 }

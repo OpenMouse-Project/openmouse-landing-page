@@ -36,3 +36,8 @@ test("ignores jitter when counting swipes", () => {
   const jitter = Array.from({ length: 30 }, (_, i) => ({ dx: i % 2 ? 1 : -1, dy: 0 }));
   assert.equal(countSwipes(jitter), 0);
 });
+
+test("one-way motion with small backward jitter is a single swipe", () => {
+  const samples = Array.from({ length: 20 }, (_, i) => ({ dx: i % 2 === 0 ? 50 : -1, dy: 0 }));
+  assert.equal(countSwipes(samples), 1);
+});

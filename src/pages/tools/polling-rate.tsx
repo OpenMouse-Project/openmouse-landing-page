@@ -35,7 +35,9 @@ function PollingApp(): ReactNode {
     // Counting happens while the cursor is captured, or hovering if the lock was refused.
     let hovering = false;
     let locked = false;
-    const counting = (): boolean => hovering || locked;
+    // Set by Esc or right-click in hover mode, cleared when the cursor leaves the box.
+    let stopped = false;
+    const counting = (): boolean => (hovering && !stopped) || locked;
     const onMove = (event: Event): void => {
       const pointer = event as PointerEvent;
       if (pointer.pointerType !== "mouse" || (rawSupported && !counting())) return;
@@ -53,6 +55,7 @@ function PollingApp(): ReactNode {
     };
     const onLeave = (): void => {
       hovering = false;
+      stopped = false;
       sync();
     };
     const onLockChange = (): void => {
@@ -61,7 +64,17 @@ function PollingApp(): ReactNode {
     };
     const onDown = (event: MouseEvent): void => {
       // Under pointer lock the right click is delivered to the document, not the pad.
-      if (locked && event.button === 2) document.exitPointerLock();
+      if (event.button !== 2) return;
+      if (locked) document.exitPointerLock();
+      else if (hovering) {
+        stopped = true;
+        sync();
+      }
+    };
+    const onKey = (event: KeyboardEvent): void => {
+      if (event.key !== "Escape" || locked || !hovering) return;
+      stopped = true;
+      sync();
     };
     const onMenu = (event: MouseEvent): void => {
       if (event.target instanceof Node && pad.contains(event.target)) event.preventDefault();
@@ -72,6 +85,7 @@ function PollingApp(): ReactNode {
     document.addEventListener("pointerlockchange", onLockChange);
     document.addEventListener("mousedown", onDown);
     document.addEventListener("contextmenu", onMenu);
+    document.addEventListener("keydown", onKey);
     // Reports arrive at up to 8 kHz, so the readout is refreshed on a timer instead of per event.
     const timer = window.setInterval(() => {
       if (!dirty.current) return;
@@ -85,6 +99,7 @@ function PollingApp(): ReactNode {
       document.removeEventListener("pointerlockchange", onLockChange);
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("contextmenu", onMenu);
+      document.removeEventListener("keydown", onKey);
       window.clearInterval(timer);
     };
   }, [rawSupported]);

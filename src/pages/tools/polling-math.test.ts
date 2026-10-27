@@ -54,3 +54,11 @@ test("snaps to a standard rate only when close", () => {
   assert.equal(nearestStandardRate(700), null);
   assert.equal(nearestStandardRate(0), null);
 });
+
+test("peak never drops once seen, even before the full window fills", () => {
+  const meter = new PollingMeter();
+  feed(meter, 1, 10);
+  const early = meter.snapshot()?.peak ?? 0;
+  feed(meter, 8, 5, 20);
+  assert.ok((meter.snapshot()?.peak ?? 0) >= early);
+});

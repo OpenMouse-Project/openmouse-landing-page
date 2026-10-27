@@ -34,23 +34,28 @@ export function analyzeSwipes(samples: readonly RotationSample[]): RotationResul
   return { swipes: countSwipes(samples), correction: Math.round(tilt * 10) / 10 || 0 };
 }
 
-/** Count direction reversals along the horizontal axis, ignoring jitter. */
+/** Count strokes along the horizontal axis. A reversal only counts once the move back covers `threshold`. */
 export function countSwipes(samples: readonly RotationSample[], threshold = 40): number {
   let direction = 0;
-  let travelled = 0;
+  let run = 0;
+  let reverse = 0;
   let swipes = 0;
   for (const { dx } of samples) {
     const sign = Math.sign(dx);
     if (sign === 0) continue;
-    if (sign === direction || direction === 0) {
+    if (direction === 0 || sign === direction) {
       direction = sign;
-      travelled += Math.abs(dx);
+      run += Math.abs(dx);
+      reverse = 0;
       continue;
     }
-    if (travelled >= threshold) swipes += 1;
+    reverse += Math.abs(dx);
+    if (reverse < threshold) continue;
+    if (run >= threshold) swipes += 1;
     direction = sign;
-    travelled = Math.abs(dx);
+    run = reverse;
+    reverse = 0;
   }
-  if (travelled >= threshold) swipes += 1;
+  if (run >= threshold) swipes += 1;
   return swipes;
 }
