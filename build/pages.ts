@@ -73,6 +73,46 @@ export const PAGES: readonly PageSpec[] = [
     sitemap: { priority: 0.8, changefreq: "monthly" },
   },
   {
+    file: "tools.html",
+    path: "/tools",
+    entry: "/src/pages/tools/tools.tsx",
+    title: "Tools — OpenMouse",
+    description: "Free browser tools for your mouse, like a rotation calibrator. Everything runs locally in your browser.",
+    sitemap: { priority: 0.7, changefreq: "monthly" },
+  },
+  {
+    file: "tools/mouse-rotation.html",
+    path: "/tools/mouse-rotation",
+    entry: "/src/pages/tools/mouse-rotation.tsx",
+    title: "Mouse Rotation Calibration — OpenMouse",
+    description:
+      "Swipe side to side to find out how far your grip tilts your mouse, and the rotation angle that levels it. Runs in your browser, no mouse software needed.",
+    socialTitle: "Mouse rotation calibration",
+    jsonLd: {
+      ...WEB_APP,
+      name: "Mouse Rotation Calibration",
+      url: `${SITE_URL}/tools/mouse-rotation`,
+      isPartOf: { "@type": "WebSite", name: "OpenMouse", url: `${SITE_URL}/` },
+    },
+    sitemap: { priority: 0.7, changefreq: "monthly" },
+  },
+  {
+    file: "tools/polling-rate.html",
+    path: "/tools/polling-rate",
+    entry: "/src/pages/tools/polling-rate.tsx",
+    title: "Mouse Polling Rate Tester — OpenMouse",
+    description:
+      "Move your mouse over the box to measure its polling rate in Hz, live in your browser. No mouse software needed.",
+    socialTitle: "Mouse polling rate tester",
+    jsonLd: {
+      ...WEB_APP,
+      name: "Mouse Polling Rate Tester",
+      url: `${SITE_URL}/tools/polling-rate`,
+      isPartOf: { "@type": "WebSite", name: "OpenMouse", url: `${SITE_URL}/` },
+    },
+    sitemap: { priority: 0.7, changefreq: "monthly" },
+  },
+  {
     file: "faq.html",
     path: "/faq",
     entry: "/src/pages/faq/faq.tsx",

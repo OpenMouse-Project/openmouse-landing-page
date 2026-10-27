@@ -58,6 +58,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
             <a href="/">{t(locale, "don.home")}</a>
             <a href="/supported">{t(locale, "land.supported")}</a>
             <a href="/check">{t(locale, "don.check")}</a>
+            <a href="/tools">{t(locale, "tools.nav")}</a>
             <a href="/blog">Blog</a>
           </nav>
 
