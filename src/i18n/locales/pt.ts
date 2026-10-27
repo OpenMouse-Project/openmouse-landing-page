@@ -792,7 +792,7 @@ export const pt: Record<I18nKey, string> = {
   "poll.note": "Navegadores e sistemas operacionais podem limitar o que a página enxerga, então trate o resultado como um mínimo, não como uma medição de laboratório. Círculos rápidos funcionam melhor.",
   "poll.how.title": "Como é calculado",
   "poll.how.p1": "Cada relatório do ponteiro traz um carimbo de tempo. A ferramenta mede o intervalo entre relatórios consecutivos e ignora os acima de {ms} ms, que são pausas no seu movimento.",
-  "poll.how.p2": "A média é o número de intervalos dividido pelo tempo que eles somam. Atual usa os últimos 50 intervalos, e o pico é a maior leitura atual até agora.",
+  "poll.how.p2": "A média é o número de intervalos dividido pelo tempo que eles somam. Atual usa o último quarto de segundo de movimento, e o pico é a maior dessas leituras até agora. Calcular a média ao longo do tempo evita que rajadas de relatórios com carimbos de tempo quase idênticos inflem os valores.",
   "don.source": "Código-fonte",
   "don.community": "Comunidade",
   "don.rights": "© {year} Projeto OpenMouse. Todos os direitos reservados.",

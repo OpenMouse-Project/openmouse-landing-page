@@ -792,7 +792,7 @@ export const fr: Record<I18nKey, string> = {
   "poll.note": "Les navigateurs et systèmes peuvent limiter ce que voit une page : considérez le résultat comme un minimum, pas une mesure de laboratoire. Les cercles rapides fonctionnent le mieux.",
   "poll.how.title": "Comment c'est calculé",
   "poll.how.p1": "Chaque rapport du pointeur porte un horodatage. L'outil mesure l'écart entre rapports consécutifs et ignore ceux de plus de {ms} ms, qui sont des pauses dans votre mouvement.",
-  "poll.how.p2": "La moyenne est le nombre d'écarts divisé par leur durée totale. Actuelle utilise les 50 derniers écarts, et le pic est la plus haute valeur actuelle observée.",
+  "poll.how.p2": "La moyenne est le nombre d'écarts divisé par leur durée totale. Actuelle utilise le dernier quart de seconde de mouvement, et le pic est la plus haute de ces valeurs. Moyenner dans le temps évite que des rafales de rapports aux horodatages quasi identiques gonflent les mesures.",
   "don.source": "Code source",
   "don.community": "Communauté",
   "don.rights": "© {year} OpenMouse Project. Tous droits réservés.",
