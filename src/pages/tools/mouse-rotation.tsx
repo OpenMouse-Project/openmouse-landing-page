@@ -60,7 +60,7 @@ function RotationApp(): ReactNode {
     const canvas = canvasRef.current;
     if (!pad || !canvas) return;
     samples.current = [];
-    trail.current = [];
+    trail.current = [{ x: 0, y: 0 }];
     cursor.current = { x: 0, y: 0 };
     phaseRef.current = "measuring";
     setSwipes(0);
