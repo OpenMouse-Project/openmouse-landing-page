@@ -51,6 +51,7 @@ import { DAREU_PRODUCT_IDS } from "@openmouse/protocol/dareu";
 import { REDRAGON_PRODUCT_IDS } from "@openmouse/protocol/redragon";
 import { RAPOO_PRODUCT_IDS } from "@openmouse/protocol/rapoo";
 import { RAWM_PRODUCT_IDS } from "@openmouse/protocol/rawm";
+import { MOTOSPEED_PRODUCTS } from "@openmouse/protocol/motospeed";
 import { GEARHUB_PRODUCTS } from "@openmouse/protocol/gearhub";
 import { MCHOSE_A5_GEN1_PRODUCTS } from "@openmouse/protocol/mchose";
 import { SCYROX_PRODUCT_IDS } from "@openmouse/protocol/scyrox";
@@ -229,6 +230,8 @@ const PID_UNIVERSE = new Set<number>([
   ...KEYCHRON_8K_NORDIC_MICE.map((mouse) => mouse.productId),
   // RAWM HUB family mice and receivers (src/rawm).
   ...RAWM_PRODUCT_IDS,
+  // Motospeed X6 wired link and 8K receiver (src/motospeed).
+  ...MOTOSPEED_PRODUCTS.map((product) => product.productId),
   // GearHub dongle 0x402d + cable 0x4026, shared by the Lingbao M5 Pro and
   // Attack Shark R2 / R3 (src/gearhub).
   ...GEARHUB_PRODUCTS.keys(),

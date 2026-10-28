@@ -1032,6 +1032,11 @@ export const MICE: Mouse[] = [
   { brand: "Incott",        model: "Zero 39 (and Pro)",  status: "likely",    req: 0,
     note: "Also sold as 039. Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
 
+  // MOTOSPEED
+  { brand: "Motospeed", model: "X6", status: "supported", req: 0,
+    pids: [0xfff1, 0xffe0],
+    note: "PIDs (Wired: 0xfff1, 8K receiver: 0xffe0) in driver;" },
+
   // RAWM ────────────────────────────────────────────────────────────────
   // RAWM HUB driver identities — every entry below is verified on hardware
   // (src/rawm); the 0x232a/0x232b/0x2335/0x2336 receivers are excluded as
