@@ -772,7 +772,7 @@ export const fr: Record<I18nKey, string> = {
   "rot.restart": "Cliquez pour recommencer",
   "rot.result": "Rotation recommandée",
   "rot.few": "Seulement {n} mouvements comptés. Faites-en au moins {min} et réessayez.",
-  "rot.note": "Les angles positifs font tourner la sortie du capteur dans le sens antihoraire. Le signe varie selon les fabricants, testez donc quelques mouvements après application.",
+  "rot.note": "Les angles positifs font tourner la sortie du capteur dans le sens horaire. Le signe varie selon les fabricants, testez donc quelques mouvements après application.",
   "rot.how.title": "Comment c'est calculé",
   "rot.how.p1": "Pendant la mesure, chaque événement de souris signale un petit déplacement (dx, dy). L'outil additionne dx², dy² et dx·dy sur l'ensemble.",
   "rot.how.p2": "Ces trois sommes donnent la direction dans laquelle vos mouvements s'alignent : la droite la plus proche de tous vos déplacements. Comme les sommes utilisent des carrés et des produits, un va-et-vient donne le même résultat qu'un mouvement dans un seul sens.",

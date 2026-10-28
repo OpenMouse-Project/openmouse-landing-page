@@ -5,7 +5,7 @@ export interface RotationSample {
 
 export interface RotationResult {
   swipes: number;
-  /** Degrees to rotate the sensor output, counter-clockwise positive, in [-90, 90]. */
+  /** Degrees to rotate the sensor output, clockwise positive, in [-45, 45]. */
   correction: number;
 }
 
@@ -27,11 +27,13 @@ export function analyzeSwipes(samples: readonly RotationSample[]): RotationResul
   }
   if (sxx + syy === 0) return null;
 
-  // Screen y points down, so a positive angle here is a clockwise tilt.
+  // Screen y points down, so a positive tilt here means the swipes run clockwise of
+  // horizontal. Levelling them rotates the output the other way, so the correction is
+  // the negated tilt, in the clockwise-positive convention mouse software uses.
   const tilt = (0.5 * Math.atan2(2 * sxy, sxx - syy) * 180) / Math.PI;
   // A mostly vertical stroke has no horizontal axis to level.
   if (Math.abs(tilt) > 45) return { swipes: countSwipes(samples), correction: 0 };
-  return { swipes: countSwipes(samples), correction: Math.round(tilt * 10) / 10 || 0 };
+  return { swipes: countSwipes(samples), correction: -Math.round(tilt * 10) / 10 || 0 };
 }
 
 /** Count strokes along the horizontal axis. A reversal only counts once the move back covers `threshold`. */

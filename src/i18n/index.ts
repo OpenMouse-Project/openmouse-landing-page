@@ -772,7 +772,7 @@ const en = {
   "rot.restart": "Click to restart",
   "rot.result": "Recommended rotation",
   "rot.few": "Only {n} swipes counted. Swipe at least {min} times and try again.",
-  "rot.note": "Positive angles rotate the sensor output counter-clockwise. Vendors differ on sign, so test with a few swipes after you apply it.",
+  "rot.note": "Positive angles rotate the sensor output clockwise. Vendors differ on sign, so test with a few swipes after you apply it.",
   "rot.how.title": "How it is calculated",
   "rot.how.p1": "While you measure, every mouse event reports a small move (dx, dy). The tool adds up dx², dy² and dx·dy across all of them.",
   "rot.how.p2": "Those three sums give the direction your swipes line up with: the straight line that sits closest to all your movements. Because the sums use squares and products, swiping left and right gives the same answer as swiping one way.",

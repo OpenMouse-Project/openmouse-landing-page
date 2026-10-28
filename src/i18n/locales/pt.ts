@@ -772,7 +772,7 @@ export const pt: Record<I18nKey, string> = {
   "rot.restart": "Clique para reiniciar",
   "rot.result": "Rotação recomendada",
   "rot.few": "Só {n} movimentos foram contados. Faça pelo menos {min} e tente de novo.",
-  "rot.note": "Ângulos positivos giram a saída do sensor no sentido anti-horário. Cada fabricante trata o sinal de um jeito, então teste alguns movimentos depois de aplicar.",
+  "rot.note": "Ângulos positivos giram a saída do sensor no sentido horário. Cada fabricante trata o sinal de um jeito, então teste alguns movimentos depois de aplicar.",
   "rot.how.title": "Como é calculado",
   "rot.how.p1": "Durante a medição, cada evento do mouse informa um pequeno movimento (dx, dy). A ferramenta soma dx², dy² e dx·dy de todos eles.",
   "rot.how.p2": "Essas três somas dão a direção em que os seus movimentos se alinham: a reta mais próxima de todos eles. Como as somas usam quadrados e produtos, mover de um lado para o outro dá o mesmo resultado que mover em um só sentido.",

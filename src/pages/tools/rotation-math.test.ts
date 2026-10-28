@@ -18,14 +18,14 @@ test("level swipes need no correction", () => {
   assert.deepEqual(analyzeSwipes(swipes(0, 12)), { swipes: 12, correction: 0 });
 });
 
-test("recovers a clockwise tilt as its own angle", () => {
+test("a clockwise tilt is corrected with a negative angle", () => {
   const result = analyzeSwipes(swipes(7, 12));
-  assert.equal(result?.correction, 7);
+  assert.equal(result?.correction, -7);
 });
 
-test("recovers a counter-clockwise tilt as a negative angle", () => {
+test("a counter-clockwise tilt is corrected with a positive angle", () => {
   const result = analyzeSwipes(swipes(-4.5, 12));
-  assert.equal(result?.correction, -4.5);
+  assert.equal(result?.correction, 4.5);
 });
 
 test("returns null with no movement", () => {

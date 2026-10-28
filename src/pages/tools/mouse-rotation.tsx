@@ -48,6 +48,7 @@ function RotationApp(): ReactNode {
     setPhase("done");
     setResult(analyzeSwipes(samples.current));
     if (document.pointerLockElement) document.exitPointerLock();
+    if (document.fullscreenElement) document.exitFullscreen().catch(() => undefined);
   }, []);
 
   const start = (): void => {
@@ -61,14 +62,21 @@ function RotationApp(): ReactNode {
     setSwipes(0);
     setResult(null);
     setPhase("measuring");
-    // Pointer lock keeps the cursor inside the pad and reports raw deltas; it
-    // may be refused, in which case the deltas still arrive while over the pad.
-    try {
-      const request = pad.requestPointerLock({ unadjustedMovement: true } as PointerLockOptions) as Promise<void> | void;
-      if (request) request.catch(() => pad.requestPointerLock());
-    } catch {
-      /* movement events still work without the lock */
-    }
+    // Pointer lock keeps the cursor inside the pad and reports raw deltas; it may be
+    // refused, in which case the deltas still arrive while over the pad.
+    const lock = (): void => {
+      if (phaseRef.current !== "measuring") return;
+      try {
+        const request = pad.requestPointerLock({ unadjustedMovement: true } as PointerLockOptions) as Promise<void> | void;
+        if (request) request.catch(() => pad.requestPointerLock());
+      } catch {
+        /* movement events still work without the lock */
+      }
+    };
+    // The pad goes fullscreen first, so there is room for long swipes at high DPI, and the
+    // lock is taken once that settles. If fullscreen is refused the pad stays a box.
+    if (pad.requestFullscreen) pad.requestFullscreen().then(lock, lock);
+    else lock();
   };
 
   useEffect(() => {
@@ -78,6 +86,8 @@ function RotationApp(): ReactNode {
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.round(rect.width * window.devicePixelRatio);
       canvas.height = Math.round(rect.height * window.devicePixelRatio);
+      // The pad changes size when it enters or leaves fullscreen; keep the cursor centred until the first move.
+      if (phaseRef.current === "measuring" && trail.current.length === 0) cursor.current = { x: canvas.width / 2, y: canvas.height / 2 };
       draw();
     };
     resize();
@@ -119,13 +129,18 @@ function RotationApp(): ReactNode {
     const onLockChange = (): void => {
       if (!document.pointerLockElement) finish();
     };
+    const onFullscreenChange = (): void => {
+      if (!document.fullscreenElement) finish();
+    };
+    document.addEventListener("fullscreenchange", onFullscreenChange);
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mousedown", onDown);
     document.addEventListener("contextmenu", onMenu);
     document.addEventListener("keydown", onKey);
     document.addEventListener("pointerlockchange", onLockChange);
     return () => {
-      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("fullscreenchange", onFullscreenChange);
+    document.removeEventListener("mousemove", onMove);
       document.removeEventListener("mousedown", onDown);
     document.removeEventListener("contextmenu", onMenu);
     document.removeEventListener("keydown", onKey);
@@ -170,6 +185,7 @@ function RotationApp(): ReactNode {
           >
             <canvas ref={canvasRef} className="rot-canvas" aria-hidden="true" />
             <span className="rot-status">{status}</span>
+            {phase === "measuring" ? <span className="rot-stop">{t(locale, "rot.step3")}</span> : null}
           </div>
 
           <div className="rot-result" aria-live="polite">
