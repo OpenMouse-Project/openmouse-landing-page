@@ -64,6 +64,7 @@ const en = {
   "set.languageTitle": "Language",
   "set.languageBody": "Choose the interface language. Device messages stay English for now.",
   "set.english": "English",
+  "set.turkish": "Türkçe",
   "set.portuguese": "Português",
   "set.spanish": "Español",
   "set.french": "Français",
@@ -579,6 +580,14 @@ const en = {
   "land.contribute": "Contribute",
   "land.donate": "Donate",
   "land.openApp": "Open the app",
+  "land.faq": "FAQ",
+  "land.screenshotAlt": "The OpenMouse web app on the Performance tab of a Razer Viper V3 Pro: the device header with connection, battery, polling rate and DPI, the DPI stage table and the report frequency meter",
+  "land.bridgeAlt": "The OpenMouse Bridge companion panel listing connected mice and their per-device settings status",
+  "chk.verdict.full": "WebHID full",
+  "chk.verdict.partial": "Partial",
+  "chk.verdict.limited": "Limited",
+  "chk.verdict.blocked": "Native only",
+  "chk.verdict.unknown": "Unknown",
   "land.download": "Download",
   "land.bridgeKicker": "OPENMOUSE BRIDGE",
   "land.bridgeTitle": "Need more than the browser?",
@@ -882,6 +891,7 @@ export const LOCALE_NAME_KEYS: ReadonlyArray<[InterfaceLocale, I18nKey]> = [
   ["ko", "set.korean"],
   ["ru", "set.russian"],
   ["ar", "set.arabic"],
+  ["tr", "set.turkish"],
 ];
 
 const RTL_LOCALES: ReadonlySet<InterfaceLocale> = new Set(["ar"]);
@@ -908,6 +918,7 @@ const LOCALE_LOADERS: Record<Exclude<InterfaceLocale, "en">, () => Promise<Local
   ko: () => import("./locales/ko.ts").then((m) => m.ko),
   ru: () => import("./locales/ru.ts").then((m) => m.ru),
   ar: () => import("./locales/ar.ts").then((m) => m.ar),
+  tr: () => import("./locales/tr.ts").then((m) => m.tr),
 };
 
 export function ensureLocale(locale: InterfaceLocale): Promise<void> {

@@ -31,7 +31,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
         <nav className="land-nav-links">
           <a href="/supported">{t(locale, "land.supported")}</a>
           <a href="/blog">Blog</a>
-          <a href="/faq">FAQ</a>
+          <a href="/faq">{t(locale, "land.faq")}</a>
           <a href="/download">{t(locale, "land.download")}</a>
           <a href="/donate">{t(locale, "land.donate")}</a>
           <GitHubLink locale={locale} />
@@ -72,7 +72,7 @@ export function SiteFooter({ locale }: { locale: InterfaceLocale }): ReactNode {
 
           <nav className="land-footer-col" aria-label={t(locale, "foot.support")}>
             <h3>{t(locale, "foot.support")}</h3>
-            <a href="/faq">FAQ</a>
+            <a href="/faq">{t(locale, "land.faq")}</a>
             <a href="/contact">{t(locale, "foot.contact")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/issues" target="_blank" rel="noreferrer">{t(locale, "don.reportIssue")}</a>
             <a href="https://github.com/OpenMouse-Project/openmouse/discussions" target="_blank" rel="noreferrer">{t(locale, "don.discussions")}</a>
