@@ -23,6 +23,8 @@ function RotationApp(): ReactNode {
   const padRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const samples = useRef<RotationSample[]>([]);
+  // Offsets from the centre of the pad, in device pixels, so the trail does not depend on
+  // when the pad is resized (it goes fullscreen as the measurement starts).
   const cursor = useRef({ x: 0, y: 0 });
   const trail = useRef<{ x: number; y: number }[]>([]);
   const phaseRef = useRef<Phase>("idle");
@@ -38,7 +40,9 @@ function RotationApp(): ReactNode {
     ctx.lineWidth = 2 * window.devicePixelRatio;
     ctx.lineJoin = "round";
     ctx.beginPath();
-    trail.current.forEach((point, index) => (index === 0 ? ctx.moveTo(point.x, point.y) : ctx.lineTo(point.x, point.y)));
+    const cx = width / 2;
+    const cy = height / 2;
+    trail.current.forEach((point, index) => (index === 0 ? ctx.moveTo(cx + point.x, cy + point.y) : ctx.lineTo(cx + point.x, cy + point.y)));
     ctx.stroke();
   }, []);
 
@@ -56,8 +60,8 @@ function RotationApp(): ReactNode {
     const canvas = canvasRef.current;
     if (!pad || !canvas) return;
     samples.current = [];
-    trail.current = [];
-    cursor.current = { x: canvas.width / 2, y: canvas.height / 2 };
+    trail.current = [{ x: 0, y: 0 }];
+    cursor.current = { x: 0, y: 0 };
     phaseRef.current = "measuring";
     setSwipes(0);
     setResult(null);
@@ -86,8 +90,6 @@ function RotationApp(): ReactNode {
       const rect = canvas.getBoundingClientRect();
       canvas.width = Math.round(rect.width * window.devicePixelRatio);
       canvas.height = Math.round(rect.height * window.devicePixelRatio);
-      // The pad changes size when it enters or leaves fullscreen; keep the cursor centred until the first move.
-      if (phaseRef.current === "measuring" && trail.current.length === 0) cursor.current = { x: canvas.width / 2, y: canvas.height / 2 };
       draw();
     };
     resize();
@@ -104,8 +106,8 @@ function RotationApp(): ReactNode {
       samples.current.push({ dx: event.movementX, dy: event.movementY });
       const scale = window.devicePixelRatio;
       cursor.current = {
-        x: Math.min(canvas.width, Math.max(0, cursor.current.x + event.movementX * scale)),
-        y: Math.min(canvas.height, Math.max(0, cursor.current.y + event.movementY * scale)),
+        x: Math.min(canvas.width / 2, Math.max(-canvas.width / 2, cursor.current.x + event.movementX * scale)),
+        y: Math.min(canvas.height / 2, Math.max(-canvas.height / 2, cursor.current.y + event.movementY * scale)),
       };
       trail.current.push({ ...cursor.current });
       if (trail.current.length > 600) trail.current.shift();
