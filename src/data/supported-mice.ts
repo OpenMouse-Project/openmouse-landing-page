@@ -444,7 +444,7 @@ export const MICE: Mouse[] = [
   { brand: "Razer", model: "DeathAdder V2 Mini",        status: "likely",    req: 0,
     pids: [0x008c],
     note: "In Razer registry — needs hardware test" },
-  { brand: "Razer", model: "DeathAdder V3 HyperSpeed",  status: "likely",    req: 4,
+  { brand: "Razer", model: "DeathAdder V3 HyperSpeed",  status: "supported", req: 4,
     pids: [0x00c4, 0x00c5],
     note: "PIDs 0x00c4 (wired) / 0x00c5 (wireless) in Razer registry" },
   { brand: "Razer", model: "Diamondback Chroma",        status: "supported", req: 0,
