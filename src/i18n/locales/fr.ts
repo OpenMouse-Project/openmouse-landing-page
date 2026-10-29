@@ -772,6 +772,7 @@ export const fr: Record<I18nKey, string> = {
   "rot.restart": "Cliquez pour recommencer",
   "rot.result": "Rotation recommandée",
   "rot.few": "Seulement {n} mouvements comptés. Faites-en au moins {min} et réessayez.",
+  "rot.margin": "Marge d'erreur ±{n}° sur {swipes} mouvements. Plus de mouvements la réduisent.",
   "rot.note": "Les angles positifs font tourner la sortie du capteur dans le sens horaire. Le signe varie selon les fabricants, testez donc quelques mouvements après application.",
   "rot.how.title": "Comment c'est calculé",
   "rot.how.p1": "Pendant la mesure, chaque événement de souris signale un petit déplacement (dx, dy). L'outil additionne dx², dy² et dx·dy sur l'ensemble.",

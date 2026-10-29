@@ -772,6 +772,7 @@ export const zh: Record<I18nKey, string> = {
   "rot.restart": "点击重新开始",
   "rot.result": "建议旋转角度",
   "rot.few": "仅统计到 {n} 次滑动。请至少滑动 {min} 次后重试。",
+  "rot.margin": "误差范围 ±{n}°（基于 {swipes} 次滑动）。滑动次数越多，误差越小。",
   "rot.note": "正角度表示传感器输出顺时针旋转。各厂商对正负号的约定不同，应用后请再滑动几次验证。",
   "rot.how.title": "计算方式",
   "rot.how.p1": "测量时，每个鼠标事件都会报告一个小位移 (dx, dy)。工具会对所有事件累加 dx²、dy² 和 dx·dy。",

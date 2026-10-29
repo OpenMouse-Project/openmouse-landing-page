@@ -8,7 +8,7 @@ import { SiteFooter, SiteNav } from "../../shared/site-chrome";
 import { t, tp } from "../../i18n/index";
 import { usePageLocale } from "../../shared/page-locale";
 import { usePointerAurora, useScrollReveal } from "../../shared/motion";
-import { analyzeSwipes, countSwipes, MIN_SWIPES, type RotationResult, type RotationSample } from "./rotation-math";
+import { analyzeSwipes, countSwipes, MIN_SWIPES, RECOMMENDED_SWIPES, type RotationResult, type RotationSample } from "./rotation-math";
 
 type Phase = "idle" | "measuring" | "done";
 
@@ -172,7 +172,7 @@ function RotationApp(): ReactNode {
         <section className="land-section rot-layout" data-reveal>
           <ol className="rot-steps">
             <li>{t(locale, "rot.step1")}</li>
-            <li>{tp(locale, "rot.step2", { n: MIN_SWIPES })}</li>
+            <li>{tp(locale, "rot.step2", { n: RECOMMENDED_SWIPES })}</li>
             <li>{t(locale, "rot.step3")}</li>
           </ol>
 
@@ -193,6 +193,9 @@ function RotationApp(): ReactNode {
           <div className="rot-result" aria-live="polite">
             <span className="rot-result-label">{t(locale, "rot.result")}</span>
             <strong className="rot-result-value">{enough ? `${result.correction.toFixed(1)}°` : "0°"}</strong>
+            {phase === "done" && enough ? (
+              <p className="rot-margin">{tp(locale, "rot.margin", { n: result.margin.toFixed(1), swipes: result.swipes })}</p>
+            ) : null}
             {phase === "done" && !enough ? (
               <p className="rot-hint">{tp(locale, "rot.few", { n: result?.swipes ?? 0, min: MIN_SWIPES })}</p>
             ) : null}

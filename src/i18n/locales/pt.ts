@@ -772,6 +772,7 @@ export const pt: Record<I18nKey, string> = {
   "rot.restart": "Clique para reiniciar",
   "rot.result": "Rotação recomendada",
   "rot.few": "Só {n} movimentos foram contados. Faça pelo menos {min} e tente de novo.",
+  "rot.margin": "Margem de erro ±{n}° em {swipes} movimentos. Mais movimentos a reduzem.",
   "rot.note": "Ângulos positivos giram a saída do sensor no sentido horário. Cada fabricante trata o sinal de um jeito, então teste alguns movimentos depois de aplicar.",
   "rot.how.title": "Como é calculado",
   "rot.how.p1": "Durante a medição, cada evento do mouse informa um pequeno movimento (dx, dy). A ferramenta soma dx², dy² e dx·dy de todos eles.",
