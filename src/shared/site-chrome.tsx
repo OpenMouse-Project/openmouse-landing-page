@@ -30,6 +30,7 @@ export function SiteNav({ locale, onLocale }: { locale: InterfaceLocale; onLocal
         </a>
         <nav className="land-nav-links">
           <a href="/supported">{t(locale, "land.supported")}</a>
+          <a href="/tools">{t(locale, "tools.nav")}</a>
           <a href="/blog">Blog</a>
           <a href="/faq">FAQ</a>
           <a href="/download">{t(locale, "land.download")}</a>
