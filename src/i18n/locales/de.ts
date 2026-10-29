@@ -772,6 +772,7 @@ export const de: Record<I18nKey, string> = {
   "rot.restart": "Zum Neustart klicken",
   "rot.result": "Empfohlene Rotation",
   "rot.few": "Nur {n} Wischbewegungen erkannt. Wische mindestens {min}-mal und versuche es erneut.",
+  "rot.margin": "Fehlerspanne ±{n}° bei {swipes} Wischbewegungen. Mehr Wischbewegungen verringern sie.",
   "rot.note": "Positive Winkel drehen die Sensorausgabe im Uhrzeigersinn. Hersteller handhaben das Vorzeichen unterschiedlich, teste deshalb nach dem Anwenden ein paar Wischbewegungen.",
   "rot.how.title": "So wird gerechnet",
   "rot.how.p1": "Während der Messung meldet jedes Mausereignis eine kleine Bewegung (dx, dy). Das Tool summiert dx², dy² und dx·dy über alle Ereignisse.",

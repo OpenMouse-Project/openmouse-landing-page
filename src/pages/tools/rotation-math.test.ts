@@ -15,7 +15,7 @@ function swipes(angleDeg: number, count: number): RotationSample[] {
 }
 
 test("level swipes need no correction", () => {
-  assert.deepEqual(analyzeSwipes(swipes(0, 12)), { swipes: 12, correction: 0 });
+  assert.deepEqual(analyzeSwipes(swipes(0, 12)), { swipes: 12, correction: 0, spread: 0, margin: 0 });
 });
 
 test("a clockwise tilt is corrected with a negative angle", () => {
@@ -40,4 +40,32 @@ test("ignores jitter when counting swipes", () => {
 test("one-way motion with small backward jitter is a single swipe", () => {
   const samples = Array.from({ length: 20 }, (_, i) => ({ dx: i % 2 === 0 ? 50 : -1, dy: 0 }));
   assert.equal(countSwipes(samples), 1);
+});
+
+test("identical swipes have no spread", () => {
+  const result = analyzeSwipes(swipes(7, 12));
+  assert.equal(result?.spread, 0);
+  assert.equal(result?.margin, 0);
+});
+
+test("scattered swipes report a spread and a margin that shrinks with more swipes", () => {
+  const scattered = (count: number): RotationSample[] =>
+    Array.from({ length: count }, (_, i) => swipes(5 + (i % 2 === 0 ? 2 : -2), 1)).flatMap((one, i) =>
+      i % 2 === 0 ? one : one.map(({ dx, dy }) => ({ dx: -dx, dy: -dy })),
+    );
+  const few = analyzeSwipes(scattered(10));
+  const many = analyzeSwipes(scattered(40));
+  assert.equal(few?.correction, -5);
+  assert.equal(few?.spread, 2);
+  assert.ok(many && few && many.margin < few.margin);
+});
+
+test("batching of mouse events does not change the result", () => {
+  const fine = swipes(6, 12);
+  const coarse: RotationSample[] = [];
+  for (let i = 0; i < fine.length; i += 4) {
+    const chunk = fine.slice(i, i + 4);
+    coarse.push({ dx: chunk.reduce((a, s) => a + s.dx, 0), dy: chunk.reduce((a, s) => a + s.dy, 0) });
+  }
+  assert.deepEqual(analyzeSwipes(coarse), analyzeSwipes(fine));
 });

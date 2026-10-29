@@ -33,6 +33,7 @@
 .rot-result { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding: 18px 20px; border-radius: var(--r-lg); background: var(--well); box-shadow: var(--inset-shadow); }
 .rot-result-label { color: var(--text-2); font-size: 14px; }
 .rot-result-value { font-family: var(--font-mono); font-size: clamp(32px, 6vw, 44px); font-weight: 600; letter-spacing: -0.02em; color: var(--text-1); }
+.rot-margin { flex-basis: 100%; margin: 0; color: var(--text-3); font-size: 13.5px; }
 .rot-hint { flex-basis: 100%; margin: 0; color: var(--warn); font-size: 13.5px; }
 .rot-note { margin: 0; color: var(--text-3); font-size: 13px; line-height: 1.55; }
 

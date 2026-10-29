@@ -772,6 +772,7 @@ const en = {
   "rot.restart": "Click to restart",
   "rot.result": "Recommended rotation",
   "rot.few": "Only {n} swipes counted. Swipe at least {min} times and try again.",
+  "rot.margin": "Margin of error ±{n}° over {swipes} swipes. More swipes narrow it.",
   "rot.note": "Positive angles rotate the sensor output clockwise. Vendors differ on sign, so test with a few swipes after you apply it.",
   "rot.how.title": "How it is calculated",
   "rot.how.p1": "While you measure, every mouse event reports a small move (dx, dy). The tool adds up dx², dy² and dx·dy across all of them.",
