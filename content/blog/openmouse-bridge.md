@@ -45,7 +45,7 @@ The settings you see don't change, and the drivers don't change. The same code t
 1. Download Bridge for your computer:
 
    :::downloads
-   windows: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/openmouse-bridge-windows-x64.zip
+   windows: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/openmouse-bridge-windows-x64-full.zip
    macos: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-macos-universal.dmg
    linux: soon
    :::
