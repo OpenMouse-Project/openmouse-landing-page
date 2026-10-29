@@ -11,7 +11,7 @@ import { usePageLocale } from "../../shared/page-locale";
 import { usePointerAurora, useScrollReveal } from "../../shared/motion";
 
 const BRIDGE_RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
-const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64.zip`;
+const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64-full.zip`;
 const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-macos-universal.dmg`;
 const BRIDGE_POST_URL = "/blog/openmouse-bridge#install";
 
