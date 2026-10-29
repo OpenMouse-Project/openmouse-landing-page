@@ -111,9 +111,9 @@ body {
   color: var(--land-text);
 }
 
-/* The six links need ~1000px alongside the brand, language picker and CTA;
+/* The seven links need ~1080px alongside the brand, language picker and CTA;
    below that they're hidden (all of them are also in the footer). */
-@media (min-width: 1000px) {
+@media (min-width: 1080px) {
   .land-nav-links {
     display: flex;
   }
@@ -158,7 +158,7 @@ body {
   opacity: 0.92;
 }
 
-@media (max-width: 999px) {
+@media (max-width: 1079px) {
   .land-nav-inner .page-locale-select { margin-left: auto; }
   .land-nav-cta { margin-left: 0; }
 }
