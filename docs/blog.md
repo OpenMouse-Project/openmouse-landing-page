@@ -30,7 +30,7 @@ description: A small helper app that runs next to your browser and talks to your
 date: 2026-09-23
 author: snekxs
 category: Announcements
-kicker: Release · Bridge beta
+kicker: Release · Bridge
 toc: true
 ---
 ```
@@ -113,7 +113,7 @@ For things that can go wrong or surprise the reader.
 
 ```md
 :::warn Your computer will probably warn you
-This beta isn't code-signed yet, so Windows shows a "Windows protected your PC" screen.
+Bridge isn't code-signed yet, so Windows shows a "Windows protected your PC" screen.
 :::
 ```
 
@@ -150,7 +150,7 @@ The first line is the primary button. `soon` instead of a link shows a disabled 
 
 ```md
 :::downloads
-windows: https://github.com/.../openmouse-bridge-windows-x64.zip
+windows: https://github.com/.../OpenMouse-Bridge-windows-x64-setup.exe
 macos: https://github.com/.../OpenMouse-Bridge-macos-universal.dmg
 linux: soon
 :::
@@ -165,6 +165,32 @@ A small line of text, meant for right under download buttons.
 Straight from our [GitHub releases](https://github.com/...), with a checksum.
 :::
 ```
+
+### `:::platforms` steps per operating system
+
+Different instructions for Windows, macOS and Linux, shown as tabs. The reader's own system opens
+first, and they can switch to another. Put a `:::windows`, `:::macos` and/or `:::linux` block
+inside; each holds any Markdown, including other blocks. Tabs always run Windows, macOS, Linux.
+Picking a tab in one `:::platforms` block picks it in every block on the page.
+
+```md
+:::platforms
+:::windows
+1. Download the installer:
+
+   :::downloads
+   windows: https://github.com/.../OpenMouse-Bridge-windows-x64-setup.exe
+   :::
+2. Run it.
+:::
+:::macos
+1. Open the disk image and drag the app into Applications.
+:::
+:::
+```
+
+Blocks can sit inside other blocks: each `:::name` line opens one and each bare `:::` closes the
+most recent. `:::` lines inside code fences don't count.
 
 ## The blog index
 
@@ -192,6 +218,7 @@ Nothing here needs to change to write a post, but for when something breaks:
 | Turns each post into a page (`/blog/<slug>`), builds the index data, sitemap entries | `build/site.ts` |
 | Generates the HTML for every page, serves pages in dev, reloads on post changes | `build/site-vite-plugin.ts` |
 | The post page: title, byline, hero, contents rail, the rendered post, outro, comments | `src/pages/blog/blog-post.tsx` |
+| Switches the `:::platforms` tabs and opens the reader's own system | `src/pages/blog/platform-tabs.ts` |
 | The blog index | `src/pages/blog/blog-index.tsx` |
 | Styles for posts, blocks and the index | `src/pages/blog/blog.css` |
 | The comments API | `functions/api/comments.js` |

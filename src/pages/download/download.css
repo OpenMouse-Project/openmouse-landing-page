@@ -28,7 +28,7 @@
 .dl-product-heading h2 {
   margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; line-height: 1.15;
 }
-.dl-product-details { display: grid; align-content: start; gap: 16px; }
+.dl-product-details { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 16px; }
 .dl-product-details > p { margin: 0; color: var(--text-2); font-size: 16px; line-height: 1.6; }
 .dl-count {
   display: inline-flex; align-items: center; gap: 10px; justify-self: start; margin: 0;
@@ -115,14 +115,6 @@
 .dl-btn-wide {
   flex-basis: auto;
 }
-.dl-soon {
-  margin-inline-start: 0.5rem;
-  padding: 0.05rem 0.45rem;
-  border-radius: var(--r-sm);
-  background: var(--surface-2);
-  font-size: 0.66rem;
-  letter-spacing: 0;
-}
 .dl-btn:hover {
   border-color: var(--accent-line);
   background: var(--accent-soft);
@@ -143,6 +135,42 @@
   color: var(--text-3);
   cursor: default;
 }
+
+.dl-command { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0.45rem; }
+.dl-command-label { margin: 0; font-size: 0.82rem; color: var(--text-2); }
+.dl-command-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: 100%;
+  padding: 0.4rem 0.4rem 0.4rem 0.8rem;
+  border-radius: 10px;
+  background: var(--surface-2);
+  box-shadow: var(--lit);
+}
+.dl-command-row code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: var(--land-mono);
+  font-size: 0.8rem;
+  color: var(--text-1);
+}
+.dl-command-copy {
+  flex: none;
+  padding: 0.35rem 0.7rem;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  box-shadow: var(--lit);
+  color: var(--text-1);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dl-command-copy:hover { background: var(--accent-soft); }
 
 .dl-foot {
   display: flex;

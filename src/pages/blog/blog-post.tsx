@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import "../../shared/site.css";
 import "./blog.css";
 import { SiteFooter, SiteNav } from "../../shared/site-chrome";
@@ -6,6 +6,7 @@ import { usePageLocale } from "../../shared/page-locale";
 import { BlogComments } from "./blog-comments";
 import { BlogOutro } from "./blog-outro";
 import { BlogToc } from "./blog-toc";
+import { setupPlatformTabs } from "./platform-tabs";
 import { formatPostDate, type Heading, type PostMeta } from "./blog-types";
 import { mountPage, readPageData } from "../../shared/page-mount";
 
@@ -16,6 +17,8 @@ interface BlogPostProps {
 }
 
 function Article({ post, html }: { post: PostMeta; html: string }): ReactNode {
+  const prose = useRef<HTMLDivElement>(null);
+  useEffect(() => (prose.current ? setupPlatformTabs(prose.current) : undefined), [html]);
   return (
     <article className="blog-article">
       <div className="blog-kicker">{post.kicker}</div>
@@ -30,7 +33,7 @@ function Article({ post, html }: { post: PostMeta; html: string }): ReactNode {
           <img src={post.hero} alt={post.heroAlt ?? ""} />
         </figure>
       ) : null}
-      <div className="blog-prose" dangerouslySetInnerHTML={{ __html: html }} />
+      <div className="blog-prose" ref={prose} dangerouslySetInnerHTML={{ __html: html }} />
       {post.outro ? <BlogOutro>{post.outro}</BlogOutro> : null}
     </article>
   );
