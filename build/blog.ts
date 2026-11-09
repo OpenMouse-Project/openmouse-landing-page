@@ -66,9 +66,47 @@ interface ContainerToken extends Tokens.Generic {
 
 const RAW_CONTAINERS = new Set(["glance", "downloads", "note"]);
 const BOXES = new Set(["tldr", "finding", "warn"]);
+/* The sections of a :::platforms block, in tab order. */
+const PLATFORMS = ["windows", "macos", "linux"];
+
+const OPEN_RE = /^ {0,3}:::(\w+)(?:[ \t]+([^\n]*))?$/;
+const CLOSE_RE = /^ {0,3}:::[ \t]*$/;
+const FENCE_RE = /^ {0,3}(```|~~~)/;
+
+/**
+ * Finds the block that starts at the top of `src`, counting the blocks
+ * opened inside it so a nested block's closing `:::` doesn't end its parent.
+ * Lines inside code fences are skipped.
+ */
+function matchContainer(src: string): { raw: string; kind: string; title: string; body: string } | undefined {
+  const lines = src.split("\n");
+  const open = OPEN_RE.exec(lines[0]);
+  if (!open) return undefined;
+  let depth = 1;
+  let fence: string | null = null;
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i];
+    const fenceMatch = FENCE_RE.exec(line);
+    if (fenceMatch) {
+      if (fence === null) fence = fenceMatch[1];
+      else if (fenceMatch[1] === fence) fence = null;
+      continue;
+    }
+    if (fence !== null) continue;
+    if (OPEN_RE.test(line)) depth++;
+    else if (CLOSE_RE.test(line) && --depth === 0) {
+      let raw = lines.slice(0, i + 1).join("\n");
+      const trailing = /^\n+/.exec(src.slice(raw.length));
+      if (trailing) raw += trailing[0];
+      return { raw, kind: open[1], title: (open[2] ?? "").trim(), body: lines.slice(1, i).join("\n") };
+    }
+  }
+  return undefined;
+}
 
 function createMarked(headings: Heading[]): Marked {
   const marked = new Marked({ gfm: true });
+  let platformBlocks = 0;
 
   const container: TokenizerAndRendererExtension = {
     name: "container",
@@ -77,16 +115,9 @@ function createMarked(headings: Heading[]): Marked {
       return /^ {0,3}:::\w/m.exec(src)?.index;
     },
     tokenizer(src) {
-      const match = /^ {0,3}:::(\w+)(?:[ \t]+([^\n]*))?\n([\s\S]*?)\n {0,3}:::[ \t]*(?:\n+|$)/.exec(src);
+      const match = matchContainer(src);
       if (!match) return undefined;
-      const token: ContainerToken = {
-        type: "container",
-        raw: match[0],
-        kind: match[1],
-        title: (match[2] ?? "").trim(),
-        body: match[3],
-        tokens: [],
-      };
+      const token: ContainerToken = { type: "container", ...match, tokens: [] };
       if (!RAW_CONTAINERS.has(token.kind)) this.lexer.blockTokens(token.body, token.tokens);
       return token;
     },
@@ -118,6 +149,32 @@ function createMarked(headings: Heading[]): Marked {
             return `<div><dt>${inline(term)}</dt><dd${status ? ' class="blog-status-tag"' : ""}>${inline(value)}</dd></div>`;
           });
         return `<dl class="blog-glance">${rows.join("")}</dl>\n`;
+      }
+      if (token.kind === "platforms") {
+        const sections = token.tokens.filter((child) => child.type !== "space") as ContainerToken[];
+        for (const section of sections) {
+          if (section.type !== "container" || !PLATFORMS.includes(section.kind)) {
+            throw new Error(":::platforms can only hold :::windows, :::macos and :::linux blocks");
+          }
+        }
+        sections.sort((a, b) => PLATFORMS.indexOf(a.kind) - PLATFORMS.indexOf(b.kind));
+        if (sections.length === 0 || new Set(sections.map((section) => section.kind)).size !== sections.length) {
+          throw new Error(":::platforms needs at least one platform, each at most once");
+        }
+        const id = `platforms-${++platformBlocks}`;
+        const tabs = sections.map((section, index) => {
+          const os = DOWNLOAD_MARKS[section.kind];
+          const selected = index === 0;
+          return `<button type="button" role="tab" class="blog-platform-tab" id="${id}-${section.kind}-tab" aria-controls="${id}-${section.kind}" aria-selected="${selected}" tabindex="${selected ? 0 : -1}" data-platform="${section.kind}">${svg(os.mark)} ${os.label}</button>`;
+        });
+        const panels = sections.map(
+          (section, index) =>
+            `<div role="tabpanel" class="blog-platform-panel" id="${id}-${section.kind}" aria-labelledby="${id}-${section.kind}-tab" data-platform="${section.kind}"${index === 0 ? "" : " hidden"}>\n${this.parser.parse(section.tokens)}</div>`,
+        );
+        return `<div class="blog-platforms" data-platforms><div class="blog-platform-tabs" role="tablist" aria-label="Your system">${tabs.join("")}</div>${panels.join("")}</div>\n`;
+      }
+      if (PLATFORMS.includes(token.kind)) {
+        throw new Error(`:::${token.kind} only works inside a :::platforms block`);
       }
       if (token.kind === "downloads") {
         const buttons = token.body

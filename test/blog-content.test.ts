@@ -74,6 +74,44 @@ linux: soon
   assert.match(html, /blog-download-btn is-disabled[^>]*>.*Linux <span class="blog-download-soon">Soon<\/span>/);
 });
 
+test(":::platforms renders a tab per platform, with blocks nested inside", () => {
+  const { html } = renderMarkdown(`:::platforms
+:::linux
+1. Step
+
+   :::downloads
+   linux: https://example.com/app.AppImage
+   :::
+
+   \`\`\`sh
+   echo ":::"
+   \`\`\`
+:::
+:::windows
+:::warn Careful
+Windows text
+:::
+:::
+:::
+
+After the block.
+`);
+  // Tabs follow Windows, macOS, Linux order whatever order the post uses.
+  assert.match(html, /role="tablist"[^>]*><button[^>]*aria-selected="true"[^>]*data-platform="windows"/);
+  assert.match(html, /data-platform="linux">[\s\S]*Linux<\/button>/);
+  assert.match(html, /role="tabpanel"[^>]*data-platform="windows">\n<div class="blog-warn"><h3>Careful<\/h3><p>Windows text<\/p>/);
+  assert.match(html, /role="tabpanel"[^>]*data-platform="linux" hidden>/);
+  assert.match(html, /href="https:\/\/example.com\/app.AppImage"/);
+  assert.match(html, /echo &quot;:::&quot;/);
+  assert.match(html, /<\/div><\/div>\n<p>After the block.<\/p>/);
+});
+
+test(":::platforms rejects anything but platform sections", () => {
+  assert.throws(() => renderMarkdown(":::platforms\nLoose text\n:::\n"), /can only hold/);
+  assert.throws(() => renderMarkdown(":::platforms\n:::linux\na\n:::\n:::linux\nb\n:::\n:::\n"), /at most once/);
+  assert.throws(() => renderMarkdown(":::macos\nText\n:::\n"), /only works inside/);
+});
+
 test("a post with a bad file name, category or date is rejected", () => {
   assert.throws(() => parsePost("My Post", POST), /file names/);
   assert.throws(() => parsePost("x", POST.replace("Guides", "News")), /category/);

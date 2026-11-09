@@ -9,6 +9,7 @@ import { DISCORD_URL } from "../../shared/social-links";
 import { AppleIcon, LinuxIcon, WindowsIcon } from "../../shared/platform-icons";
 import { usePageLocale } from "../../shared/page-locale";
 import { useScrollReveal } from "../../shared/motion";
+import { detectOs } from "../../shared/detect-os";
 
 import { AsciiField } from "../home/ascii-field";
 import { AsciiLine } from "./ascii-line";
@@ -20,20 +21,6 @@ const BRIDGE_LINUX_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-linux
 /* build/pages.ts redirects this path to install-linux.sh in the Bridge repo. */
 const BRIDGE_LINUX_INSTALL = "curl -fsSL https://openmouse.app/bridge/download/install-linux.sh | bash";
 const BRIDGE_POST_URL = "/blog/openmouse-bridge#install";
-
-type DesktopOs = "windows" | "mac" | "linux" | null;
-
-/** The visitor's desktop OS, or null on phones, tablets and anything unrecognised. */
-function detectOs(): DesktopOs {
-  const nav = navigator as Navigator & { userAgentData?: { platform?: string; mobile?: boolean } };
-  if (nav.userAgentData?.mobile) return null;
-  const hint = `${nav.userAgentData?.platform ?? ""} ${nav.platform} ${nav.userAgent}`.toLowerCase();
-  if (/android|iphone|ipad|ipod|cros/.test(hint)) return null;
-  if (/win/.test(hint)) return "windows";
-  if (/mac/.test(hint)) return "mac";
-  if (/linux|x11/.test(hint)) return "linux";
-  return null;
-}
 
 // Bridge's public launch: 11:00 AM Mountain (MDT) on Sep 23, 2026. Until
 // then the card shows the moment in the visitor's own time zone, and flips

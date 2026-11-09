@@ -18,7 +18,7 @@ outro: Tried it? Tell us how it went, good or bad.
 :::glance
 Platforms: Windows (x64), macOS (Intel and Apple silicon), Linux (x86-64)
 Price: Free and open source (MIT)
-Needs admin?: No
+Needs admin?: No (on Linux, it asks once to reach your mouse)
 :::
 
 :::tldr TL;DR
@@ -42,26 +42,62 @@ The settings you see don't change, and the drivers don't change. The same code t
 
 ## Install it {#install}
 
-1. Download Bridge for your computer:
+We've opened the steps for your system. Pick another one if you're installing Bridge somewhere else.
+
+:::platforms
+:::windows
+1. Download the installer:
 
    :::downloads
    windows: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-windows-x64-setup.exe
-   macos: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-macos-universal.dmg
-   linux: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-linux-x86_64.AppImage
    :::
 
    :::note
    Straight from our [GitHub releases](https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest), with a checksum if you want to verify it. The newest version is always on our [download page](/download).
    :::
-2. On Windows, run the installer and follow the prompts. On macOS, open the disk image and drag OpenMouse Bridge into Applications. On Linux, make the AppImage executable (`chmod +x OpenMouse-Bridge-linux-x86_64.AppImage`) and open it, or install it from a terminal in one line, which also sets up permissions for your mouse:
+2. Run it and follow the prompts. It installs Bridge for your account only, so it doesn't need administrator access, and adds it to the Start menu.
+3. Open OpenMouse Bridge from the Start menu. An OpenMouse icon shows up in your system tray (it may be tucked behind the **^** arrow). Click it to open Bridge's panel.
+
+:::warn Windows may warn you
+If Windows shows a blue "Windows protected your PC" screen the first time, click **More info**, then **Run anyway**. You only have to do this once.
+:::
+:::
+:::macos
+1. Download the disk image. It runs on Intel and Apple silicon Macs:
+
+   :::downloads
+   macos: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-macos-universal.dmg
+   :::
+
+   :::note
+   Straight from our [GitHub releases](https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest), with a checksum if you want to verify it. The newest version is always on our [download page](/download).
+   :::
+2. Open the disk image and drag OpenMouse Bridge into Applications.
+3. Launch OpenMouse Bridge from Applications. An OpenMouse icon shows up in your menu bar. Click it to open Bridge's panel.
+
+:::warn macOS may warn you
+If macOS says it can't check the app the first time, right-click OpenMouse Bridge in Applications and choose **Open**. You only have to do this once.
+:::
+:::
+:::linux
+1. The easiest way is one line in a terminal:
 
    ```sh
    curl -fsSL https://openmouse.app/bridge/download/install-linux.sh | bash
    ```
-3. Open it (on macOS, launch OpenMouse Bridge from Applications). An OpenMouse icon shows up in your system tray (Windows and Linux) or menu bar (macOS). Click it to open Bridge's panel.
 
-:::warn Your computer will probably warn you
-This beta isn't code-signed yet, so the first time you open it, Windows shows a blue "Windows protected your PC" screen. Click **More info**, then **Run anyway**. On macOS, right-click the app and choose **Open** the first time. You only have to do this once. Signed builds are on our list.
+   It installs any system libraries Bridge is missing (asking for your password), lets your account reach your mouse, starts Bridge when you sign in, and adds it to your app launcher.
+2. Or download the AppImage, make it executable (`chmod +x OpenMouse-Bridge-linux-x86_64.AppImage`) and open it. If Bridge can't reach your mouse, its panel shows a **Fix permissions** button that sets up access after asking for your password.
+
+   :::downloads
+   linux: https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest/download/OpenMouse-Bridge-linux-x86_64.AppImage
+   :::
+
+   :::note
+   Straight from our [GitHub releases](https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest), with a checksum if you want to verify it.
+   :::
+3. An OpenMouse icon shows up in your system tray on KDE Plasma and other desktops with tray icons. Click it to open Bridge's panel. GNOME needs a tray extension such as AppIndicator to show the icon; without one, Bridge's panel stays open as a regular window.
+:::
 :::
 
 ## Connect your mouse {#connect}
@@ -119,4 +155,4 @@ Anything that runs on your computer and talks to hardware should be clear about 
 
 ## It's a beta {#beta}
 
-It works on our machines and on our testers' machines, but there are a lot more mice out there than we have on our desks, and a Linux version is still in the works. If something doesn't connect, or connects and then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On Windows it's in `%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs`.
+It works on our machines and on our testers' machines, but there are a lot more mice out there than we have on our desks. If something doesn't connect, or connects and then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On Windows it's in `%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs`.
