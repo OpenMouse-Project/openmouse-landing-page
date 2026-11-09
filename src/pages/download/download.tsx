@@ -14,8 +14,11 @@ import { AsciiField } from "../home/ascii-field";
 import { AsciiLine } from "./ascii-line";
 
 const BRIDGE_RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
-const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64.zip`;
+const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-windows-x64-setup.exe`;
 const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-macos-universal.dmg`;
+const BRIDGE_LINUX_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-linux-x86_64.AppImage`;
+/* build/pages.ts redirects this path to install-linux.sh in the Bridge repo. */
+const BRIDGE_LINUX_INSTALL = "curl -fsSL https://openmouse.app/bridge/download/install-linux.sh | bash";
 const BRIDGE_POST_URL = "/blog/openmouse-bridge#install";
 
 type DesktopOs = "windows" | "mac" | "linux" | null;
@@ -55,10 +58,13 @@ interface Release { prerelease: boolean; assets: ReleaseAsset[] }
 
 /**
  * Total Bridge downloads across every stable release, from GitHub's public
- * per-asset counters. Only the .zip archives count (not their .sha256
- * files), and the rolling dev-build prerelease is skipped. Bridge's own
- * auto-updater downloads the same zips, so updates count too.
+ * per-asset counters. The installers (.exe, .dmg, .AppImage) and the .zip
+ * archives count; checksums and the updater's latest.json don't, and the
+ * rolling dev-build prerelease is skipped. Bridge's own auto-updater
+ * downloads the zips, so updates count too.
  */
+const COUNTED_ASSET = /\.(exe|dmg|appimage|zip)$/i;
+
 function useBridgeDownloads(enabled: boolean): number | null {
   const [count, setCount] = useState<number | null>(null);
   useEffect(() => {
@@ -71,7 +77,7 @@ function useBridgeDownloads(enabled: boolean): number | null {
         const total = releases
           .filter((release) => !release.prerelease)
           .flatMap((release) => release.assets)
-          .filter((asset) => asset.name.endsWith(".zip"))
+          .filter((asset) => COUNTED_ASSET.test(asset.name))
           .reduce((sum, asset) => sum + asset.download_count, 0);
         setCount(total);
       })
@@ -126,10 +132,37 @@ function Divider({ seed }: { seed: number }): ReactNode {
   );
 }
 
+/** The one-line Linux install, with a button that copies it. */
+function LinuxInstallCommand(): ReactNode {
+  const [copied, setCopied] = useState(false);
+  useEffect(() => {
+    if (!copied) return;
+    const timer = window.setTimeout(() => setCopied(false), 2000);
+    return () => window.clearTimeout(timer);
+  }, [copied]);
+  return (
+    <div className="dl-command">
+      <p className="dl-command-label">Or install on Linux from a terminal:</p>
+      <div className="dl-command-row">
+        <code>{BRIDGE_LINUX_INSTALL}</code>
+        <button
+          type="button"
+          className="dl-command-copy"
+          onClick={() => {
+            navigator.clipboard?.writeText(BRIDGE_LINUX_INSTALL).then(() => setCopied(true), () => undefined);
+          }}
+        >
+          {copied ? "Copied" : "Copy"}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 /** Bridge downloads, platform availability, and the live download total. */
 function BridgeSection({ launched, downloads }: { launched: boolean; downloads: number | null }): ReactNode {
   // One button, for the visitor's own OS. On phones and unrecognised systems
-  // there is nothing to match, so both builds show.
+  // there is nothing to match, so every build shows.
   const os = useMemo(detectOs, []);
   const windows = (
     <a key="windows" className="dl-btn dl-btn-primary dl-btn-lg" href={BRIDGE_WINDOWS_URL}>
@@ -142,17 +175,20 @@ function BridgeSection({ launched, downloads }: { launched: boolean; downloads: 
     </a>
   );
   const linux = (
-    <span key="linux" className="dl-btn dl-btn-disabled dl-btn-lg" aria-disabled="true">
-      <LinuxIcon /> Linux <span className="dl-soon">Soon</span>
-    </span>
+    <a key="linux" className="dl-btn dl-btn-primary dl-btn-lg" href={BRIDGE_LINUX_URL}>
+      <LinuxIcon /> Download for Linux
+    </a>
   );
   const downloadButtons: ReactNode[] =
-    os === "windows" ? [windows] : os === "mac" ? [mac] : os === "linux" ? [linux] : [windows, mac];
+    os === "windows" ? [windows] : os === "mac" ? [mac] : os === "linux" ? [linux] : [windows, mac, linux];
   // The other builds stay one click away.
   const otherBuilds: ReactNode[] = [];
-  if (os === "windows") otherBuilds.push(<a key="mac" href={BRIDGE_MAC_URL}>macOS</a>);
-  if (os === "mac") otherBuilds.push(<a key="windows" href={BRIDGE_WINDOWS_URL}>Windows</a>);
-  if (os === "linux") otherBuilds.push(<a key="windows" href={BRIDGE_WINDOWS_URL}>Windows</a>, <a key="mac" href={BRIDGE_MAC_URL}>macOS</a>);
+  if (os !== "windows" && os !== null) otherBuilds.push(<a key="windows" href={BRIDGE_WINDOWS_URL}>Windows</a>);
+  if (os !== "mac" && os !== null) otherBuilds.push(<a key="mac" href={BRIDGE_MAC_URL}>macOS</a>);
+  if (os !== "linux" && os !== null) otherBuilds.push(<a key="linux" href={BRIDGE_LINUX_URL}>Linux</a>);
+  // The install script is the easier route on Linux, so Linux visitors (and
+  // anyone we can't place) see it right under the button.
+  const showLinuxCommand = os === "linux" || os === null;
   return (
     <section className="dl-product" aria-labelledby="bridge-title" data-reveal>
       <div className="dl-product-heading">
@@ -192,6 +228,7 @@ function BridgeSection({ launched, downloads }: { launched: boolean; downloads: 
             <div className="dl-actions">
               {downloadButtons}
             </div>
+            {showLinuxCommand && <LinuxInstallCommand />}
             <p className="dl-foot">
               {otherBuilds.length > 0 && (
                 <>
@@ -223,15 +260,19 @@ function BridgeSection({ launched, downloads }: { launched: boolean; downloads: 
                   <li className="land-step">
                     <div>
                       <h3>Run it</h3>
-                      <p>Open the installer and follow the prompts.</p>
+                      <p>
+                        On Windows, open the installer and follow the prompts. On macOS, open the disk image and drag
+                        OpenMouse Bridge into Applications. On Linux, make the AppImage executable and open it, or use
+                        the install command, which also sets up mouse permissions.
+                      </p>
                     </div>
                   </li>
                   <li className="land-step">
                     <div>
                       <h3>Open it once</h3>
                       <p>
-                        An OpenMouse icon shows up in your system tray on Windows, or your menu bar on macOS. Click it
-                        to open Bridge's panel.
+                        An OpenMouse icon shows up in your system tray on Windows and Linux, or your menu bar on macOS.
+                        Click it to open Bridge's panel.
                       </p>
                     </div>
                   </li>
