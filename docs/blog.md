@@ -30,7 +30,7 @@ description: A small helper app that runs next to your browser and talks to your
 date: 2026-09-23
 author: snekxs
 category: Announcements
-kicker: Release · Bridge beta
+kicker: Release · Bridge
 toc: true
 ---
 ```
@@ -113,7 +113,7 @@ For things that can go wrong or surprise the reader.
 
 ```md
 :::warn Your computer will probably warn you
-This beta isn't code-signed yet, so Windows shows a "Windows protected your PC" screen.
+Bridge isn't code-signed yet, so Windows shows a "Windows protected your PC" screen.
 :::
 ```
 
