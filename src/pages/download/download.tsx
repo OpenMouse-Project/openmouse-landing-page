@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createRoot } from "react-dom/client";
 import "../../shared/site.css";
 import "./download.css";
@@ -8,12 +8,29 @@ import { APP_URL, SiteFooter, SiteNav } from "../../shared/site-chrome";
 import { DISCORD_URL } from "../../shared/social-links";
 import { AppleIcon, LinuxIcon, WindowsIcon } from "../../shared/platform-icons";
 import { usePageLocale } from "../../shared/page-locale";
-import { usePointerAurora, useScrollReveal } from "../../shared/motion";
+import { useScrollReveal } from "../../shared/motion";
+
+import { AsciiField } from "../home/ascii-field";
+import { AsciiLine } from "./ascii-line";
 
 const BRIDGE_RELEASES_URL = "https://github.com/OpenMouse-Project/OpenMouse-Bridge/releases/latest";
 const BRIDGE_WINDOWS_URL = `${BRIDGE_RELEASES_URL}/download/openmouse-bridge-windows-x64.zip`;
 const BRIDGE_MAC_URL = `${BRIDGE_RELEASES_URL}/download/OpenMouse-Bridge-macos-universal.dmg`;
 const BRIDGE_POST_URL = "/blog/openmouse-bridge#install";
+
+type DesktopOs = "windows" | "mac" | "linux" | null;
+
+/** The visitor's desktop OS, or null on phones, tablets and anything unrecognised. */
+function detectOs(): DesktopOs {
+  const nav = navigator as Navigator & { userAgentData?: { platform?: string; mobile?: boolean } };
+  if (nav.userAgentData?.mobile) return null;
+  const hint = `${nav.userAgentData?.platform ?? ""} ${nav.platform} ${nav.userAgent}`.toLowerCase();
+  if (/android|iphone|ipad|ipod|cros/.test(hint)) return null;
+  if (/win/.test(hint)) return "windows";
+  if (/mac/.test(hint)) return "mac";
+  if (/linux|x11/.test(hint)) return "linux";
+  return null;
+}
 
 // Bridge's public launch: 11:00 AM Mountain (MDT) on Sep 23, 2026. Until
 // then the card shows the moment in the visitor's own time zone, and flips
@@ -100,74 +117,150 @@ const ICON_DESKTOP =
 const ICON_BRIDGE =
   "M9.2 2.6v4.2M14.8 2.6v4.2M6.6 6.8h10.8v4.4a5.4 5.4 0 0 1-10.8 0ZM12 16.6v4.8";
 
-/** The card that actually downloads something: Bridge, its two platform
-    builds, and the live download total. */
-function BridgeCard({ launched, downloads }: { launched: boolean; downloads: number | null }): ReactNode {
+/** A faint one-line ASCII trace that separates two sections. Each seed draws its own line. */
+function Divider({ seed }: { seed: number }): ReactNode {
   return (
-    <article className="land-card dl-card-featured" data-reveal>
-      <CardIcon path={ICON_BRIDGE} />
-      <p className="land-kicker dl-kicker">
-        Helper app <span className="dl-badge">Beta</span>
-      </p>
-      <h2>OpenMouse Bridge</h2>
-      <p>
-        Runs in your system tray. Gets Razer mice working on Windows again, lets OpenMouse run in Firefox, and
-        switches settings automatically when a game launches.
-      </p>
-      <ul className="dl-meta">
-        <li>Windows (64-bit), macOS (Intel and Apple silicon), Linux in the works</li>
-      </ul>
-      {downloads !== null && (
-        <ul className="land-stats">
-          <li className="land-stat">
-            <span className="land-stat-value">{downloads.toLocaleString()}</span>
-            <span className="land-stat-label">{downloads === 1 ? "download" : "downloads"}</span>
-          </li>
-        </ul>
-      )}
-      {launched ? (
-        <>
+    <div className="dl-divider" aria-hidden="true">
+      <AsciiLine className="dl-wave" seed={seed} cols={200} />
+    </div>
+  );
+}
+
+/** Bridge downloads, platform availability, and the live download total. */
+function BridgeSection({ launched, downloads }: { launched: boolean; downloads: number | null }): ReactNode {
+  // One button, for the visitor's own OS. On phones and unrecognised systems
+  // there is nothing to match, so both builds show.
+  const os = useMemo(detectOs, []);
+  const windows = (
+    <a key="windows" className="dl-btn dl-btn-primary dl-btn-lg" href={BRIDGE_WINDOWS_URL}>
+      <WindowsIcon /> Download for Windows
+    </a>
+  );
+  const mac = (
+    <a key="mac" className="dl-btn dl-btn-primary dl-btn-lg" href={BRIDGE_MAC_URL}>
+      <AppleIcon /> Download for macOS
+    </a>
+  );
+  const linux = (
+    <span key="linux" className="dl-btn dl-btn-disabled dl-btn-lg" aria-disabled="true">
+      <LinuxIcon /> Linux <span className="dl-soon">Soon</span>
+    </span>
+  );
+  const downloadButtons: ReactNode[] =
+    os === "windows" ? [windows] : os === "mac" ? [mac] : os === "linux" ? [linux] : [windows, mac];
+  // The other builds stay one click away.
+  const otherBuilds: ReactNode[] = [];
+  if (os === "windows") otherBuilds.push(<a key="mac" href={BRIDGE_MAC_URL}>macOS</a>);
+  if (os === "mac") otherBuilds.push(<a key="windows" href={BRIDGE_WINDOWS_URL}>Windows</a>);
+  if (os === "linux") otherBuilds.push(<a key="windows" href={BRIDGE_WINDOWS_URL}>Windows</a>, <a key="mac" href={BRIDGE_MAC_URL}>macOS</a>);
+  return (
+    <section className="dl-product" aria-labelledby="bridge-title" data-reveal>
+      <div className="dl-product-heading">
+        <CardIcon path={ICON_BRIDGE} />
+        <p className="land-kicker">Helper app</p>
+        <h2 id="bridge-title">OpenMouse Bridge</h2>
+        {launched && (
+          /* The panel that appears once Bridge is running, in the same framed
+             shot the landing page's bridge section uses. */
+          <div className="dl-shot">
+            <img
+              src="/bridge-panel.png"
+              alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
+              width={320}
+              height={306}
+              loading="lazy"
+            />
+          </div>
+        )}
+      </div>
+      <div className="dl-product-details">
+        <p>
+          Runs in your system tray. Gets Razer mice working on Windows again, lets OpenMouse run in Firefox, and
+          switches settings automatically when a game launches.
+        </p>
+        {downloads !== null && (
+          <p className="dl-count">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 4v10.5M7.5 10.5 12 15l4.5-4.5M5 19.5h14" />
+            </svg>
+            <span className="dl-count-value">{downloads.toLocaleString()}</span>
+            <span className="dl-count-label">{downloads === 1 ? "download" : "downloads"}</span>
+          </p>
+        )}
+        {launched ? (
+          <>
+            <div className="dl-actions">
+              {downloadButtons}
+            </div>
+            <p className="dl-foot">
+              {otherBuilds.length > 0 && (
+                <>
+                  <span>Also for</span>
+                  {otherBuilds}
+                  <span aria-hidden="true">·</span>
+                </>
+              )}
+              <a href={BRIDGE_POST_URL}>Install guide</a>
+              <span aria-hidden="true">·</span>
+              <a href={BRIDGE_RELEASES_URL} target="_blank" rel="noreferrer">Release notes</a>
+            </p>
+            <details className="dl-install">
+              <summary>Installing Bridge</summary>
+              <div className="dl-install-body">
+                <p>
+                  Bridge is a small app you install and run. OpenMouse notices it on its own, so there's nothing to
+                  pair and nothing to configure.
+                </p>
+                <ol className="land-steps">
+                  <li className="land-step">
+                    <div>
+                      <h3>Download the installer</h3>
+                      <p>
+                        Use the button above. Every release ships a checksum if you want to check the download first.
+                      </p>
+                    </div>
+                  </li>
+                  <li className="land-step">
+                    <div>
+                      <h3>Run it</h3>
+                      <p>Open the installer and follow the prompts.</p>
+                    </div>
+                  </li>
+                  <li className="land-step">
+                    <div>
+                      <h3>Open it once</h3>
+                      <p>
+                        An OpenMouse icon shows up in your system tray on Windows, or your menu bar on macOS. Click it
+                        to open Bridge's panel.
+                      </p>
+                    </div>
+                  </li>
+                </ol>
+                <p className="land-note">
+                  Bridge isn't code-signed yet, so Windows and macOS will warn you the first time you open it. On macOS, right-click the app and choose Open.{" "}
+                  <a href={BRIDGE_POST_URL}>Here's how to get past that.</a>
+                </p>
+              </div>
+            </details>
+          </>
+        ) : (
           <div className="dl-actions">
-            <a className="dl-btn dl-btn-primary" href={BRIDGE_WINDOWS_URL}>
-              <WindowsIcon /> Windows
-            </a>
-            <a className="dl-btn" href={BRIDGE_MAC_URL}>
-              <AppleIcon /> macOS
-            </a>
-            <span className="dl-btn dl-btn-disabled dl-btn-wide" aria-disabled="true">
-              <LinuxIcon /> Linux <span className="dl-soon">Soon</span>
+            <span className="dl-btn dl-btn-disabled" aria-disabled="true">
+              Available {formatLaunch(BRIDGE_LAUNCH)}
             </span>
           </div>
-          <p className="dl-foot">
-            <a href={BRIDGE_POST_URL}>Install guide</a>
-            <span aria-hidden="true">·</span>
-            <a href={BRIDGE_RELEASES_URL} target="_blank" rel="noreferrer">Release notes</a>
-          </p>
-        </>
-      ) : (
-        <div className="dl-actions">
-          <span className="dl-btn dl-btn-disabled" aria-disabled="true">
-            Available {formatLaunch(BRIDGE_LAUNCH)}
-          </span>
-        </div>
-      )}
-    </article>
+        )}
+      </div>
+    </section>
   );
 }
 
 function Downloads(): ReactNode {
   const bridgeLaunched = useLaunched(BRIDGE_LAUNCH);
   const bridgeDownloads = useBridgeDownloads(bridgeLaunched);
-  const aurora = usePointerAurora();
   return (
-    <section className="land-page">
-      <header
-        className="land-page-head land-aurora"
-        ref={(node) => {
-          aurora.current = node;
-        }}
-        data-reveal
-      >
+    <main className="land-page dl-page">
+      <header className="land-page-head dl-hero" data-reveal>
         <p className="land-kicker">Get OpenMouse</p>
         <h1 className="land-page-title">Download OpenMouse</h1>
         <p className="land-page-lead">
@@ -182,96 +275,46 @@ function Downloads(): ReactNode {
         </div>
       </header>
 
-      {/* One card per way to run OpenMouse: the browser, the tray helper, and
-          the desktop app that's still on the way. */}
-      <section className="land-section land-grid dl-options">
-        <article className="land-card" data-reveal>
-          <CardIcon path={ICON_BROWSER} />
-          <p className="land-kicker">Web app</p>
-          <h2>OpenMouse</h2>
-          <p>The full configurator, right in your browser. Every setting for every supported mouse.</p>
-          <ul className="dl-meta">
-            <li>Chrome, Edge, and other Chromium browsers</li>
-            <li>Nothing to install</li>
-          </ul>
-          <div className="dl-actions">
-            <a className="dl-btn dl-btn-primary" href={APP_URL}>Open the app</a>
+      <div className="dl-options">
+        <Divider seed={33} />
+        <section className="dl-product" aria-labelledby="web-title" data-reveal>
+          <div className="dl-product-heading">
+            <CardIcon path={ICON_BROWSER} />
+            <p className="land-kicker">Web app</p>
+            <h2 id="web-title">OpenMouse</h2>
           </div>
-        </article>
-
-        <BridgeCard launched={bridgeLaunched} downloads={bridgeDownloads} />
-
-        <article className="land-card dl-card-soon" data-reveal>
-          <CardIcon path={ICON_DESKTOP} />
-          <p className="land-kicker">Desktop app</p>
-          <h2>OpenMouse Desktop</h2>
-          <p>OpenMouse as a standalone app, no browser required. We'll announce it on Discord first.</p>
-          <div className="dl-actions">
-            <span className="dl-btn dl-btn-disabled" aria-disabled="true">Coming soon</span>
-            <a className="dl-btn" href={DISCORD_URL} target="_blank" rel="noreferrer">Get notified</a>
+          <div className="dl-product-details">
+            <p>The full configurator, right in your browser. Every setting for every supported mouse.</p>
+            <ul className="dl-meta">
+              <li>Chrome, Edge, and other Chromium browsers</li>
+              <li>Nothing to install</li>
+            </ul>
+            <div className="dl-actions">
+              <a className="dl-btn dl-btn-primary" href={APP_URL}>Open the app</a>
           </div>
-        </article>
-      </section>
-
-      {bridgeLaunched && (
-        <section className="land-section dl-install">
-          <div className="land-section-head">
-            <h2>Installing Bridge</h2>
-            <p>
-              Bridge is a small app you install and run. OpenMouse notices it on its own, so there's nothing to pair
-              and nothing to configure.
-            </p>
           </div>
-          {/* The panel that appears once Bridge is running, in the same framed
-              shot the landing page's bridge section uses. */}
-          <div className="dl-install-body">
-            <div className="dl-shot" data-reveal>
-              <img
-                src="/bridge-panel.png"
-                alt="The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
-                width={320}
-                height={306}
-                loading="lazy"
-              />
-            </div>
-            <ol className="land-steps">
-              <li className="land-step" data-reveal>
-                <div>
-                  <h3>Download it for your computer</h3>
-                  <p>
-                    Grab the Windows zip or the macOS disk image from the card above. Every release ships a checksum if you want
-                    to check the download first.
-                  </p>
-                </div>
-              </li>
-              <li className="land-step" data-reveal>
-                <div>
-                  <h3>Put it somewhere you'll keep it</h3>
-                  <p>
-                    On Windows, unzip it into your Documents folder and keep the <code>native-hid</code> folder next
-                    to the app, because Bridge needs it. On macOS, open the disk image and drag OpenMouse Bridge into
-                    Applications.
-                  </p>
-                </div>
-              </li>
-              <li className="land-step" data-reveal>
-                <div>
-                  <h3>Open it once</h3>
-                  <p>
-                    An OpenMouse icon shows up in your system tray on Windows, or your menu bar on macOS. Click it
-                    to open Bridge's panel. On macOS, launch OpenMouse Bridge from Applications.
-                  </p>
-                </div>
-              </li>
-            </ol>
-          </div>
-          <p className="land-note">
-            Bridge isn't code-signed yet, so Windows and macOS will warn you the first time you open it. On macOS, right-click the app and choose Open.{" "}
-            <a href={BRIDGE_POST_URL}>Here's how to get past that.</a>
-          </p>
         </section>
-      )}
-    </section>
+
+        <Divider seed={12} />
+        <BridgeSection launched={bridgeLaunched} downloads={bridgeDownloads} />
+
+        <Divider seed={47} />
+        <section className="dl-product" aria-labelledby="desktop-title" data-reveal>
+          <div className="dl-product-heading">
+            <CardIcon path={ICON_DESKTOP} />
+            <p className="land-kicker">Desktop app</p>
+            <h2 id="desktop-title">OpenMouse Desktop</h2>
+          </div>
+          <div className="dl-product-details">
+            <p>OpenMouse as a standalone app, no browser required. We'll announce it on Discord first.</p>
+            <div className="dl-actions">
+              <span className="dl-btn dl-btn-disabled" aria-disabled="true">Coming soon</span>
+              <a className="dl-btn" href={DISCORD_URL} target="_blank" rel="noreferrer">Get notified</a>
+          </div>
+          </div>
+        </section>
+      </div>
+    </main>
   );
 }
 
@@ -279,8 +322,10 @@ function DownloadPage(): ReactNode {
   const [locale, setLocale] = usePageLocale();
   useScrollReveal();
   return (
-    <div className="land-shell land-shell--marketing">
+    <div className="land-shell land-shell--marketing dl-shell">
       <SiteNav locale={locale} onLocale={setLocale} />
+      {/* Anchored to the page, not the centred column, so it stays in the corner at any width. */}
+      <AsciiField className="dl-ascii" seed={7} cols={104} rows={40} origin={[1.02, -0.04]} reach={0.62} />
       <Downloads />
       <SiteFooter locale={locale} />
     </div>

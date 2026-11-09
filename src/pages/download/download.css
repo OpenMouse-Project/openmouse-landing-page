@@ -1,40 +1,58 @@
-.dl-options {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+.dl-shell { position: relative; isolation: isolate; overflow-x: clip; background: var(--ink-1); }
+.dl-page { position: relative; isolation: isolate; }
+.dl-hero { padding-block: 24px 64px; }
+.dl-ascii {
+  position: absolute; z-index: -1; inset-block-start: 56px; inset-inline-end: 0;
+  margin: 0; font: 500 11px/1.4 var(--font-mono); white-space: pre;
+  color: rgb(var(--accent-rgb) / 0.28); pointer-events: none; user-select: none;
 }
-@media (max-width: 900px) {
-  .dl-options {
-    grid-template-columns: 1fr;
-    gap: 0.9rem;
-  }
+.dl-options { display: grid; }
+/* One line of ASCII between sections that glitches now and then (ascii-line.tsx). It
+   straddles the boundary, fades out at both ends and takes no clicks. */
+.dl-divider {
+  position: relative; height: 20px; margin-block: -10px; overflow: hidden; pointer-events: none;
+  mask-image: linear-gradient(90deg, transparent, #000 25%, #000 75%, transparent);
 }
-
-.dl-card-featured {
-  border-color: rgba(105, 210, 141, 0.3);
+.dl-divider .dl-wave {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  margin: 0; padding: 0; font: 500 11px/1.4 var(--font-mono); white-space: pre;
+  color: rgb(var(--accent-rgb) / 0.3); user-select: none;
 }
-.dl-card-featured::before {
-  opacity: 1;
+.dl-product {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr); align-items: center;
+  gap: clamp(32px, 6vw, 80px); padding: 56px 24px;
 }
-/* The desktop app isn't out yet, so that card sits a step back. Dimmed with a
-   filter rather than opacity so the scroll reveal still owns the card's own
-   opacity (they would fight over the same property). */
-.dl-card-soon {
-  filter: opacity(0.85);
+.dl-product-heading {
+  display: grid; align-content: start; justify-items: start; gap: 12px;
 }
-
-.dl-install-body {
-  display: grid;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
-  align-items: center;
-  gap: clamp(1.6rem, 4vw, 3rem);
+.dl-product-heading h2 {
+  margin: 0; font-size: clamp(26px, 3vw, 36px); font-weight: 600; line-height: 1.15;
 }
-@media (max-width: 860px) {
-  .dl-install-body {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
+.dl-product-details { display: grid; align-content: start; gap: 16px; }
+.dl-product-details > p { margin: 0; color: var(--text-2); font-size: 16px; line-height: 1.6; }
+.dl-count {
+  display: inline-flex; align-items: center; gap: 10px; justify-self: start; margin: 0;
+  padding: 8px 16px 8px 12px; border-radius: 999px;
+  background: var(--sheen), var(--surface-1); box-shadow: var(--lit);
+}
+.dl-count svg {
+  width: 16px; height: 16px; fill: none; stroke: var(--accent); stroke-width: 2;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.dl-count-value {
+  font: 600 15px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text-1);
+}
+.dl-count-label { font-size: 13px; color: var(--text-3); }
+.dl-product .land-card-icon { border-radius: var(--r-sm); background: var(--surface-2); box-shadow: var(--lit); }
+@media (max-width: 700px) {
+  .dl-product { grid-template-columns: 1fr; gap: 24px; padding: 32px 16px; }
+  .dl-hero { padding-block: 0 40px; }
+  .dl-ascii { font-size: 9px; color: rgb(var(--accent-rgb) / 0.16); }
+  .dl-divider .dl-wave { font-size: 9px; }
 }
 
 .dl-shot {
+  width: 100%;
   position: relative;
   display: grid;
   place-items: center;
@@ -43,30 +61,16 @@
   box-shadow: var(--lit);
   border-radius: 14px;
   background:
-    radial-gradient(120% 90% at 50% 0%, rgba(105, 210, 141, 0.09), transparent 70%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 60%),
-    var(--land-panel);
+    radial-gradient(120% 90% at 50% 0%, rgb(var(--accent-rgb) / 0.09), transparent 70%),
+    linear-gradient(180deg, var(--surface-1), transparent 60%),
+    var(--ink-1);
 }
 .dl-shot img {
   display: block;
   width: min(100%, 400px);
   height: auto;
   border-radius: 10px;
-  box-shadow: var(--lit), 0 30px 60px -34px rgba(0, 0, 0, 0.9);
-}
-
-.dl-kicker {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.dl-badge {
-  padding: 0.1rem 0.45rem;
-  border-radius: var(--r-sm);
-  background: rgba(232, 178, 103, 0.14);
-  color: #e8b267;
-  font-size: 0.7rem;
-  letter-spacing: 0;
+  box-shadow: var(--lit), 0 30px 60px -34px var(--ink-0);
 }
 
 .dl-meta {
@@ -75,7 +79,7 @@
   list-style: none;
   font-size: 0.84rem;
   line-height: 1.6;
-  color: var(--land-dim);
+  color: var(--text-2);
 }
 .dl-meta li + li {
   margin-top: 0.3rem;
@@ -85,19 +89,19 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin-top: auto;
+  margin-top: 8px;
   padding-top: 0.4rem;
 }
 .dl-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  flex: 1 1 auto;
+  flex: 0 1 auto;
   padding: 0.65rem 1.1rem;
   border-radius: 10px;
   border: 0;
   box-shadow: var(--lit);
-  color: var(--land-text);
+  color: var(--text-1);
   font-size: 0.9rem;
   font-weight: 600;
   transition: border-color 0.15s, background 0.15s;
@@ -105,32 +109,32 @@
 .dl-btn svg {
   width: 15px;
   height: 15px;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
   flex: none;
 }
 .dl-btn-wide {
-  flex-basis: 100%;
+  flex-basis: auto;
 }
 .dl-soon {
-  margin-left: 0.5rem;
+  margin-inline-start: 0.5rem;
   padding: 0.05rem 0.45rem;
   border-radius: var(--r-sm);
-  background: rgba(255, 255, 255, 0.06);
+  background: var(--surface-2);
   font-size: 0.66rem;
   letter-spacing: 0;
 }
 .dl-btn:hover {
-  border-color: rgba(105, 210, 141, 0.5);
-  background: rgba(105, 210, 141, 0.07);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
 }
 .dl-btn-primary {
   border-color: transparent;
-  background: var(--land-mint);
+  background: var(--accent);
   color: var(--on-accent);
 }
 .dl-btn-primary:hover {
   border-color: transparent;
-  background: #7ce39d;
+  background: color-mix(in srgb, var(--accent) 88%, white);
 }
 .dl-btn-disabled,
 .dl-btn-disabled:hover {
@@ -145,33 +149,81 @@
   gap: 0.5rem;
   margin: 0;
   font-size: 0.82rem;
-  color: var(--land-dim);
+  color: var(--text-2);
 }
 .dl-foot a {
-  color: var(--land-dim);
+  color: var(--text-2);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .dl-foot a:hover {
-  color: var(--land-text);
+  color: var(--text-1);
 }
 
+.dl-btn-lg {
+  padding: 1rem 1.8rem;
+  border-radius: 12px;
+  font-size: 1.05rem;
+}
+.dl-btn-lg svg {
+  width: 20px;
+  height: 20px;
+  margin-inline-end: 0.65rem;
+}
+
+.dl-install {
+  margin-top: 16px;
+  border-top: 1px solid var(--line-1);
+}
+.dl-install summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-block: 20px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+.dl-install summary::-webkit-details-marker {
+  display: none;
+}
+.dl-install summary::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-inline-end: 4px;
+  border-right: 2px solid var(--text-2);
+  border-bottom: 2px solid var(--text-2);
+  transform: rotate(45deg);
+  transition: transform 0.15s;
+}
+.dl-install[open] summary::after {
+  transform: rotate(-135deg);
+}
+.dl-install summary:hover::after {
+  border-color: var(--text-1);
+}
+.dl-install-body {
+  display: grid;
+  gap: 12px;
+  padding-bottom: 8px;
+}
+.dl-install-body > p {
+  margin: 0;
+  color: var(--text-2);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
 .dl-install .land-note {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
 }
 .dl-install .land-note a {
-  color: var(--land-dim);
+  color: var(--text-2);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 .dl-install .land-note a:hover {
-  color: var(--land-text);
-}
-.dl-install code {
-  padding: 0.1rem 0.35rem;
-  border-radius: 6px;
-  background: rgba(255, 255, 255, 0.05);
-  font-family: var(--land-mono);
-  font-size: 0.85em;
-  color: var(--land-mint);
+  color: var(--text-1);
 }
