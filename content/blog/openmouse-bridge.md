@@ -5,10 +5,10 @@ summary: OpenMouse Bridge is a small, free helper app that lets OpenMouse reach 
 date: 2026-09-23
 author: snekxs
 category: Announcements
-kicker: Release · Bridge beta
+kicker: Release · Bridge
 cover: /bridge-panel.png
 coverLabel: Bridge
-coverCaption: Beta · Windows · macOS
+coverCaption: Windows · macOS · Linux
 hero: /bridge-panel.png
 heroAlt: "The OpenMouse Bridge tray panel: Ready, PRO X SUPERLIGHT 2c, default profile, 41% battery, and an Open control panel button"
 toc: true
@@ -58,8 +58,8 @@ We've opened the steps for your system. Pick another one if you're installing Br
 2. Run it and follow the prompts. It installs Bridge for your account only, so it doesn't need administrator access, and adds it to the Start menu.
 3. Open OpenMouse Bridge from the Start menu. An OpenMouse icon shows up in your system tray (it may be tucked behind the **^** arrow). Click it to open Bridge's panel.
 
-:::warn Windows may warn you
-If Windows shows a blue "Windows protected your PC" screen the first time, click **More info**, then **Run anyway**. You only have to do this once.
+:::warn Windows will probably warn you
+Bridge isn't code-signed yet, so the first time you open it, Windows shows a blue "Windows protected your PC" screen. Click **More info**, then **Run anyway**. You only have to do this once.
 :::
 :::
 :::macos
@@ -75,8 +75,8 @@ If Windows shows a blue "Windows protected your PC" screen the first time, click
 2. Open the disk image and drag OpenMouse Bridge into Applications.
 3. Launch OpenMouse Bridge from Applications. An OpenMouse icon shows up in your menu bar. Click it to open Bridge's panel.
 
-:::warn macOS may warn you
-If macOS says it can't check the app the first time, right-click OpenMouse Bridge in Applications and choose **Open**. You only have to do this once.
+:::warn macOS will probably warn you
+Bridge isn't code-signed yet, so macOS won't open it with a double-click the first time. Right-click OpenMouse Bridge in Applications and choose **Open**, then confirm. You only have to do this once.
 :::
 :::
 :::linux
@@ -153,6 +153,6 @@ Anything that runs on your computer and talks to hardware should be clear about 
 - **It doesn't work in Safari.** Safari isn't supported yet. Use Chrome, Edge, or Firefox.
 :::
 
-## It's a beta {#beta}
+## Something not working? {#feedback}
 
-It works on our machines and on our testers' machines, but there are a lot more mice out there than we have on our desks. If something doesn't connect, or connects and then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On Windows it's in `%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs`.
+There are a lot more mice out there than we have on our desks. If something doesn't connect, or connects and then acts strangely, tell us which mouse and which browser, and attach Bridge's log file if you can. On Windows it's in `%APPDATA%\OpenMouse\OpenMouse Bridge\config\logs`.
