@@ -166,7 +166,7 @@ function TheApp({ locale }: { locale: InterfaceLocale }): ReactNode {
         </span>
         <img
           src="/screenshot-control.png"
-          alt="The OpenMouse web app on the Performance tab of a Razer Viper V3 Pro: the device header with connection, battery, polling rate and DPI, the DPI stage table and the report frequency meter"
+          alt={t(locale, "land.screenshotAlt")}
           width={2160}
           height={1290}
           loading="lazy"
@@ -182,7 +182,7 @@ function Bridge({ locale }: { locale: InterfaceLocale }): ReactNode {
       <img
         className="lp-bridge-img"
         src="/bridge-panel.png"
-        alt="The OpenMouse Bridge companion panel listing connected mice and their per-device settings status"
+        alt={t(locale, "land.bridgeAlt")}
         width={320}
         height={306}
         loading="lazy"

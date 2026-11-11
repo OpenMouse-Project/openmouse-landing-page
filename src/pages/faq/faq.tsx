@@ -44,7 +44,14 @@ function faqs(locale: InterfaceLocale): FaqEntry[] {
     { question: t(locale, "faq.q7"), answer: t(locale, "faq.a7") },
     {
       question: t(locale, "faq.q8"),
-      answer: (
+      answer: locale === "tr" ? (
+        <>
+          <GitHubLink locale={locale} /> {t(locale, "faq.a8a")} {" "}
+          <a href={DISCORD_URL} target="_blank" rel="noreferrer">Discord</a>{" "}
+          {t(locale, "faq.a8b")} {" "}
+          <a href="/donate">{t(locale, "land.donate")}</a> {t(locale, "faq.a8c")}
+        </>
+      ) : (
         <>
           {t(locale, "faq.a8a")} <GitHubLink locale={locale} />,{" "}
           {t(locale, "faq.a8b")}{" "}

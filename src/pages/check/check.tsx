@@ -4,7 +4,7 @@ import "../../shared/site.css";
 import "./check.css";
 import { mountOfflineBanner } from "../../platform/offline-banner";
 import { registerServiceWorker } from "../../platform/register-sw";
-import { t, tp } from "../../i18n/index";
+import { t, tp, type I18nKey } from "../../i18n/index";
 import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { usePageLocale } from "../../shared/page-locale";
 import { SiteFooter, SiteNav } from "../../shared/site-chrome";
@@ -18,12 +18,12 @@ import {
   type DeviceResult,
 } from "./check-scan";
 
-const VERDICT_TEXT: Record<DeviceResult["verdict"], string> = {
-  full: "WebHID full",
-  partial: "Partial",
-  limited: "Limited",
-  blocked: "Native only",
-  unknown: "Unknown",
+const VERDICT_KEYS: Record<DeviceResult["verdict"], I18nKey> = {
+  full: "chk.verdict.full",
+  partial: "chk.verdict.partial",
+  limited: "chk.verdict.limited",
+  blocked: "chk.verdict.blocked",
+  unknown: "chk.verdict.unknown",
 };
 
 function DeviceCard({ result, locale }: { result: DeviceResult; locale: InterfaceLocale }): ReactNode {
@@ -39,7 +39,7 @@ function DeviceCard({ result, locale }: { result: DeviceResult; locale: Interfac
           {result.openmouseSupported ? (
             <span className="verdict-badge verdict-full">{"OpenMouse"}</span>
           ) : null}
-          <span className={`verdict-badge verdict-${result.verdict}`}>{VERDICT_TEXT[result.verdict]}</span>
+          <span className={`verdict-badge verdict-${result.verdict}`}>{t(locale, VERDICT_KEYS[result.verdict])}</span>
         </div>
       </div>
 
@@ -149,7 +149,7 @@ function CheckApp(): ReactNode {
       <main className="chk-main">
         <section className="check-hero">
           <p className="land-kicker">{t(locale, "chk.overline")}</p>
-          <h1>Mouse Check</h1>
+          <h1>{t(locale, "nav.mouseCheck")}</h1>
           <p>{t(locale, "chk.heroBody")}</p>
         </section>
 
