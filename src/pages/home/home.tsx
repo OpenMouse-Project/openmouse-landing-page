@@ -215,6 +215,7 @@ interface Sponsor {
 const SPONSORS: ReadonlyArray<Sponsor> = [
   { name: "HYPERTUNE", href: "https://hypertune.gg/", logo: "/sponsors/hypertune-logo.svg", width: 1448, height: 150, logoHeight: 26 },
   { name: "HONE", href: "https://hone.gg/", logo: "/sponsors/hone-logo.svg", width: 215, height: 82, logoHeight: 52 },
+  { name: "EXM", href: "https://exmtweaks.com/en-us", logo: "/sponsors/exm-logo.svg", width: 4085, height: 974, logoHeight: 34 },
 ];
 
 function Sponsors({ locale }: { locale: InterfaceLocale }): ReactNode {
