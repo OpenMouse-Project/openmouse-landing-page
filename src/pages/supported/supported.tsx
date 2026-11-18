@@ -11,6 +11,7 @@ import { t, tp, type I18nKey } from "../../i18n/index";
 import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { MICE, STATUS, type Mouse, type Status } from "../../data/supported-mice";
 import { withRegistryMice } from "../../data/supported-registry";
+import { mouseMatchesQuery } from "../../data/mouse-search";
 
 const MICE_ALL: readonly Mouse[] = withRegistryMice(MICE);
 
@@ -169,11 +170,10 @@ function SupportedPage(): ReactNode {
   }, []);
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return MICE_ALL.filter((mouse) =>
       (statuses.size === 0 || statuses.has(mouse.status))
       && (brand === null || mouse.brand === brand)
-      && (!q || mouse.model.toLowerCase().includes(q) || mouse.brand.toLowerCase().includes(q) || mouse.note.toLowerCase().includes(q)));
+      && mouseMatchesQuery(mouse, query));
   }, [query, brand, statuses]);
 
   const groups = useMemo(() => {
