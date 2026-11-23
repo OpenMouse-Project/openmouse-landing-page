@@ -263,7 +263,7 @@ export function buildDiscordSummary(results: DeviceResult[]): string {
   for (const r of results) {
     const name = r.device.productName || `${r.brand} Mouse`;
     const verdict = VERDICT_LABEL[r.verdict];
-    lines.push(`**${name}** — \`${r.brand}\` | \`VID_${hex(r.vendorId)}\` | **${verdict}**`);
+    lines.push(`**${name}** - \`${r.brand}\` | \`VID_${hex(r.vendorId)}\` | **${verdict}**`);
     lines.push(`> ${r.verdictNote}`);
     const collections = r.device.collections
       .map((c) => `\`${usagePageLabel(c.usagePage)}\``)

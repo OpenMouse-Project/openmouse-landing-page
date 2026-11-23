@@ -21,7 +21,7 @@ function Privacy(): ReactNode {
         This policy explains how the OpenMouse website at{" "}
         <a href="/">openmouse.app</a> and its pages (the "Site") handle data.
         The Site is provided by the OpenMouse Project, a community of volunteer
-        contributors — it is not a company. The Site has no accounts and does
+        contributors - it is not a company. The Site has no accounts and does
         not collect personal data for the purpose of identifying you.
       </p>
 
@@ -64,7 +64,7 @@ function Privacy(): ReactNode {
           The Site is hosted on{" "}
           <a href="https://www.cloudflare.com/privacypolicy/">Cloudflare Pages</a>.
           To deliver pages and API responses, Cloudflare and the Site's
-          functions process standard request data — your IP address, the time
+          functions process standard request data - your IP address, the time
           of requests, the pages and endpoints requested, and standard browser
           headers. Cloudflare's privacy policy applies to this
           infrastructure-level processing.
@@ -95,8 +95,8 @@ function Privacy(): ReactNode {
       <LegalSection heading="Blog comments">
         <p>
           When you post a comment on the blog, the comment text and the name
-          you choose — which may be a pseudonym, and comments can be posted
-          anonymously — are stored in Cloudflare's key-value store and shown
+          you choose - which may be a pseudonym, and comments can be posted
+          anonymously - are stored in Cloudflare's key-value store and shown
           publicly. No email address, account, or IP address is collected with
           your comment. There is no approval queue.
         </p>
@@ -110,12 +110,12 @@ function Privacy(): ReactNode {
         </p>
         <ul>
           <li>
-            GitHub — the <code>api.github.com</code> endpoint is queried to
+            GitHub - the <code>api.github.com</code> endpoint is queried to
             show the project's star count and contributor data on the landing
             and donate pages;
           </li>
           <li>
-            Google Fonts — fonts load from{" "}
+            Google Fonts - fonts load from{" "}
             <code>fonts.googleapis.com</code> and <code>fonts.gstatic.com</code>{" "}
             for page rendering.
           </li>
@@ -138,9 +138,9 @@ function Privacy(): ReactNode {
       <LegalSection heading="How data is shared">
         <p>
           The Site does not sell or rent personal data. Data is shared only
-          with the service providers that operate the Site — the hosting
+          with the service providers that operate the Site - the hosting
           infrastructure (Cloudflare) and the providers
-          listed under third-party services — as needed to deliver it. Content
+          listed under third-party services - as needed to deliver it. Content
           you publish (blog comments, and support requests submitted earlier) is public
           and visible to anyone, as is the supported-devices catalog itself.
         </p>
@@ -153,8 +153,8 @@ function Privacy(): ReactNode {
             to delete the device-local preferences described above.
           </li>
           <li>
-            If you want a published support request or comment removed — for
-            example because it contains personal information — reach out on
+            If you want a published support request or comment removed - for
+            example because it contains personal information - reach out on
             the <a href={DISCORD_URL}>Discord server</a> and the maintainers
             will review it.
           </li>

@@ -60,7 +60,7 @@ The figures answer different questions. **Startup** is time to a responsive wind
 
 We started a stopwatch immediately before launching the app executable. About every **100 milliseconds**, the script checked the matching main process for a nonzero window handle and a responsive Windows window. The time at the first successful check is the startup result. It does **not** mean that online content, device scans, or every page image had finished loading.
 
-OpenMouse, G HUB, and Synapse use the median of three launch trials. Their measured ranges were **0.260–0.273 s**, **0.725–0.787 s**, and **1.964–2.210 s**, respectively. SteelSeries GG has one measured launch at **2.074 s**. Before each trial, the script tried to stop the matching app processes and waited two seconds. G HUB and Synapse kept some background services resident between UI launches. The numbers therefore describe opening the main window under these conditions, not a reboot-level cold start of every service.
+OpenMouse, G HUB, and Synapse use the median of three launch trials. Their measured ranges were **0.260-0.273 s**, **0.725-0.787 s**, and **1.964-2.210 s**, respectively. SteelSeries GG has one measured launch at **2.074 s**. Before each trial, the script tried to stop the matching app processes and waited two seconds. G HUB and Synapse kept some background services resident between UI launches. The numbers therefore describe opening the main window under these conditions, not a reboot-level cold start of every service.
 
 ## Memory after settling and during use
 

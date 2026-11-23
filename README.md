@@ -76,4 +76,4 @@ npm test         # unit tests
 
 This repo intentionally contains only the public marketing/support pages and
 their dependencies. The gated control app, its device drivers, and the admin
-dashboard are out of scope here — see the `openmouse` repo instead.
+dashboard are out of scope here - see the `openmouse` repo instead.
