@@ -12,6 +12,7 @@ import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { MICE, STATUS, type Mouse, type Status } from "../../data/supported-mice";
 import { withRegistryMice } from "../../data/supported-registry";
 import { KEYBOARDS } from "../../data/supported-keyboards";
+import { mouseMatchesQuery } from "../../data/mouse-search";
 
 const MICE_ALL: readonly Mouse[] = withRegistryMice(MICE);
 const DATASETS = { mice: MICE_ALL, keyboards: KEYBOARDS as readonly Mouse[] } as const;
@@ -179,11 +180,10 @@ function SupportedPage(): ReactNode {
   }, [ALL]);
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
     return ALL.filter((mouse) =>
       (statuses.size === 0 || statuses.has(mouse.status))
       && (brand === null || mouse.brand === brand)
-      && (!q || `${mouse.brand} ${mouse.model}`.toLowerCase().includes(q) || mouse.note.toLowerCase().includes(q)));
+      && mouseMatchesQuery(mouse, query));
   }, [ALL, query, brand, statuses]);
 
   const groups = useMemo(() => {
