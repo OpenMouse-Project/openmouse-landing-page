@@ -1016,8 +1016,8 @@ export const MICE: Mouse[] = [
   // Every Incott model enumerates under the same two product ids — 093A:522C
   // on the 2.4 GHz dongle, 093A:622C wired — so the USB id cannot tell the
   // models apart. The driver reads the model and the fitted sensor out of the
-  // device's own identity reply instead, which is why only the one that was
-  // tested on hardware claims full support.
+  // device's own identity reply instead, which is why only the models tested
+  // on hardware claim full support.
   { brand: "Incott",        model: "G23 V2 (SE / Pro)",  status: "supported", req: 3,
     note: "Hardware-verified: DPI stages, polling, buttons, per-axis DPI, lift-off, rapid fire, macros. Also written G23V2",
     pids: [0x522c, 0x622c] },
@@ -1027,8 +1027,9 @@ export const MICE: Mouse[] = [
     note: "Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
   { brand: "Incott",        model: "G24 (and Pro)",      status: "likely",    req: 0,
     note: "Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
-  { brand: "Incott",        model: "Zero 29 (and Pro)",  status: "likely",    req: 0,
-    note: "Also sold as 029. Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
+  { brand: "Incott",        model: "Zero 29 (and Pro)",  status: "supported", req: 0,
+    note: "Hardware-verified on the standard 2.4 GHz dongle: model identity, DPI stages, polling, buttons, battery, lift-off, rapid fire. 8000 Hz on the 8K dongle not yet confirmed. Also sold as 029",
+    pids: [0x522c, 0x622c] },
   { brand: "Incott",        model: "Zero 39 (and Pro)",  status: "likely",    req: 0,
     note: "Also sold as 039. Same driver, protocol and product ids as the G23 V2; not confirmed on hardware" },
 
