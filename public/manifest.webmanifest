@@ -2,7 +2,7 @@
   "id": "/",
   "name": "OpenMouse",
   "short_name": "OpenMouse",
-  "description": "Manage supported gaming mice in one place — DPI, polling rate, battery, and sensor settings.",
+  "description": "Manage supported gaming mice in one place - DPI, polling rate, battery, and sensor settings.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

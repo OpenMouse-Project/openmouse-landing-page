@@ -11,8 +11,12 @@ import { t, tp, type I18nKey } from "../../i18n/index";
 import type { InterfaceLocale } from "../../shared/interface-preferences";
 import { MICE, STATUS, type Mouse, type Status } from "../../data/supported-mice";
 import { withRegistryMice } from "../../data/supported-registry";
+import { KEYBOARDS } from "../../data/supported-keyboards";
+import { mouseMatchesQuery } from "../../data/mouse-search";
 
 const MICE_ALL: readonly Mouse[] = withRegistryMice(MICE);
+const DATASETS = { mice: MICE_ALL, keyboards: KEYBOARDS as readonly Mouse[] } as const;
+type Kind = keyof typeof DATASETS;
 
 const STATUS_KEYS: readonly Status[] = ["supported", "pr", "quickwin", "likely", "driver", "unknown", "bridge", "pending"];
 
@@ -38,6 +42,7 @@ const LEGEND_DESC: Record<Status, I18nKey> = {
   pending: "supp.legPending",
 };
 
+const PAGE = 10;
 const COLLAPSED_KEY = "openmouse.collapsedBrands";
 
 function readCollapsed(): Set<string> {
@@ -65,11 +70,13 @@ function BrandPicker({
   value,
   onChange,
   totals,
+  total,
 }: {
   locale: InterfaceLocale;
   value: string | null;
   onChange: (brand: string | null) => void;
   totals: ReadonlyArray<{ brand: string; count: number }>;
+  total: number;
 }): ReactNode {
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -131,7 +138,7 @@ function BrandPicker({
           <div className="sp-picker-list" role="listbox" aria-label={t(locale, "supp.filterBrand")}>
             <button type="button" role="option" aria-selected={value === null} className={value === null ? "is-on" : ""} onClick={() => pick(null)}>
               <span>{t(locale, "supp.allBrands")}</span>
-              <span className="sp-count">{MICE_ALL.length}</span>
+              <span className="sp-count">{total}</span>
             </button>
             {shown.map(({ brand, count }) => (
               <button key={brand} type="button" role="option" aria-selected={value === brand} className={value === brand ? "is-on" : ""} onClick={() => pick(brand)}>
@@ -150,31 +157,34 @@ function BrandPicker({
 function SupportedPage(): ReactNode {
   const [locale, setLocale] = usePageLocale();
   const [query, setQuery] = useState(() => new URLSearchParams(window.location.search).get("q")?.slice(0, 80) ?? "");
+  const [kind, setKind] = useState<Kind>(() => (new URLSearchParams(window.location.search).get("type") === "keyboards" ? "keyboards" : "mice"));
+  const ALL = DATASETS[kind];
   const [brand, setBrand] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<ReadonlySet<Status>>(new Set());
   const [collapsed, setCollapsed] = useState<ReadonlySet<string>>(readCollapsed);
+  const [shown, setShown] = useState(PAGE);
+  useEffect(() => setShown(PAGE), [kind, query, brand, statuses]);
 
   const counts = useMemo(() => {
     const result = Object.fromEntries(STATUS_KEYS.map((key) => [key, 0])) as Record<Status, number>;
-    for (const mouse of MICE_ALL) result[mouse.status] += 1;
+    for (const mouse of ALL) result[mouse.status] += 1;
     return result;
-  }, []);
+  }, [ALL]);
 
   const brandTotals = useMemo(() => {
     const totals = new Map<string, number>();
-    for (const mouse of MICE_ALL) totals.set(mouse.brand, (totals.get(mouse.brand) ?? 0) + 1);
+    for (const mouse of ALL) totals.set(mouse.brand, (totals.get(mouse.brand) ?? 0) + 1);
     return [...totals.entries()]
       .map(([name, count]) => ({ brand: name, count }))
       .sort((a, b) => b.count - a.count || a.brand.localeCompare(b.brand));
-  }, []);
+  }, [ALL]);
 
   const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    return MICE_ALL.filter((mouse) =>
+    return ALL.filter((mouse) =>
       (statuses.size === 0 || statuses.has(mouse.status))
       && (brand === null || mouse.brand === brand)
-      && (!q || mouse.model.toLowerCase().includes(q) || mouse.brand.toLowerCase().includes(q) || mouse.note.toLowerCase().includes(q)));
-  }, [query, brand, statuses]);
+      && mouseMatchesQuery(mouse, query));
+  }, [ALL, query, brand, statuses]);
 
   const groups = useMemo(() => {
     const byBrand = new Map<string, Mouse[]>();
@@ -210,6 +220,15 @@ function SupportedPage(): ReactNode {
       return next;
     });
   };
+  const switchKind = (next: Kind): void => {
+    setKind(next);
+    setBrand(null);
+    setStatuses(new Set());
+    const url = new URL(window.location.href);
+    if (next === "mice") url.searchParams.delete("type");
+    else url.searchParams.set("type", next);
+    window.history.replaceState(null, "", url);
+  };
   const clearAll = (): void => {
     setQuery("");
     setBrand(null);
@@ -228,9 +247,18 @@ function SupportedPage(): ReactNode {
           <p className="sp-totals">
             <span><b>{counts.supported.toLocaleString(locale)}</b> {t(locale, "supp.supportedWord")}</span>
             <span className="sp-sep" aria-hidden="true">·</span>
-            <span><b>{MICE_ALL.length.toLocaleString(locale)}</b> {t(locale, "supp.totalWord")}</span>
+            <span><b>{ALL.length.toLocaleString(locale)}</b> {t(locale, "supp.totalWord")}</span>
           </p>
         </header>
+
+        <div className="sp-kinds" role="tablist">
+          {(["mice", "keyboards"] as const).map((key) => (
+            <button key={key} type="button" role="tab" aria-selected={kind === key} className={`sp-chip${kind === key ? " is-on" : ""}`} onClick={() => switchKind(key)}>
+              {t(locale, key === "mice" ? "supp.kindMice" : "supp.kindKeyboards")}
+              <span className="sp-count">{DATASETS[key].length}</span>
+            </button>
+          ))}
+        </div>
 
         <div className="sp-toolbar">
           <label className="sp-search">
@@ -246,7 +274,7 @@ function SupportedPage(): ReactNode {
               onInput={(event) => setQuery((event.currentTarget as HTMLInputElement).value)}
             />
           </label>
-          <BrandPicker locale={locale} value={brand} onChange={setBrand} totals={brandTotals} />
+          <BrandPicker locale={locale} value={brand} onChange={setBrand} totals={brandTotals} total={ALL.length} />
           <span className="sp-result" aria-live="polite">
             {visible.length === 1 ? tp(locale, "supp.oneDevice", { n: visible.length }) : tp(locale, "supp.manyDevices", { n: visible.length.toLocaleString(locale) })}
           </span>
@@ -260,7 +288,7 @@ function SupportedPage(): ReactNode {
         <div className="sp-status" role="group" aria-label={t(locale, "supp.filterTag")}>
           <button type="button" className={`sp-chip${statuses.size === 0 ? " is-on" : ""}`} aria-pressed={statuses.size === 0} onClick={() => setStatuses(new Set())}>
             {t(locale, "supp.tabAll")}
-            <span className="sp-count">{MICE_ALL.length}</span>
+            <span className="sp-count">{ALL.length}</span>
           </button>
           {STATUS_KEYS.map((key) => (
             <button
@@ -300,7 +328,7 @@ function SupportedPage(): ReactNode {
           </div>
         ) : (
           <div className="sp-groups">
-            {groups.map(({ brand: name, items, requests }) => {
+            {groups.slice(0, shown).map(({ brand: name, items, requests }) => {
               const isCollapsed = collapsed.has(name);
               return (
                 <section key={name} className={`sp-group${isCollapsed ? " is-collapsed" : ""}`} id={`brand-${brandSlug(name)}`}>
@@ -332,8 +360,8 @@ function SupportedPage(): ReactNode {
                                 {t(locale, STATUS_LABEL[mouse.status])}
                               </span>
                             </td>
-                            <td className="sp-note">{mouse.note || "–"}</td>
-                            <td className={`is-num sp-votes${mouse.req >= 3 ? " is-hot" : ""}`}>{mouse.req > 0 ? mouse.req : "–"}</td>
+                            <td className="sp-note">{mouse.note || "-"}</td>
+                            <td className={`is-num sp-votes${mouse.req >= 3 ? " is-hot" : ""}`}>{mouse.req > 0 ? mouse.req : "-"}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -342,6 +370,9 @@ function SupportedPage(): ReactNode {
                 </section>
               );
             })}
+            {groups.length > shown ? (
+              <button type="button" className="sp-more" onClick={() => setShown(shown + PAGE)}>{t(locale, "supp.loadMore")} ({groups.length - shown})</button>
+            ) : null}
           </div>
         )}
       </main>

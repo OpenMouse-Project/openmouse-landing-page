@@ -95,8 +95,8 @@ function Terms(): ReactNode {
 
       <LegalSection heading="User-generated content">
         <p>
-          When you publish content on the Site — a support request, a vote, or
-          a blog comment — you are responsible for what you post, and you
+          When you publish content on the Site - a support request, a vote, or
+          a blog comment - you are responsible for what you post, and you
           grant the project the limited right to store and publicly display
           that content in connection with the feature you used. You keep
           ownership of the content you write. Content that violates these
@@ -107,7 +107,7 @@ function Terms(): ReactNode {
       <LegalSection heading="Donations">
         <p>
           The donate page lets you voluntarily support the project. Donations
-          are contributions to the project — they are not purchases, and they
+          are contributions to the project - they are not purchases, and they
           do not entitle you to any goods, services, or equity.
         </p>
       </LegalSection>

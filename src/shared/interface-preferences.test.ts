@@ -121,3 +121,14 @@ test("interface locale persists and falls back to the detected language", () => 
   bogus.setItem("openmouse-interface-settings-v1", JSON.stringify({ locale: "xx" }));
   assert.equal(loadInterfacePreferences(bogus).locale, detectLocale());
 });
+
+test("Turkish browser preferences are detected and an explicit choice persists", (context) => {
+  context.mock.getter(globalThis.navigator, "language", () => "tr-TR");
+  assert.equal(detectLocale(), "tr");
+  const storage = new MemoryStorage();
+  assert.equal(loadInterfacePreferences(storage).locale, "tr");
+  saveInterfacePreferences(storage, { ...DEFAULT_INTERFACE_PREFERENCES, locale: "en" });
+  assert.equal(loadInterfacePreferences(storage).locale, "en");
+  saveInterfacePreferences(storage, { ...DEFAULT_INTERFACE_PREFERENCES, locale: "tr" });
+  assert.equal(loadInterfacePreferences(storage).locale, "tr");
+});
